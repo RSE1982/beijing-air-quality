@@ -1,0 +1,31 @@
+dataset_name: Beijing Air Quality – Cleaned Dataset
+path: data/cleaned/beijing_cleaned.csv
+description: >
+  Cleaned dataset derived from the combined file. Includes removal of duplicates,
+  missing value imputation, type correction, timestamp repair, and basic outlier handling.
+
+creation_script: notebooks/02_cleaning_pipeline.ipynb
+
+licence:
+  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  url: https://creativecommons.org/licenses/by/4.0/
+  attribution_required: true
+  attribution_statement: >
+    Derived from “Beijing Multi-Site Air Quality” (Song Chen, 2017), UCI Machine Learning Repository.
+    DOI: https://doi.org/10.24432/C5RK5G
+
+cleaning_steps:
+  - Remove duplicates
+  - Standardise column names
+  - Correct data types
+  - Combine timestamp fields
+  - Impute missing values
+  - Remove unnecessary columns
+
+record_count: ~410000
+file_size: ~33 MB
+
+intended_use:
+  - Visualisations
+  - Spatial EDA
+  - Statistical hypothesis testing
