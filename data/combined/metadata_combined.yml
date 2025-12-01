@@ -1,0 +1,39 @@
+dataset_name: Beijing Air Quality – Combined Station Dataset
+path: data/combined/combined_stations.csv
+description: >
+  This dataset merges all 12 raw station CSVs into a single unified file
+  (`combined_stations.csv`). Column names are standardised, station identifiers
+  are harmonised, and datetime fields are combined.
+
+source_files: 12 raw station CSVs
+creation_method: notebooks/01_data_extraction.ipynb
+
+licence:
+  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  url: https://creativecommons.org/licenses/by/4.0/
+  attribution_required: true
+  attribution_statement: >
+    Derived from “Beijing Multi-Site Air Quality” (Song Chen, 2017), UCI Machine Learning Repository.
+    DOI: https://doi.org/10.24432/C5RK5G
+
+record_count: ~420000
+file_size: ~35 MB
+
+columns:
+  - timestamp
+  - station
+  - PM2.5
+  - PM10
+  - SO2
+  - NO2
+  - CO
+  - O3
+  - TEMP
+  - PRES
+  - DEWP
+  - RAIN
+  - wd
+  - WSPM
+
+notes:
+  - No cleaning, imputation, or outlier handling performed here.
