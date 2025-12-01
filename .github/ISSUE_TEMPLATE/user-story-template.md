@@ -1,7 +1,7 @@
 ---
 name: User Story Template
 about: Describe this issue template's purpose here.
-title: 'User Story: {{title}}'
+title: 'User Story: '
 labels: ''
 assignees: ''
 
