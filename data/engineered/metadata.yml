@@ -1,5 +1,5 @@
 dataset_name: Beijing Air Quality – Feature Engineered Dataset
-path: data/engineered/beijing_feature_engineered.csv
+path: data/engineered/beijing_feature_engineered.parquet
 description: >
   Feature-engineered dataset built for machine learning. Includes lag features,
   rolling windows, interaction terms, encodings, and scaling. Not used for dashboard visuals.
@@ -27,13 +27,15 @@ feature_engineering:
   scaling: standard scaler
 
 record_count: ~350000
-file_size: ~100–140 MB
+file_size: ~12 MB
+file_format: parquet
 
 intended_use:
   - Baseline ML model
   - Lagged ML model
   - Hyperparameter tuning
-  - Export to PKL
+  - Feature importance analysis
+  - Model evaluation
 
 notes:
   - Final dataset aligned to prevent temporal leakage.
