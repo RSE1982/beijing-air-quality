@@ -272,3 +272,11 @@ The dashboard and supporting notebooks were designed so that **each business req
 - Weather and pollution readings pose no privacy risk
 - Machine learning models used purely for environmental insight
 - Dashboard avoids alarmist or misleading conclusions
+
+## Dashboard Design
+
+**to be added**
+
+## Unfixed Bugs
+
+**to be added**
