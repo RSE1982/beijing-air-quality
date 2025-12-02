@@ -38,3 +38,42 @@ This project aims to:
 3. Deliver insights through an interactive dashboard
     - Allow users to explore spatial, temporal, and predictive insights
     - Communicate findings clearly to both technical and non-technical users
+
+## Hypothesis and how to validate?
+
+### H1: There is a strong seasonal pattern in PM2.5 levels.
+
+**Validation:**
+
+- Monthly/seasonal EDA plots
+- Year-on-year comparison
+- Weather variable analysis
+
+### H2: PM2.5 varies significantly between monitoring stations.
+
+**Validation:**
+
+- Station-level boxplots
+- Mean PM2.5 comparison
+- Spatial metadata analysis (urban vs suburban vs residential)
+
+### H3: Meteorological variables correlate with PM2.5.
+
+**Validation:**
+
+- Correlation heatmap
+- Pairplots
+- Scatter + regression visualisation
+
+### H4: Hourly and daily temporal patterns explain short-term PM2.5 variability.
+
+**Validation:**
+- Hourly averages
+- Daily rolling mean plots
+
+### H5: Lag features improve predictive model accuracy.
+
+**Validation:**
+- Train baseline models (no lag features)
+- Train lag-based models (1h, 6h, 12h, 24h lags + rolling windows)
+- Compare MAE/RMSE/R² metrics
