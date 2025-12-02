@@ -280,3 +280,18 @@ The dashboard and supporting notebooks were designed so that **each business req
 ## Unfixed Bugs
 
 **to be added**
+
+## Deployment
+
+### Streamlit Cloud
+
+The app is deployed via Streamlit Cloud.
+
+**Steps:**
+
+1. Push repository to GitHub
+2. Connect GitHub repo to Streamlit Cloud
+3. Add required secrets (if any)
+4. Deploy and test
+
+App Link: \<To Be Added\>
