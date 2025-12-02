@@ -275,11 +275,11 @@ The dashboard and supporting notebooks were designed so that **each business req
 
 ## Dashboard Design
 
-**to be added**
+to be added
 
 ## Unfixed Bugs
 
-**to be added**
+to be added
 
 ## Deployment
 
@@ -308,3 +308,15 @@ App Link: \<To Be Added\>
 | XGBoost              | Advanced regression modelling  |
 | PyYAML               | Metadata generation            |
 | Streamlit            | Dashboard application          |
+
+## Credits
+
+### Content
+
+- Dataset: Chen, Song (2017). Beijing Multi-Site Air Quality
+- Research context from UCI and Kaggle dataset pages
+
+#### Media
+
+- Icons from FontAwesome / Streamlit icon set
+- Images from Unsplash or user-created
