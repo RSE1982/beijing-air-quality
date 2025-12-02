@@ -320,3 +320,9 @@ App Link: \<To Be Added\>
 
 - Icons from FontAwesome / Streamlit icon set
 - Images from Unsplash or user-created
+
+## Acknowledgements
+
+- Code Institute facilitators
+- Cohort peers for feedback
+- ChatGPT for documentation and code optimisation support
