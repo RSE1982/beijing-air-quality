@@ -275,11 +275,11 @@ The dashboard and supporting notebooks were designed so that **each business req
 
 ## Dashboard Design
 
-**to be added**
+to be added
 
 ## Unfixed Bugs
 
-**to be added**
+to be added
 
 ## Deployment
 
@@ -295,3 +295,34 @@ The app is deployed via Streamlit Cloud.
 4. Deploy and test
 
 App Link: \<To Be Added\>
+
+## Main Data Analysis Libraries
+
+| Library              | Purpose                        |
+| -------------------- | ------------------------------ |
+| Pandas               | Data cleaning and manipulation |
+| NumPy                | Numerical operations           |
+| Matplotlib / Seaborn | Data visualisation             |
+| Plotly               | Interactive visualisation      |
+| Scikit-learn         | Baseline ML models             |
+| XGBoost              | Advanced regression modelling  |
+| PyYAML               | Metadata generation            |
+| Streamlit            | Dashboard application          |
+
+## Credits
+
+### Content
+
+- Dataset: Chen, Song (2017). Beijing Multi-Site Air Quality
+- Research context from UCI and Kaggle dataset pages
+
+#### Media
+
+- Icons from FontAwesome / Streamlit icon set
+- Images from Unsplash or user-created
+
+## Acknowledgements
+
+- Code Institute facilitators
+- Cohort peers for feedback
+- ChatGPT for documentation and code optimisation support
