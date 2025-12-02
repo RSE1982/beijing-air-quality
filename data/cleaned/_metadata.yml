@@ -1,0 +1,37 @@
+dataset_name: Beijing Air Quality – Cleaned Dataset
+path: data/cleaned/beijing_cleaned.csv
+description: Cleaned dataset including timestamp repair, type correction, missing
+  value handling, and column reduction.
+created_on: '2025-12-02 14:58:06'
+created_by: Robert Steven Elliott
+steps:
+- Standardised column names to lowercase
+- Converted wd and station columns to category
+- Created datetime column from year/month/day/hour
+- Checked for missing values
+- Handled missing values in weather-related columns
+- Handled missing values in rain and wd columns
+- Interpolated missing PM2.5 values
+- Dropped unused pollutant columns (PM10, SO2, NO2, CO, O3)
+- Dropped redundant time columns (no, year, month, day, hour)
+- Removed duplicate rows
+- Verified cleaned dataset structure
+licence:
+  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  url: https://creativecommons.org/licenses/by/4.0/
+  attribution_required: true
+  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,
+    2017). UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5RK5G'
+creation_script: notebooks/02_data_cleaning.ipynb
+columns:
+- datetime
+- pm2.5
+- temp
+- pres
+- dewp
+- rain
+- wd
+- wspm
+- station
+record_count: 420768
+file_size: 25.10 MB
