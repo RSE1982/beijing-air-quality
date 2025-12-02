@@ -22,3 +22,19 @@ It contains hourly pollution and meteorological observations from 12 monitoring 
 - Station identifiers and timestamps
 
 The cleaned and engineered datasets have been optimised for GitHub storage using the Parquet format due to GitHub’s 100 MB file limit.
+
+## Business Requirements
+
+This project aims to:
+
+1. Analyse Beijing’s air quality trends
+    - Identify temporal (hourly, daily, monthly, seasonal) variation
+    - Compare pollution across different monitoring stations
+    - Detect relationships between weather and PM2.5 concentration
+2. Forecast PM2.5 levels using machine learning
+    - Build baseline models (no lag features)
+    - Build lag-based models for improved forecasting accuracy
+    - Compare performance between modelling approaches
+3. Deliver insights through an interactive dashboard
+    - Allow users to explore spatial, temporal, and predictive insights
+    - Communicate findings clearly to both technical and non-technical users
