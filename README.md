@@ -264,3 +264,11 @@ The dashboard and supporting notebooks were designed so that **each business req
 - Optimising notebook structure and explanations
 - Assisting with Streamlit layout
 - Auto-generating metadata templates and documentation
+
+## Ethical considerations
+
+- Dataset is licensed under CC BY 4.0; attribution maintained throughout
+- No personal or sensitive data is included
+- Weather and pollution readings pose no privacy risk
+- Machine learning models used purely for environmental insight
+- Dashboard avoids alarmist or misleading conclusions
