@@ -295,3 +295,16 @@ The app is deployed via Streamlit Cloud.
 4. Deploy and test
 
 App Link: \<To Be Added\>
+
+## Main Data Analysis Libraries
+
+| Library              | Purpose                        |
+| -------------------- | ------------------------------ |
+| Pandas               | Data cleaning and manipulation |
+| NumPy                | Numerical operations           |
+| Matplotlib / Seaborn | Data visualisation             |
+| Plotly               | Interactive visualisation      |
+| Scikit-learn         | Baseline ML models             |
+| XGBoost              | Advanced regression modelling  |
+| PyYAML               | Metadata generation            |
+| Streamlit            | Dashboard application          |
