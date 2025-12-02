@@ -225,3 +225,50 @@ The dashboard and supporting notebooks were designed so that **each business req
 | **BR4 – Evaluate and compare forecasting models (baseline vs lag-based)** | Metric summary cards (MAE, RMSE, R²), side-by-side bar charts of model performance, line plots of actual vs predicted PM2.5 on the “Model Comparison” page | Metric cards provide an at-a-glance summary for decision-makers, while bar charts allow direct comparison between baseline and lag-enhanced models. Actual vs predicted line plots show how well the model tracks episodes and peaks. Together, these visuals make the outcome of H5 (whether lag features improve performance) transparent and understandable. |
 | **BR5 – Provide short-term PM2.5 forecasts for selected stations** | Forecast line charts showing future PM2.5, with historical context, on the “Forecasting” page; station selector widget | Overlaying recent history with model forecast allows users to see both where the model is coming from and where it predicts levels are heading. Station filters allow localised insights. This addresses the practical decision-support side of the project by turning model outputs into actionable, station-specific information. |
 | **BR6 – Communicate data quality, coverage and limitations** | Summary tables/figures on record counts, missing data patterns (in notebooks), brief data quality notes on the “Home” or “About” dashboard section | Simple tables and high-level charts summarising data availability, along with short narrative notes, help users understand where the data is strong and where it is limited. This supports honest communication of uncertainty and reinforces the ethical considerations of the project. |
+
+## Analysis techniques used
+
+### Exploratory Data Analysis (EDA)
+
+- Histograms, boxplots, KDEs
+- Temporal decomposition
+- Spatial comparison
+- Correlation heatmaps
+
+### Feature Engineering
+
+- Lagging
+- Rolling windows
+- Season classification
+- Cyclical time encoding
+- Interaction terms
+- Spatial metadata
+
+### Machine Learning
+
+- Linear Regression
+- Random Forest Regressor
+- XGBoost Regressor
+- Train/test split
+- Evaluation via MAE, RMSE, R²
+
+### Limitations and Alternatives
+
+- Dataset lacks wind speed/direction for some stations → could limit modelling
+- PM2.5 spikes are difficult to predict linearly → tree models perform better
+- Seasonal effects not explicitly encoded in raw data → added manually
+
+### Use of Generative AI Tools
+
+- Ideation for feature engineering strategies
+- Optimising notebook structure and explanations
+- Assisting with Streamlit layout
+- Auto-generating metadata templates and documentation
+
+## Ethical considerations
+
+- Dataset is licensed under CC BY 4.0; attribution maintained throughout
+- No personal or sensitive data is included
+- Weather and pollution readings pose no privacy risk
+- Machine learning models used purely for environmental insight
+- Dashboard avoids alarmist or misleading conclusions
