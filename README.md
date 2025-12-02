@@ -1,3 +1,5 @@
+# ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+
 # 📘 Beijing Air Quality Analysis & Forecasting
 ## A Code Institute Data Analytics with AI Capstone Project
 **Author:** Robert Steven Elliott
