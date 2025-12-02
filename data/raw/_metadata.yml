@@ -1,0 +1,61 @@
+dataset_name: Beijing Multi-Site Air Quality – Raw Stations
+path: data/raw/
+description: This folder contains the 12 raw CSV files from the Beijing Multi-Site
+  Air Quality dataset. These files are preserved exactly as provided by the source
+  (Kaggle/UCI) with no cleaning, renaming, or preprocessing applied. The raw data
+  is kept intact to maintain full provenance.
+created_on: '2025-12-02 14:38:30'
+created_by: Robert Steven Elliott
+steps:
+- Downloaded the raw datasets from Kaggle / UCI repository
+- Stored raw files without modification
+- Verified encoding and column structure
+- Validated presence of all 12 station files
+source:
+  title: Beijing Multi-Site Air Quality
+  author: Song Chen
+  year: 2017
+  doi: https://doi.org/10.24432/C5RK5G
+  uci_repository: https://archive.ics.uci.edu/dataset/501
+  kaggle_mirror: https://www.kaggle.com/datasets/sid321axn/beijing-multisite-airquality-data-set
+licence:
+  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  url: https://creativecommons.org/licenses/by/4.0/
+  attribution_required: true
+  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,
+    2017). UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5RK5G'
+files:
+- aotizhongxin.csv
+- changping.csv
+- dingling.csv
+- dongsi.csv
+- guanyuan.csv
+- gucheng.csv
+- huairou.csv
+- nongzhanguan.csv
+- shunyi.csv
+- tiantan.csv
+- wanliu.csv
+- wanshouxigong.csv
+columns:
+- 'No'
+- year
+- month
+- day
+- hour
+- PM2.5
+- PM10
+- SO2
+- NO2
+- CO
+- O3
+- TEMP
+- PRES
+- DEWP
+- RAIN
+- wd
+- WSPM
+- station
+notes:
+- These files remain unmodified to maintain full provenance.
+- No cleaning, renaming, or type conversion steps were applied.
