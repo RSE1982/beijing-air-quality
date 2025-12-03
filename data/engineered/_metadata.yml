@@ -2,7 +2,7 @@ dataset_name: Beijing Air Quality – Feature Engineered Dataset
 path: data/engineered/beijing_feature_engineered.parquet
 description: Dataset with lag features, rolling windows, seasonal categories, cyclical
   encodings, and spatial metadata.
-created_on: '2025-12-03 08:33:58'
+created_on: '2025-12-03 10:03:21'
 created_by: Robert Steven Elliott
 steps:
 - Merged spatial metadata (latitude, longitude, area type)
@@ -52,5 +52,5 @@ columns:
 - dewpoint_spread
 - temp_pres_interaction
 - rain_binary
-record_count: 420768
-file_size: 11.09 MB
+record_count: 403776
+file_size: 10.55 MB
