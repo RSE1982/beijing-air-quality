@@ -14,16 +14,35 @@
 
 ## Dataset Content
 
-This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Song Chen (2017) and hosted on the UCI Machine Learning Repository (with a Kaggle mirror).
+This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Song Chen (2017) and hosted on the UCI Machine Learning Repository, with a verified Kaggle mirror.
 
-It contains hourly pollution and meteorological observations from 12 monitoring stations across Beijing, including:
+It contains hourly pollutant and meteorological observations from 12 monitoring stations across Beijing, including:
 
 - PM2.5
 - Temperature, dew point, pressure, and rainfall
-- Wind direction and speed
-- Station identifiers and timestamps
+- Wind direction and wind speed
+- Station identifiers and timestamp fields
 
-The cleaned and engineered datasets have been optimised for GitHub storage using the Parquet format due to GitHub’s 100 MB file limit.
+This dataset represents historical air-quality observations.
+For analytical consistency, the project uses the full years 2013–2016.
+The original source includes some early 2017 data, but these records were removed during cleaning because the year is incomplete and would distort seasonal and temporal analyses.
+
+The final engineered dataset is stored in Parquet format to comply with GitHub’s 100 MB repository limit while maintaining efficient compression and fast loading.
+
+### Data Licensing (CC BY 4.0)
+The Beijing Multi-Site Air Quality Dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
+
+This licence allows sharing and adaptation for any purpose — as long as appropriate attribution is provided.
+
+Required Attribution:
+
+Chen, Song (2017). Beijing Multi-Site Air Quality.\
+UCI Machine Learning Repository.\
+DOI: https://doi.org/10.24432/C5RK5G\
+Mirrored on Kaggle by Manu Siddhartha.\
+Licensed under CC BY 4.0.
+
+More information: https://creativecommons.org/licenses/by/4.0/
 
 ## Business Requirements
 
@@ -313,7 +332,10 @@ App Link: \<To Be Added\>
 
 ### Content
 
-- Dataset: Chen, Song (2017). Beijing Multi-Site Air Quality
+- Dataset: Chen, Song (2017). Beijing Multi-Site Air Quality. \
+UCI Machine Learning Repository — Licensed under CC BY 4.0.\
+DOI: https://doi.org/10.24432/C5RK5G\
+Kaggle mirror by Manu Siddhartha.
 - Research context from UCI and Kaggle dataset pages
 
 #### Media
