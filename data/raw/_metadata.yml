@@ -4,7 +4,7 @@ description: This folder contains the 12 raw CSV files from the Beijing Multi-Si
   Air Quality dataset. These files are preserved exactly as provided by the source
   (Kaggle/UCI) with no cleaning, renaming, or preprocessing applied. The raw data
   is kept intact to maintain full provenance.
-created_on: '2025-12-02 14:38:30'
+created_on: '2025-12-04 14:33:10'
 created_by: Robert Steven Elliott
 steps:
 - Downloaded the raw datasets from Kaggle / UCI repository
@@ -17,13 +17,13 @@ source:
   year: 2017
   doi: https://doi.org/10.24432/C5RK5G
   uci_repository: https://archive.ics.uci.edu/dataset/501
-  kaggle_mirror: https://www.kaggle.com/datasets/sid321axn/beijing-multisite-airquality-data-set
+  kaggle_mirror: https://www.kaggle.com/datasets/sid321axn/                                beijing-multisite-airquality-data-set
 licence:
-  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  name: Creative Commons Attribution 4.0 International                 (CC BY 4.0)
   url: https://creativecommons.org/licenses/by/4.0/
   attribution_required: true
-  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,
-    2017). UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5RK5G'
+  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,                     2017).
+    UCI Machine Learning Repository.                     DOI: https://doi.org/10.24432/C5RK5G'
 files:
 - aotizhongxin.csv
 - changping.csv
