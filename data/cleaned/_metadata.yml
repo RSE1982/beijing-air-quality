@@ -2,10 +2,11 @@ dataset_name: Beijing Air Quality – Cleaned Dataset
 path: data/cleaned/beijing_cleaned.csv
 description: Cleaned dataset including timestamp repair, type correction, missing
   value handling, and column reduction.
-created_on: '2025-12-03 10:02:14'
+created_on: '2025-12-04 09:41:05'
 created_by: Robert Steven Elliott
 steps:
 - Standardised column names to lowercase
+- Renamed columns for clarity
 - Converted wd and station columns to category
 - Created datetime column from year/month/day/hour
 - Checked for missing values
@@ -16,23 +17,28 @@ steps:
 - Dropped redundant time columns (no, year, month, day, hour)
 - Filtered out data from 2017 onwards
 - Removed duplicate rows
+- Merged spatial metadata (latitude, longitude, area type)
+- Converted 'station' and 'area_type' columns to categorical data types
 - Verified cleaned dataset structure
 licence:
-  name: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  name: Creative Commons Attribution 4.0 International                 (CC BY 4.0)
   url: https://creativecommons.org/licenses/by/4.0/
   attribution_required: true
-  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,
-    2017). UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5RK5G'
+  attribution_statement: 'Derived from “Beijing Multi-Site Air Quality” (Song Chen,                     2017).
+    UCI Machine Learning Repository.                     DOI: https://doi.org/10.24432/C5RK5G'
 creation_script: notebooks/02_data_cleaning.ipynb
 columns:
 - datetime
-- pm2.5
-- temp
-- pres
-- dewp
+- pm25
+- temperature
+- pressure
+- dew_point
 - rain
-- wd
-- wspm
+- wind_direction
+- wind_speed
 - station
+- latitude
+- longitude
+- area_type
 record_count: 403776
-file_size: 24.06 MB
+file_size: 35.22 MB
