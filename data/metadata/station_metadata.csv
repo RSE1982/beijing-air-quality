@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8f35e484f0b5419be326dab838622680faf4646ef8b09a9214345c81d2b06039
-size 497
+station,latitude,longitude,area_type
+aotizhongxin,40.003388,116.407613,urban
+changping,40.220772,116.231204,suburban
+dingling,40.292153,116.225245,suburban
+dongsi,39.929815,116.417296,urban
+guanyuan,39.941746,116.361478,urban
+gucheng,39.908156,116.239596,residential
+huairou,40.316321,116.631974,suburban
+nongzhanguan,39.933598,116.469286,urban
+shunyi,40.127143,116.656807,suburban
+tiantan,39.886449,116.417284,urban
+wanliu,39.990376,116.287252,residential
+wanshouxigong,39.879503,116.344537,urban
