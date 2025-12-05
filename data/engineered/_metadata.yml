@@ -2,19 +2,20 @@ dataset_name: Beijing Air Quality – Feature Engineered Dataset
 path: data/engineered/beijing_feature_engineered.parquet
 description: Dataset with lag features, rolling windows, seasonal categories, cyclical
   encodings, and spatial metadata.
-created_on: '2025-12-04 09:57:06'
+created_on: '2025-12-05 12:05:46'
 created_by: Robert Steven Elliott
 steps:
-- 'Extracted datetime feature: dayofweek'
-- Encoded hour and month as cyclical sin/cos
+- Encoded hour as cyclical sin/cos
+- Encoded month as cyclical sin/cos
 - Created lag features (1h, 3h, 6h, 12h, 24h)
 - Created rolling mean features (3h, 6h, 12h, 24h)
-- Created dewpoint spread feature
+- Created dew_point_spread feature
 - Created temperature-pressure interaction feature
 - Created binary rain feature
 - Saved dataset as Parquet for GitHub compliance
 - Saved dataset as CSV for GitHub compliance
-creation_script: notebooks/04_feature_engineering.ipynb
+- Noted presence of NaN rows from lag features (to be handled in modelling step)
+creation_script: notebooks/08_feature_engineering.ipynb
 columns:
 - datetime
 - year
@@ -33,7 +34,6 @@ columns:
 - longitude
 - area_type
 - season
-- dayofweek
 - hour_sin
 - hour_cos
 - month_sin
@@ -47,7 +47,7 @@ columns:
 - pm25_roll_6h_mean
 - pm25_roll_12h_mean
 - pm25_roll_24h_mean
-- dewpoint_spread
+- dew_point_spread
 - temp_pres_interaction
 - rain_binary
 record_count: 403776
