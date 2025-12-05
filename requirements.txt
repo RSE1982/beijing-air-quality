@@ -19,3 +19,4 @@ ipykernel==6.25.2
 nbformat==5.9.0 
 pingouin==0.5.3
 statsmodels==0.14.0
+kneed==0.8.1
