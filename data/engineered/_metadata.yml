@@ -2,7 +2,7 @@ dataset_name: Beijing Air Quality – Feature Engineered Dataset
 path: data/engineered/beijing_feature_engineered.parquet
 description: Dataset with lag features, rolling windows, seasonal categories, cyclical
   encodings, and spatial metadata.
-created_on: '2025-12-05 14:17:11'
+created_on: '2025-12-07 19:04:44'
 created_by: Robert Steven Elliott
 steps:
 - Encoded hour as cyclical sin/cos
