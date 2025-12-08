@@ -1,0 +1,52 @@
+import streamlit as st
+
+# Configure the Streamlit page
+st.set_page_config(
+    page_title="Beijing Clean Air Dashboard",
+    page_icon="🌆",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# Title of the dashboard
+st.title("Beijing Clean Air Dashboard")
+
+# Define pages for navigation
+overview = st.Page("pages/overview.py",
+                   title="Overview",
+                   icon="🏠")
+hypothesis1 = st.Page("pages/hypothesis1.py",
+                      title="Hypothesis 1",
+                      icon="❓")
+hypothesis2 = st.Page("pages/hypothesis2.py",
+                      title="Hypothesis 2",
+                      icon="❓")
+hypothesis3 = st.Page("pages/hypothesis3.py",
+                      title="Hypothesis 3",
+                      icon="❓")
+hypothesis4 = st.Page("pages/hypothesis4.py",
+                      title="Hypothesis 4",
+                      icon="❓")
+hypothesis5 = st.Page("pages/hypothesis5.py",
+                      title="Hypothesis 5",
+                      icon="❓")
+clustering = st.Page("pages/clustering.py",
+                     title="Clustering Analysis",
+                     icon="📊")
+forcasting = st.Page("pages/forecasting.py",
+                     title="Air Quality Forecasting",
+                     icon="📈")
+predictor = st.Page("pages/predictor.py",
+                    title="Air Quality Predictor",
+                    icon="🤖")
+
+nav = st.navigation([overview, hypothesis1, hypothesis2, hypothesis3,
+                     hypothesis4, hypothesis5, clustering, forcasting, 
+                     predictor])
+
+current_page = nav.title
+
+# ---------------- Sidebar (filters) ----------------
+
+# Run the navigation
+nav.run()
