@@ -313,7 +313,7 @@ The app is deployed via Streamlit Cloud.
 3. Add required secrets (if any)
 4. Deploy and test
 
-App Link: [dashboard-beijing-air-quality.streamlit.app](https://dashboard-beijing-air-quality.streamlit.app/)
+App Link: [rse1982-beijing-air-quality.streamlit.app](https://rse1982-beijing-air-quality.streamlit.app/)
 
 ## Main Data Analysis Libraries
 
