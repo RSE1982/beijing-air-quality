@@ -1,24 +1,73 @@
+"""
+Hypothesis 2: Spatial Variation in PM2.5
+This page examines the spatial distribution of PM2.5 across monitoring
+stations in Beijing using average PM2.5 levels and a map visualization.
+"""
+
 import streamlit as st
-import pandas as pd
+from utils.load_data import load_engineered, load_station_meta
+from utils.charts import spatial_boxplot
 import plotly.express as px
-from utils.load_data import load_cleaned
 
-st.title("📍 H2 – Spatial Variation in PM2.5")
+st.title("📍 Hypothesis 2 — Spatial Variation Across Stations")
 
-df = load_cleaned()
+df = load_engineered()
+meta = load_station_meta()
 
-df = df.groupby(["station", "latitude", "longitude", "area_type"], as_index=False)["pm25"].mean().rename(columns={"pm25": "mean_pm25"})
+st.write("""
+### 📌 Hypothesis H2
+**PM2.5 levels vary significantly across spatial regions of Beijing.**
 
-st.subheader("🗺️ Station-Level PM2.5 Averages")
+This is tested using:
+- station-level averages
+- boxplots
+- area type labels (urban / suburban / rural)
+- geographic coordinates
+""")
+
+# ------------------------- Charts -------------------------
+st.subheader("📊 PM2.5 Variation Across 12 Stations")
+st.plotly_chart(spatial_boxplot(df), use_container_width=True)
+
+# Compute station averages
+station_means = df.groupby("station")["pm25"].mean().reset_index()
+
+st.subheader("🗺️ PM2.5 by Station (Mapped)")
 fig = px.scatter_mapbox(
-    df, lat="latitude", lon="longitude",
-    size="mean_pm25", color="mean_pm25",
+    meta.merge(station_means, on="station"),
+    lat="latitude",
+    lon="longitude",
+    color="pm25",
+    size="pm25",
     hover_name="station",
-    mapbox_style="carto-positron", zoom=9,
+    zoom=9,
+    height=500,
+    mapbox_style="carto-positron",
+    title="Average PM2.5 by Station"
 )
 st.plotly_chart(fig, use_container_width=True)
 
+# ------------------------- Observations -------------------------
+st.markdown("### 📝 Observations")
 st.markdown("""
-### Key Finding
-Urban stations exhibit **significantly higher PM2.5** than rural sites → **H2 supported**.
+- Urban stations generally show **higher PM2.5 averages** than suburban
+             or rural stations.
+- Some stations display wider variability, indicating mixed microclimates.
+- Geographic map highlights distinct hotspots located around central districts.
 """)
+
+# ------------------------- Justification -------------------------
+st.markdown("### 🎯 Justification")
+st.markdown("""
+Spatial inequality is clearly expressed in both boxplots and the geospatial
+             map.
+The ANOVA performed in the notebook confirmed **significant between-station
+             differences (p < 0.001)**.
+Station-level meteorological differences explain part of this variation.
+""")
+
+st.success("✔ **Conclusion:** H2 is supported — PM2.5 varies\
+            significantly across Beijing.")
+
+st.caption("Source: Notebook 06 — Spatial Analysis • \
+           Dataset © Song Chen (CC BY 4.0)")

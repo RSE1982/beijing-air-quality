@@ -1,24 +1,70 @@
+"""Overview page for the Beijing Clean Air Dashboard."""
+
 import streamlit as st
+from utils.load_data import load_cleaned, load_station_meta
+from utils.charts import seasonal_boxplot, monthly_trend, spatial_boxplot
 import plotly.express as px
-from utils.load_data import load_cleaned
 
-st.header("🏠 Overview – Beijing Clean Air Dashboard")
+st.title("🏠 Overview")
 
-df = load_cleaned()
-
-st.subheader("📌 Project Summary")
 st.write("""
-This dashboard presents a full analysis of Beijing air quality (PM2.5) 
-using statistical testing, machine learning, clustering, and forecasting.
+Welcome to the **Beijing Clean Air Dashboard**, an interactive companion to the
+**Beijing Air Quality Analysis & Forecasting** Capstone project.
+
+This dashboard allows you to explore:
+- Seasonal, spatial, meteorological, and temporal pollution patterns
+- Statistical validation of five hypotheses
+- Forecasting using an XGBoost lag-based model
+- Station clustering patterns
 """)
 
-st.subheader("📊 PM2.5 Distribution")
-fig = px.histogram(df, x="pm25", nbins=60, title="PM2.5 Distribution")
-st.plotly_chart(fig, use_container_width=True)
+# ------------------------- Load Data -------------------------
+df = load_cleaned()
+meta = load_station_meta()
 
-col1, col2, col3 = st.columns(3)
-col1.metric("Mean PM2.5", f"{df.pm25.mean():.1f}")
-col2.metric("Median PM2.5", f"{df.pm25.median():.1f}")
-col3.metric("Max PM2.5", f"{df.pm25.max():.1f}")
+# ------------------------- KPI Metrics -------------------------
+st.subheader("📊 Dataset Snapshot")
 
-st.info("Use the left navigation to explore each hypothesis and model.")
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Rows", f"{len(df):,}")
+col2.metric("Stations", df["station"].nunique())
+col3.metric("Years Covered", df["year"].nunique())
+col4.metric("Features", df.shape[1])
+
+# ------------------------- Quick Visuals -------------------------
+st.subheader("🌤 Seasonal & Monthly Trends")
+
+colA, colB = st.columns(2)
+with colA:
+    st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
+
+with colB:
+    st.plotly_chart(monthly_trend(df), use_container_width=True)
+
+# ------------------------- Spatial Snapshot -------------------------
+st.subheader("📍 Spatial Variation Across Stations")
+st.plotly_chart(spatial_boxplot(df), use_container_width=True)
+
+# ------------------------- Station Map -------------------------
+station_means = df.groupby("station")["pm25"].mean().reset_index()
+meta_map = meta.merge(station_means, on="station")
+
+fig_map = px.scatter_mapbox(
+    meta_map,
+    lat="latitude",
+    lon="longitude",
+    color="pm25",
+    size="pm25",
+    hover_name="station",
+    mapbox_style="carto-positron",
+    zoom=9,
+    title="Average PM2.5 by Station",
+    height=500,
+)
+st.plotly_chart(fig_map, use_container_width=True)
+
+# ------------------------- Footer -------------------------
+st.caption("""
+© 2025 Robert Steven Elliott — Beijing Air Quality Capstone
+Dataset © Song Chen (2017), licensed under CC BY 4.0
+""")
