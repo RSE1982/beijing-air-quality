@@ -9,7 +9,8 @@ st.set_page_config(
 )
 
 # Title of the dashboard
-st.title("Beijing Clean Air Dashboard")
+st.title("🌆 Beijing Clean Air Dashboard")
+st.write("Analyze Beijing's air quality through various hypotheses and models.")
 
 # Define pages for navigation
 overview = st.Page("pages/overview.py",
