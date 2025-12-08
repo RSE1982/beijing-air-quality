@@ -30,7 +30,7 @@ def load_engineered() -> pd.DataFrame:
         pd.DataFrame: Feature engineered Beijing air quality data.
     """
     return pd.read_csv(DATA_PATH / "engineered" /
-                       "beijing_feature_engineered.csv")
+                       "beijing_engineered.csv")
 
 
 @st.cache_data
