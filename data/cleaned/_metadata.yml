@@ -2,7 +2,7 @@ dataset_name: Beijing Air Quality – Cleaned Dataset
 path: data/cleaned/beijing_cleaned.csv
 description: Cleaned dataset including timestamp repair, type correction, missing
   value handling, and column reduction.
-created_on: '2025-12-05 13:56:21'
+created_on: '2025-12-08 13:20:35'
 created_by: Robert Steven Elliott
 steps:
 - Standardised column names to lowercase
@@ -22,7 +22,6 @@ steps:
 - Added season variable
 - Verified cleaned dataset structure
 - Saved cleaned dataset to CSV
-- Saved cleaned dataset to Parquet
 licence:
   name: Creative Commons Attribution 4.0 International                 (CC BY 4.0)
   url: https://creativecommons.org/licenses/by/4.0/
@@ -50,4 +49,4 @@ columns:
 - season
 - day_of_week
 record_count: 403776
-file_size: Unknown
+file_size: 43.52 MB
