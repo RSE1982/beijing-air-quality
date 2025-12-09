@@ -7,6 +7,13 @@ data/model_outputs/*
 models/kmeans_cluter_model.joblib
 models/rf_baseline_model.joblib
 models/rg_lag_model.joblib
+models/kmeans_cluster_model.joblib
+figures/eda/*
+figures/h1/*
+figures/h2/*
+figures/h3/*
+figures/h4/*
+figures/clustering/*
 src/*
 assets/*
 README.md
