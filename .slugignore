@@ -1,2 +1,4 @@
-jupyter_notebooks/*
+notebooks/*
+templates/*
+images/*
 README.md
