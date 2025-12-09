@@ -27,7 +27,9 @@ with col1:
     st.caption("Source: Notebook 05 — Seasonal Analysis •  \
     Dataset © Song Chen (CC BY 4.0)")
     with col2:
-        tab1, tab2, tab3 = st.tabs(["Seasonal Boxplot", "Monthly Trend", "Observations & Justification"])
+        tab1, tab2, tab3 = st.tabs(["Seasonal Boxplot",
+                                    "Monthly Trend",
+                                    "Observations & Justification"])
         with tab1:
             st.subheader("📊 Seasonal PM2.5 Distribution")
             st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
@@ -49,12 +51,11 @@ with col1:
             # ------------------------- Justification -------------------------
             st.markdown("### 🎯 Justification")
             st.markdown("""
-            These visual patterns indicate substantial seasonal variation in air quality,
-                        driven by
-            temperature inversions, coal heating, wind strength, and atmospheric
-                        mixing conditions.
-            The statistical ANOVA test performed in the notebook showed **significant
-                        differences between seasons (p < 0.001)**.
+                        These visual patterns indicate substantial seasonal
+                        variation in air quality, driven bytemperature
+                        inversions, coal heating, wind strength, and
+                        atmospheric mixing conditions. The statistical
+                        ANOVA test performed in the notebook showed
+                        **significant differences between seasons
+                        (p < 0.001)**.
             """)
-
-

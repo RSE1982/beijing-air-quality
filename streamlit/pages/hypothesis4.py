@@ -4,12 +4,12 @@ This page examines the temporal dependence in PM2.5 levels in Beijing.
 """
 
 import streamlit as st
-from utils.load_data import load_engineered
+from utils.load_data import load_cleaned
 import plotly.express as px
 
 st.title("⏳ Hypothesis 4 — Temporal Structure in PM2.5")
 
-df = load_engineered()
+df = load_cleaned()
 
 st.write("""
 ### 📌 Hypothesis H4

@@ -6,12 +6,12 @@ correlation.
 """
 
 import streamlit as st
-from utils.load_data import load_engineered
+from utils.load_data import load_cleaned
 from utils.charts import corr_heatmap
 
 st.title("🌦️ Hypothesis 3 — Meteorological Correlations")
 
-df = load_engineered()
+df = load_cleaned()
 
 st.write("""
 ### 📌 Hypothesis H3

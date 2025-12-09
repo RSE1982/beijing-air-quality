@@ -16,30 +16,6 @@ st.html("""
         padding-bottom: 0rem !important;
         margin-bottom: 0rem !important;
     }
-
-    /* Remove plot margins */
-    div[data-testid="stPlot"] {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    div[data-testid="stPlotlyChart"] {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* Force body to not scroll */
-    html, body, [data-testid="stAppViewContainer"], [data-testid="stMainBlockContainer"] {
-        height: 100%;
-        overflow: hidden !important;
-    }
-
-    /* Allow main content area to scroll *internally* if needed */
-    [data-testid="stMain"] {
-        overflow-y: auto !important;
-        height: calc(100vh - 3rem); /* account for Cloud toolbar */
-    }
-
 </style>
 """)
 
