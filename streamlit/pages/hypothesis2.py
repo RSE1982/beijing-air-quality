@@ -49,7 +49,7 @@ with col2:
             hover_name="station",
             zoom=9,
             height=500,
-            mapbox_style="carto-positron",
+            mapbox_style="open-street-map",
             title="Average PM2.5 by Station"
         )
         st.plotly_chart(fig, use_container_width=True)
