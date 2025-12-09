@@ -54,7 +54,7 @@ forcasting = st.Page("pages/forecasting.py",
                      icon="📈")
 
 nav = st.navigation([overview, hypothesis1, hypothesis2, hypothesis3,
-                     hypothesis4, hypothesis5, clustering, modelling, 
+                     hypothesis4, hypothesis5, clustering, modelling,
                      forcasting])
 
 current_page = nav.title

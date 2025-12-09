@@ -50,19 +50,19 @@ tabs = st.tabs(["Model Comparison",
                 "Residuals vs Predicted"])
 
 with tabs[0]:
-    st.image(load_img("model_performance_comparison.png"))
+    st.image(load_img("modelling/model_performance_comparison.png"))
 
 with tabs[1]:
-    st.image(load_img("rmse_ranked_models.png"))
+    st.image(load_img("modelling/rmse_ranked_models.png"))
 
 with tabs[2]:
-    st.image(load_img("predicted_vs_actual_best_model.png"))
+    st.image(load_img("modelling/predicted_vs_actual_best_model.png"))
 
 with tabs[3]:
-    st.image(load_img("residual_distribution.png"))
+    st.image(load_img("modelling/residual_distribution.png"))
 
 with tabs[4]:
-    st.image(load_img("residuals_vs_predicted.png"))
+    st.image(load_img("modelling/residuals_vs_predicted.png"))
 
 
 st.divider()
@@ -93,32 +93,3 @@ st.header("🔍 Hyperparameter Search Results (GridSearchCV)")
 
 st.dataframe(grid_results, use_container_width=True)
 st.divider()
-
-
-# ---------------------------------------------------------
-# Interactive Prediction Panel
-# ---------------------------------------------------------
-st.header("🔮 Predict PM2.5")
-
-feature_schema = metadata.get("feature_schema", {})
-
-if feature_schema:
-    cols = st.columns(3)
-    user_values = {}
-
-    for i, (feature, schema) in enumerate(feature_schema.items()):
-        with cols[i % 3]:
-            user_values[feature] = st.number_input(
-                label=feature.replace("_", " ").title(),
-                min_value=float(schema["min"]),
-                max_value=float(schema["max"]),
-                value=float(schema["default"]),
-                step=0.1
-            )
-
-    if st.button("Run Prediction"):
-        X = np.array(list(user_values.values())).reshape(1, -1)
-        pred = model.predict(X)[0]
-        st.success(f"Predicted PM2.5: **{pred:.2f} µg/m³**")
-else:
-    st.info("Feature schema not found — cannot generate interactive inputs.")
