@@ -52,13 +52,10 @@ modelling = st.Page("pages/modelling.py",
 forcasting = st.Page("pages/forecasting.py",
                      title="Air Quality Forecasting",
                      icon="📈")
-predictor = st.Page("pages/predictor.py",
-                    title="Air Quality Predictor",
-                    icon="🤖")
 
 nav = st.navigation([overview, hypothesis1, hypothesis2, hypothesis3,
-                     hypothesis4, hypothesis5, clustering, forcasting,
-                     modelling, predictor])
+                     hypothesis4, hypothesis5, clustering, modelling, 
+                     forcasting])
 
 current_page = nav.title
 
