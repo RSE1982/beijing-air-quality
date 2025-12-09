@@ -1,0 +1,17 @@
+Model,Best Params,MAE,RMSE,R2,Estimator
+LinearRegression,{'fit_intercept': False},9.69346191305418,16.058396361597858,0.9430962704212121,LinearRegression(fit_intercept=False)
+DecisionTree,"{'max_depth': 5, 'min_samples_split': 2}",9.852349733954897,16.78954111524738,0.9377966122448064,"DecisionTreeRegressor(max_depth=5, random_state=42)"
+RandomForest,"{'max_depth': 20, 'max_features': 'sqrt', 'n_estimators': 100}",10.147766086669158,16.32415634741233,0.9411972175393677,"RandomForestRegressor(max_depth=20, max_features='sqrt', n_jobs=-1,
+                      random_state=42)"
+AdaBoost,"{'learning_rate': 0.5, 'n_estimators': 50}",36.55503344798731,43.90550214922769,0.5746227271956158,"AdaBoostRegressor(learning_rate=0.5, random_state=42)"
+XGBoost,"{'learning_rate': 0.05, 'max_depth': 4, 'subsample': 0.8}",9.091619796784267,15.455948053305237,0.9472857921929133,"XGBRegressor(base_score=None, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric='rmse', feature_types=None,
+             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=0.05, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=4, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             n_estimators=200, n_jobs=None, num_parallel_tree=None,
+             predictor=None, random_state=42, ...)"
