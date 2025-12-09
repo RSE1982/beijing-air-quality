@@ -36,14 +36,14 @@
         "reg_lambda": null,
         "sampling_method": null,
         "scale_pos_weight": null,
-        "subsample": 0.8,
+        "subsample": 1.0,
         "tree_method": null,
         "validate_parameters": null,
         "verbosity": null
     },
-    "mae": 9.091619796784267,
-    "rmse": 15.455948053305237,
-    "r2": 0.9472857921929133,
+    "mae": 9.079180551353172,
+    "rmse": 15.417260906836193,
+    "r2": 0.9475493554437188,
     "feature_schema": {
         "temperature": {
             "min": -19.9,
@@ -129,6 +129,11 @@
             "min": 2013.0,
             "max": 2016.0,
             "default": 2014.0
+        },
+        "station": {
+            "min": 0.0,
+            "max": 9.0,
+            "default": 4.0
         },
         "pm25_lag_1h": {
             "min": 2.0,

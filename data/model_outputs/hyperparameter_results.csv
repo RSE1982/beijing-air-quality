@@ -1,10 +1,10 @@
 Model,Best Params,MAE,RMSE,R2,Estimator
-LinearRegression,{'fit_intercept': False},9.69346191305418,16.058396361597858,0.9430962704212121,LinearRegression(fit_intercept=False)
+LinearRegression,{'fit_intercept': False},9.690241212045983,16.056557653914666,0.9431093007802,LinearRegression(fit_intercept=False)
 DecisionTree,"{'max_depth': 5, 'min_samples_split': 2}",9.852349733954897,16.78954111524738,0.9377966122448064,"DecisionTreeRegressor(max_depth=5, random_state=42)"
-RandomForest,"{'max_depth': 20, 'max_features': 'sqrt', 'n_estimators': 100}",10.147766086669158,16.32415634741233,0.9411972175393677,"RandomForestRegressor(max_depth=20, max_features='sqrt', n_jobs=-1,
+RandomForest,"{'max_depth': 20, 'max_features': 'sqrt', 'n_estimators': 100}",10.74575424658587,16.803957535081462,0.9376897439097842,"RandomForestRegressor(max_depth=20, max_features='sqrt', n_jobs=-1,
                       random_state=42)"
-AdaBoost,"{'learning_rate': 0.5, 'n_estimators': 50}",36.55503344798731,43.90550214922769,0.5746227271956158,"AdaBoostRegressor(learning_rate=0.5, random_state=42)"
-XGBoost,"{'learning_rate': 0.05, 'max_depth': 4, 'subsample': 0.8}",9.091619796784267,15.455948053305237,0.9472857921929133,"XGBRegressor(base_score=None, booster=None, callbacks=None,
+AdaBoost,"{'learning_rate': 0.5, 'n_estimators': 50}",36.183910781195046,43.41673458397676,0.5840408340878616,"AdaBoostRegressor(learning_rate=0.5, random_state=42)"
+XGBoost,"{'learning_rate': 0.05, 'max_depth': 4, 'subsample': 1.0}",9.079180551353172,15.417260906836193,0.9475493554437188,"XGBRegressor(base_score=None, booster=None, callbacks=None,
              colsample_bylevel=None, colsample_bynode=None,
              colsample_bytree=None, early_stopping_rounds=None,
              enable_categorical=False, eval_metric='rmse', feature_types=None,
