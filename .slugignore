@@ -1,4 +1,12 @@
 notebooks/*
 templates/*
 images/*
+data/raw/*
+data/combined/*
+data/model_outputs/*
+models/kmeans_cluter_model.joblib
+models/rf_baseline_model.joblib
+models/rg_lag_model.joblib
+src/*
+assets/*
 README.md
