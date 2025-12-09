@@ -11,6 +11,26 @@ ROOT = Path(__file__).parent.parent.parent
 DATA_PATH = ROOT / "data"
 
 
+def _load_csv(path: Path) -> pd.DataFrame:
+    """
+    Load a CSV file into a DataFrame.
+
+    Args:
+        path (Path): Path to the CSV file.
+    Returns:
+        pd.DataFrame: Loaded DataFrame.
+    """
+    df = pd.read_csv(path)
+
+    if "datetime" in df.columns:
+        df["datetime"] = pd.to_datetime(df["datetime"])
+    for col in df.select_dtypes(include="object").columns:
+        if col != "datetime":
+            df[col] = df[col].astype("category")
+
+    return df
+
+
 @st.cache_data
 def load_cleaned() -> pd.DataFrame:
     """
@@ -19,7 +39,7 @@ def load_cleaned() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Cleaned Beijing air quality data.
     """
-    return pd.read_csv(DATA_PATH / "cleaned" / "beijing_cleaned.csv")
+    return _load_csv(DATA_PATH / "cleaned" / "beijing_cleaned.csv")
 
 
 @st.cache_data
@@ -30,8 +50,7 @@ def load_engineered() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Feature engineered Beijing air quality data.
     """
-    return pd.read_csv(DATA_PATH / "engineered" /
-                       "beijing_engineered.csv")
+    return _load_csv(DATA_PATH / "engineered" / "beijing_engineered.csv")
 
 
 @st.cache_data
@@ -42,7 +61,7 @@ def load_station_meta() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Station metadata.
     """
-    return pd.read_csv(DATA_PATH / "metadata" / "station_metadata.csv")
+    return _load_csv(DATA_PATH / "metadata" / "station_metadata.csv")
 
 
 @st.cache_data
@@ -53,7 +72,8 @@ def load_clustered() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Clustered Beijing air quality data.
     """
-    return pd.read_csv(DATA_PATH / "derived" / "beijing_clustered.csv")
+    return _load_csv(DATA_PATH / "derived" / "beijing_clustered.csv")
+
 
 @st.cache_data
 def load_pca_coords() -> pd.DataFrame:
@@ -63,7 +83,7 @@ def load_pca_coords() -> pd.DataFrame:
     Returns:
         pd.DataFrame: PCA coordinates data.
     """
-    return pd.read_csv(DATA_PATH / "derived" / "pca_coords.csv")
+    return _load_csv(DATA_PATH / "derived" / "pca_coords.csv")
 
 
 @st.cache_data
@@ -74,7 +94,7 @@ def load_silhouette_values() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Silhouette values data.
     """
-    return pd.read_csv(DATA_PATH / "derived" / "silhouette_values.csv")
+    return _load_csv(DATA_PATH / "derived" / "silhouette_values.csv")
 
 
 @st.cache_data
@@ -100,3 +120,26 @@ def load_cluster_profiles() -> dict:
         except (ValueError, TypeError):
             normalised[k] = v
     return normalised
+
+
+@st.cache_data
+def load_feature_importance() -> pd.DataFrame:
+    """
+    Load feature importance data.
+
+    Returns:
+        pd.DataFrame: Feature importance data.
+    """
+    return _load_csv(DATA_PATH / "model_outputs" / "feature_importance.csv")
+
+
+@st.cache_data
+def load_hyperparameter_results() -> pd.DataFrame:
+    """
+    Load hyperparameter tuning results.
+
+    Returns:
+        pd.DataFrame: Hyperparameter tuning results.
+    """
+    return _load_csv(DATA_PATH / "model_outputs" /
+                     "hyperparameter_results.csv")

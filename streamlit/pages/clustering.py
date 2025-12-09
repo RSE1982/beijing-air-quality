@@ -2,9 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import yaml
-from pathlib import Path
-from utils.load_data import load_clustered, load_pca_coords, load_silhouette_values, load_cluster_profiles
+from utils.load_data import load_clustered, load_pca_coords
+from utils.load_data import load_silhouette_values, load_cluster_profiles
 
 
 df_clusters = load_clustered()
@@ -33,7 +32,8 @@ numeric_features = [
 # ==============================
 # Helper: Radar chart
 # ==============================
-def make_cluster_radar(df: pd.DataFrame, cluster_id: int, features: list[str]) -> go.Figure:
+def make_cluster_radar(df: pd.DataFrame, cluster_id: int,
+                       features: list[str]) -> go.Figure:
     """
     Creates a normalised radar chart for a given cluster.
     Normalisation is done over cluster-level means for each feature.
@@ -84,7 +84,8 @@ with st.sidebar:
         "Select a cluster:",
         options=cluster_ids,
         index=0,
-        format_func=lambda c: f"Cluster {c} — {cluster_profiles.get(c, {}).get('name', 'Unlabelled')}",
+        format_func=lambda c: f"Cluster {c} — {cluster_profiles.get(c, {})
+                                               .get('name', 'Unlabelled')}",
     )
 
     profile = cluster_profiles.get(selected_cluster, {})
@@ -100,7 +101,8 @@ with st.sidebar:
 
     st.markdown("---")
     st.caption(
-        "Profiles are derived from cluster-level means of PM2.5 and key meteorological features."
+        "Profiles are derived from cluster-level means of PM2.5 and key\
+              meteorological features."
     )
 
 
@@ -202,7 +204,8 @@ if not numeric_features:
     st.warning("No suitable numeric features found for radar charts.")
 else:
     st.caption(
-        "Features are normalised across cluster-level means to allow comparison on a common 0–1 scale."
+        "Features are normalised across cluster-level means to allow\
+              comparison on a common 0–1 scale."
     )
 
     radar_features = st.multiselect(
@@ -212,7 +215,8 @@ else:
     )
 
     if radar_features:
-        radar_fig = make_cluster_radar(df_clusters, selected_cluster, radar_features)
+        radar_fig = make_cluster_radar(df_clusters, selected_cluster,
+                                       radar_features)
         st.plotly_chart(radar_fig, use_container_width=True)
     else:
         st.info("Select at least one feature to display the radar chart.")
@@ -258,7 +262,8 @@ yticks = []
 ytick_labels = []
 
 for cluster in clusters:
-    cluster_values = df_sil_sorted[df_sil_sorted["cluster"] == cluster]["silhouette"]
+    cluster_values = df_sil_sorted[df_sil_sorted["cluster"]
+                                   == cluster]["silhouette"]
     n_points = len(cluster_values)
 
     # Highlight if selected in sidebar

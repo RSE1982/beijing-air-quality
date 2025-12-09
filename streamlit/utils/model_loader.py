@@ -5,6 +5,7 @@ Utility functions to load machine learning models with caching.
 from pathlib import Path
 import joblib
 import streamlit as st
+import json
 
 
 ROOT = Path(__file__).parent.parent.parent
@@ -12,7 +13,7 @@ MODEL_PATH = ROOT / "models"
 
 
 @st.cache_resource
-def load_xgboost_model():
+def load_best_model():
     """Load the XGBoost regression model used in the analysis."""
     with open(MODEL_PATH / "best_regression_model.joblib", "rb") as f:
         return joblib.load(f)
@@ -44,3 +45,11 @@ def load_lag_model():
     """Load a lag-based model for time series forecasting."""
     with open(MODEL_PATH / "rf_lag_model.joblib", "rb") as f:
         return joblib.load(f)
+
+
+@st.cache_resource
+def load_metadata():
+    """Load regression metadata."""
+    metadata_path = MODEL_PATH / "regression_metadata.json"
+    with open(metadata_path, "r") as f:
+        return json.load(f)
