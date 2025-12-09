@@ -53,3 +53,18 @@ def load_metadata():
     metadata_path = MODEL_PATH / "regression_metadata.json"
     with open(metadata_path, "r") as f:
         return json.load(f)
+
+
+@st.cache_resource
+def load_encoders():
+    """Load categorical encoders used in the models."""
+    season_dtype = joblib.load(MODEL_PATH / "season_dtype.joblib")
+    area_dtype = joblib.load(MODEL_PATH / "area_dtype.joblib")
+    station_dtype = joblib.load(MODEL_PATH / "station_dtype.joblib")
+    return season_dtype, area_dtype, station_dtype
+
+@st.cache_resource
+def load_feature_names():
+    """Load feature names used in the models."""
+    features = joblib.load(MODEL_PATH / "forecasting_feature_names.joblib")
+    return features

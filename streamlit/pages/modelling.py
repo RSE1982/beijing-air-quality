@@ -1,5 +1,4 @@
 import streamlit as st
-import numpy as np
 import plotly.express as px
 from utils.model_loader import load_best_model, load_metadata
 from utils.load_data import (load_feature_importance,
