@@ -68,7 +68,7 @@ with col2:
             color="pm25",
             size="pm25",
             hover_name="station",
-            mapbox_style="carto-positron",
+            mapbox_style="open-street-map",  # more mobile-friendly
             zoom=8,
             title="Average PM2.5 by Station",
             height=500,
