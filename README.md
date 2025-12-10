@@ -67,15 +67,25 @@ Licensed under CC BY 4.0.
 Full licence text: [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
 
 
-### Data Collection, Cleaning & Storage
+## 🧹 Data Collection, Cleaning & Storage
 
-- Raw hourly station data sourced from UCI/Kaggle
-- Cleaned using robust handling of missing/outlier values
-- Engineered using meteorological & temporal features
-- Stored exclusively as CSV to ensure:
-  - Cross-platform compatibility
-  - Streamlit stability
-  - Transparent marking and assessment
+Following extensive testing, all final datasets are stored exclusively in CSV format because:
+
+- Streamlit Cloud has inconsistent support for Parquet
+- CSV files guarantee compatibility across environments
+- They are transparent and easy for assessors to inspect
+- They avoid dependency issues in the dashboard
+
+### Workflow Summary
+
+- Raw data loaded from 12 station CSVs
+- Cleaned with robust missing value and outlier handling
+- Engineered features added:
+  - Lag features (1h, 6h, 12h, 24h)
+  - Rolling windows (3h, 12h, 24h)
+  - Cyclical encodings
+  - Relative Humidity, Dewpoint spread, interaction terms
+- Metadata generated at each stage
 
 ## Methodology Summary
 The project uses observational environmental data.
