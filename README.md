@@ -87,16 +87,46 @@ Following extensive testing, all final datasets are stored exclusively in CSV fo
   - Relative Humidity, Dewpoint spread, interaction terms
 - Metadata generated at each stage
 
-## Methodology Summary
-The project uses observational environmental data.
-The methodology design consists of:
+## 🧪 Methodology Summary
 
-- Descriptive analytics → EDA, distribution analysis
-- Inferential analytics → Hypothesis testing
-- Predictive analytics → ML models
-- Unsupervised learning → Clustering of stations
-- Feature engineering → Time-based encodings, lags, interactions
-- Interactive storytelling → Streamlit dashboard
+This project uses observational environmental data and a complete analytical workflow:
+
+### 🟥 Descriptive Analytics
+
+- Distributions
+- Seasonal averages
+- Temporal patterns
+
+### 🟧 Inferential Analytics
+
+- ANOVA
+- t-tests
+- Correlation analysis
+
+### 🟨 Predictive Analytics
+
+- Linear Regression
+- Random Forest
+- XGBoost
+- Model comparison (MAE, RMSE, R²)
+
+### 🟩 Unsupervised Learning
+
+- KMeans clustering
+- PCA for dimensionality reduction
+- Silhouette analysis
+
+### 🟦 Feature Engineering
+
+- Lags, rolling windows
+- Cyclical time features
+- Derived meteorological interactions
+- Spatial metadata
+
+### 🟪 Interactive Storytelling
+
+- Multi-page Streamlit dashboard
+- Tooltips, explanations, statistical summaries
 
 ## Business Requirements
 
