@@ -12,6 +12,27 @@
 
 ---
 
+## 🧭 CRISP-DM Overview
+
+This project follows the CRISP-DM analytical lifecycle:
+
+1. Business Understanding:\
+  Explore air quality behaviour to support public health insights.
+2. Data Understanding:\
+  Examine pollutants, meteorological drivers, and spatial variation across Beijing.
+3. Data Preparation:\
+  Clean, merge, and engineer features (rolling windows, lags, cyclical encodings).
+4. Modelling:
+    - Baseline forecasting using cleaned data
+    - Lag-based forecasting using engineered features
+    - Clustering for spatial pattern discovery
+5. Evaluation:
+    - Hypothesis testing
+    - Silhouette analysis for clustering
+    - Model metrics (MAE, RMSE, R²)
+6. Deployment:\
+  Multi-page Streamlit dashboard communicating findings interactively.
+
 ## Dataset Content
 
 This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Song Chen (2017) and hosted on the UCI Machine Learning Repository, with a verified Kaggle mirror.
@@ -30,6 +51,7 @@ The original source includes some early 2017 data, but these records were remove
 The final engineered dataset is stored in Parquet format to comply with GitHub’s 100 MB repository limit while maintaining efficient compression and fast loading.
 
 ### Data Licensing (CC BY 4.0)
+
 The Beijing Multi-Site Air Quality Dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
 
 This licence allows sharing and adaptation for any purpose — as long as appropriate attribution is provided.
@@ -43,6 +65,27 @@ Mirrored on Kaggle by Manu Siddhartha.\
 Licensed under CC BY 4.0.
 
 More information: https://creativecommons.org/licenses/by/4.0/
+
+### Data Collection, Cleaning & Storage
+
+- Raw hourly station data sourced from UCI/Kaggle
+- Cleaned using robust handling of missing/outlier values
+- Engineered using meteorological & temporal features
+- Stored exclusively as CSV to ensure:
+  - Cross-platform compatibility
+  - Streamlit stability
+  - Transparent marking and assessment
+
+## Methodology Summary
+The project uses observational environmental data.
+The methodology design consists of:
+
+- Descriptive analytics → EDA, distribution analysis
+- Inferential analytics → Hypothesis testing
+- Predictive analytics → ML models
+- Unsupervised learning → Clustering of stations
+- Feature engineering → Time-based encodings, lags, interactions
+- Interactive storytelling → Streamlit dashboard
 
 ## Business Requirements
 
@@ -165,7 +208,7 @@ Features engineered include:
 - Saved as **Parquet** due to GitHub’s 100 MB file limit  
 - Metadata generated for the engineered dataset  
 
-### 5. Hypothesis Testing (H1–H4)
+### 🔍 Hypotheses & Validation Methods
 
 Hypotheses are tested **after Feature Engineering**, because several require engineered variables (season, spatial metadata, cyclical encodings, derived weather features).
 
@@ -184,8 +227,6 @@ Hypotheses are tested **after Feature Engineering**, because several require eng
 #### H4 — Temporal structure explains PM2.5 variation
 
 - Uses engineered cyclical hour/month encodings and lag correlations.
-
-### 6. Modelling
 
 #### H5 — Lag features improve model performance
 
@@ -208,7 +249,6 @@ Hypotheses are tested **after Feature Engineering**, because several require eng
 - Performance comparison against baseline  
 - Feature importances ranked  
 
----
 
 ### 7. Dashboard Development
 
@@ -232,7 +272,7 @@ Hypotheses are tested **after Feature Engineering**, because several require eng
 - Deployment instructions  
 - Final README and dashboard guide
 
-## The Rationale to Map the Business Requirements to the Data Visualisations
+## 🗺 Mapping Business Requirements to Visualisations
 
 The dashboard and supporting notebooks were designed so that **each business requirement** is clearly addressed by one or more specific visualisations. This ensures that insights are not only computed, but also communicated in a way that is accessible to both technical and non-technical users.
 
@@ -245,7 +285,7 @@ The dashboard and supporting notebooks were designed so that **each business req
 | **BR5 – Provide short-term PM2.5 forecasts for selected stations** | Forecast line charts showing future PM2.5, with historical context, on the “Forecasting” page; station selector widget | Overlaying recent history with model forecast allows users to see both where the model is coming from and where it predicts levels are heading. Station filters allow localised insights. This addresses the practical decision-support side of the project by turning model outputs into actionable, station-specific information. |
 | **BR6 – Communicate data quality, coverage and limitations** | Summary tables/figures on record counts, missing data patterns (in notebooks), brief data quality notes on the “Home” or “About” dashboard section | Simple tables and high-level charts summarising data availability, along with short narrative notes, help users understand where the data is strong and where it is limited. This supports honest communication of uncertainty and reinforces the ethical considerations of the project. |
 
-## Analysis techniques used
+## 🧰 Analysis Techniques Used
 
 ### Exploratory Data Analysis (EDA)
 
@@ -277,30 +317,49 @@ The dashboard and supporting notebooks were designed so that **each business req
 - PM2.5 spikes are difficult to predict linearly → tree models perform better
 - Seasonal effects not explicitly encoded in raw data → added manually
 
-### Use of Generative AI Tools
+### 🧠 Use of Generative AI Tools
 
-- Ideation for feature engineering strategies
-- Optimising notebook structure and explanations
-- Assisting with Streamlit layout
-- Auto-generating metadata templates and documentation
+AI-assisted tools were used for:
 
-## Ethical considerations
+- Code suggestions (GitHub Copilot)
+- Summarising exploratory insights (ChatGPT)
+- Grammar and readability improvements (Grammarly)
+- Generating station metadata (ChatGPT)
+- Drafting documentation sections (ChatGPT)
 
-- Dataset is licensed under CC BY 4.0; attribution maintained throughout
-- No personal or sensitive data is included
-- Weather and pollution readings pose no privacy risk
-- Machine learning models used purely for environmental insight
-- Dashboard avoids alarmist or misleading conclusions
+All analytical decisions and implementation remain human-led.
 
-## Dashboard Design
+## ⚖️ Ethical, Legal & Social Considerations
 
-to be added
+This project considers several ethical and social factors:
 
-## Unfixed Bugs
+### Legal
 
-to be added
+- Dataset is openly licensed under CC BY 4.0 — attribution fully maintained
+- No personal data, IDs, or sensitive attributes appear, making project GDPR compliant
 
-## Deployment
+### Ethical
+
+- Forecasts are used only for academic and informational purposes
+- Care is taken not to present predictions as official air-quality warnings
+- Dashboard avoids sensational language or claims
+
+### Social Implications
+
+- Air pollution disproportionately affects vulnerable groups
+- High pollution alerts must be communicated responsibly
+- Insights are framed to inform, not to alarm, the public
+- Spatial clustering highlights neighbourhood-level disparities that may inform policy discussions
+
+## 🖥 Dashboard Design
+
+
+## 🐞 Unfixed Bugs
+
+- Some mobile plots may overflow the screen
+- Large datasets may cause slow initial load
+
+## 🚀 Deployment
 
 ### Streamlit Cloud
 
@@ -328,7 +387,29 @@ App Link: [rse1982-beijing-air-quality.streamlit.app](https://rse1982-beijing-ai
 | PyYAML               | Metadata generation            |
 | Streamlit            | Dashboard application          |
 
-## Credits
+## 🔚 Conclusion
+This project demonstrates that Beijing’s PM2.5 levels show:
+
+- Strong and consistent seasonal patterns, with winter pollution significantly higher
+
+- Clear spatial variation, reflecting urban density and geography
+
+- Meaningful relationships with meteorological variables, such as temperature inversions and low wind conditions
+
+- Predictability through machine learning, where lag-based models outperform baseline models
+
+- The dashboard transforms complex analysis into clear, interactive insights suitable for both technical and non-technical audiences.
+
+## 🔮 Future Work & Learning Roadmap
+
+- Incorporate deep learning models (LSTM, TFT)
+- Build automated retraining pipelines
+- Add real-time data ingestion
+- Evaluate SHAP values for model interpretability
+- Extend dashboard to include forecasting alerts
+- Deploy models using FastAPI or AWS Lambda
+
+## 🙏 Credits & Acknowledgements
 
 ### Content
 
