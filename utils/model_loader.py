@@ -8,7 +8,7 @@ import streamlit as st
 import json
 
 
-ROOT = Path(__file__).parent.parent.parent
+ROOT = Path(__file__).parent.parent
 MODEL_PATH = ROOT / "models"
 
 

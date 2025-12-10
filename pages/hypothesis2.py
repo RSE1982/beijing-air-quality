@@ -5,11 +5,11 @@ stations in Beijing using average PM2.5 levels and a map visualization.
 """
 
 import streamlit as st
-from utils.data_loader import load_cleaned, load_station_meta
+from utils.data_loader import load_engineered, load_station_meta
 from utils.charts import spatial_boxplot
 import plotly.express as px
 
-df = load_cleaned()
+df = load_engineered()
 meta = load_station_meta()
 
 col1, col2 = st.columns([1, 3])

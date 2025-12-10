@@ -4,11 +4,11 @@ This page examines the temporal dependence in PM2.5 levels in Beijing.
 """
 
 import streamlit as st
-from utils.data_loader import load_cleaned
+from utils.data_loader import load_engineered
 import plotly.express as px
 
 
-df = load_cleaned()
+df = load_engineered()
 
 col1, col2 = st.columns([1, 3])
 with col1:

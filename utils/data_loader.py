@@ -32,17 +32,6 @@ def _load_csv(path: Path) -> pd.DataFrame:
 
 
 @st.cache_data
-def load_cleaned() -> pd.DataFrame:
-    """
-    Load cleaned Beijing air quality data.
-
-    Returns:
-        pd.DataFrame: Cleaned Beijing air quality data.
-    """
-    return _load_csv(DATA_PATH / "cleaned" / "beijing_cleaned.csv")
-
-
-@st.cache_data
 def load_engineered() -> pd.DataFrame:
     """
     Load feature engineered Beijing air quality data.

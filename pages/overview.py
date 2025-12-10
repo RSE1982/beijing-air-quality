@@ -1,7 +1,7 @@
 """Overview page for the Beijing Clean Air Dashboard."""
 
 import streamlit as st
-from utils.data_loader import load_cleaned, load_station_meta
+from utils.data_loader import load_engineered, load_station_meta
 from utils.charts import seasonal_boxplot, monthly_trend, spatial_boxplot
 import plotly.express as px
 
@@ -27,7 +27,7 @@ with col1:
     """)
 with col2:
     # ------------------------- Load Data -------------------------
-    df = load_cleaned()
+    df = load_engineered()
     meta = load_station_meta()
 
     # ------------------------- KPI Metrics -------------------------
