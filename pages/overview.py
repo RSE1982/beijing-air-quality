@@ -1,7 +1,7 @@
 """Overview page for the Beijing Clean Air Dashboard."""
 
 import streamlit as st
-from utils.load_data import load_cleaned, load_station_meta
+from utils.data_loader import load_cleaned, load_station_meta
 from utils.charts import seasonal_boxplot, monthly_trend, spatial_boxplot
 import plotly.express as px
 

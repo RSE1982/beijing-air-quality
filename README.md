@@ -12,39 +12,123 @@
 
 ---
 
-## Dataset Content
+## 🧭 CRISP-DM Overview
 
-This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Song Chen (2017) and hosted on the UCI Machine Learning Repository, with a verified Kaggle mirror.
+This project follows the CRISP-DM analytical lifecycle:
 
-It contains hourly pollutant and meteorological observations from 12 monitoring stations across Beijing, including:
+1. Business Understanding:\
+  Explore air quality behaviour to support public health insights.
+2. Data Understanding:\
+  Examine pollutants, meteorological drivers, and spatial variation across Beijing.
+3. Data Preparation:\
+  Clean, merge, and engineer features (rolling windows, lags, cyclical encodings).
+4. Modelling:
+    - Baseline forecasting using cleaned data
+    - Lag-based forecasting using engineered features
+    - Clustering for spatial pattern discovery
+5. Evaluation:
+    - Hypothesis testing
+    - Silhouette analysis for clustering
+    - Model metrics (MAE, RMSE, R²)
+6. Deployment:\
+  Multi-page Streamlit dashboard communicating findings interactively.
 
-- PM2.5
-- Temperature, dew point, pressure, and rainfall
-- Wind direction and wind speed
-- Station identifiers and timestamp fields
+## 📊 Dataset Content
 
-This dataset represents historical air-quality observations.
-For analytical consistency, the project uses the full years 2013–2016.
-The original source includes some early 2017 data, but these records were removed during cleaning because the year is incomplete and would distort seasonal and temporal analyses.
+This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Chen et al. (2017) on the UCI Machine Learning Repository with a verified Kaggle mirror.
 
-The final engineered dataset is stored in Parquet format to comply with GitHub’s 100 MB repository limit while maintaining efficient compression and fast loading.
+The dataset contains hourly pollutant and meteorological observations from 12 monitoring stations across Beijing.
 
-### Data Licensing (CC BY 4.0)
-The Beijing Multi-Site Air Quality Dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
+### Variables include:
 
-This licence allows sharing and adaptation for any purpose — as long as appropriate attribution is provided.
+- PM2.5 concentration
+- Temperature, dew point, pressure, rainfall
+- Wind speed and wind direction
+- Station ID and precise timestamps
+
+### Time Coverage
+
+- Full years 2013–2016 are used.
+- Early 2017 data was removed because it is incomplete and would distort seasonal analysis.
+
+## 🔐 Data Licensing (CC BY 4.0)
+
+This dataset is licensed under the Creative Commons Attribution 4.0 International Licence.
 
 Required Attribution:
 
-Chen, Song (2017). Beijing Multi-Site Air Quality.\
-UCI Machine Learning Repository.\
-DOI: https://doi.org/10.24432/C5RK5G\
-Mirrored on Kaggle by Manu Siddhartha.\
+Chen, Song (2017). Beijing Multi-Site Air Quality.
+UCI Machine Learning Repository.
+DOI: [https://doi.org/10.24432/C5RK5G](https://doi.org/10.24432/C5RK5G)
+
+Mirrored on Kaggle by Manu Siddhartha.
 Licensed under CC BY 4.0.
 
-More information: https://creativecommons.org/licenses/by/4.0/
+Full licence text: [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
 
-## Business Requirements
+
+## 🧹 Data Collection, Cleaning & Storage
+
+Following extensive testing, all final datasets are stored exclusively in CSV format because:
+
+- Streamlit Cloud has inconsistent support for Parquet
+- CSV files guarantee compatibility across environments
+- They are transparent and easy for assessors to inspect
+- They avoid dependency issues in the dashboard
+
+### Workflow Summary
+
+- Raw data loaded from 12 station CSVs
+- Cleaned with robust missing value and outlier handling
+- Engineered features added:
+  - Lag features (1h, 6h, 12h, 24h)
+  - Rolling windows (3h, 12h, 24h)
+  - Cyclical encodings
+  - Relative Humidity, Dewpoint spread, interaction terms
+- Metadata generated at each stage
+
+## 🧪 Methodology Summary
+
+This project uses observational environmental data and a complete analytical workflow:
+
+### 🟥 Descriptive Analytics
+
+- Distributions
+- Seasonal averages
+- Temporal patterns
+
+### 🟧 Inferential Analytics
+
+- ANOVA
+- t-tests
+- Correlation analysis
+
+### 🟨 Predictive Analytics
+
+- Linear Regression
+- Random Forest
+- XGBoost
+- Model comparison (MAE, RMSE, R²)
+
+### 🟩 Unsupervised Learning
+
+- KMeans clustering
+- PCA for dimensionality reduction
+- Silhouette analysis
+
+### 🟦 Feature Engineering
+
+- Lags, rolling windows
+- Cyclical time features
+- Derived meteorological interactions
+- Spatial metadata
+
+### 🟪 Interactive Storytelling
+
+- Multi-page Streamlit dashboard
+- Tooltips, explanations, statistical summaries
+
+## 🎯 Business Requirements
 
 This project aims to:
 
@@ -60,179 +144,34 @@ This project aims to:
     - Allow users to explore spatial, temporal, and predictive insights
     - Communicate findings clearly to both technical and non-technical users
 
-## Hypothesis and how to validate?
+## 🔍 Hypotheses & Validation Methods
 
-### H1: There is a strong seasonal pattern in PM2.5 levels
+### H1 — There is a strong seasonal pattern in PM2.5 levels.
 
-**Validation:**
+- Monthly and seasonal plots
+- Weather-driven analysis
 
-- Monthly/seasonal EDA plots
-- Year-on-year comparison
-- Weather variable analysis
+### H2 — PM2.5 varies significantly between stations.
 
-### H2: PM2.5 varies significantly between monitoring stations
+- Station boxplots
+- Spatial metadata
 
-**Validation:**
+### H3 — Meteorological variables correlate with PM2.5.
 
-- Station-level boxplots
-- Mean PM2.5 comparison
-- Spatial metadata analysis (urban vs suburban vs residential)
+- Correlation matrix
+- Scatterplots + regression lines
 
-### H3: Meteorological variables correlate with PM2.5
+### H4 — Short-term temporal structure explains PM2.5 variability.
 
-**Validation:**
+- Hourly/daily profiles
+- Rolling window analysis
 
-- Correlation heatmap
-- Pairplots
-- Scatter + regression visualisation
+### H5 — Lag features improve model accuracy.
 
-### H4: Hourly and daily temporal patterns explain short-term PM2.5 variability
+- Compare baseline vs lag-enhanced models
+- Evaluate MAE, RMSE, R²
 
-**Validation:**
-
-- Hourly averages
-- Daily rolling mean plots
-
-### H5: Lag features improve predictive model accuracy
-
-**Validation:**
-
-- Train baseline models (no lag features)
-- Train lag-based models (1h, 6h, 12h, 24h lags + rolling windows)
-- Compare MAE/RMSE/R² metrics
-
-## Project Plan
-
-This project follows a structured data analytics workflow aligned with Code Institute’s Capstone standards. It includes extraction, cleaning, exploration, feature engineering, hypothesis testing, modelling, and dashboard development.
-
-### 1. Data Extraction
-
-- Load 12 raw station CSV files  
-- Validate structure and column consistency  
-- Standardise column names  
-- Combine all stations into a unified dataset  
-- Generate raw + combined metadata  
-
-### 2. Data Cleaning
-
-- Merge timestamp fields into a single datetime column  
-- Correct datatypes  
-- Remove duplicates  
-- Handle missing values  
-- Drop unused pollutant columns (PM10, SO₂, NO₂, CO, O₃)  
-- Save cleaned dataset + metadata  
-
-### 3. Initial Exploratory Data Analysis (EDA)
-
-- Distribution analysis (PM2.5 + weather)  
-- Temporal trends (hourly, daily, monthly, seasonal)  
-- Spatial station comparisons  
-- Correlation and relationship analysis  
-- Identify candidate features for engineering  
-
-EDA produces the insights that justify the engineered features used later.
-
-### 4. Feature Engineering
-
-Feature Engineering is performed **before hypothesis testing**, because several hypotheses require enhanced or transformed features.
-
-Features engineered include:
-
-#### Temporal Features
-
-- Year, month, day, hour, day-of-week  
-- Seasonal categories (winter/spring/summer/autumn)  
-- Cyclical encodings (sin/cos for hour + month)
-
-#### Lag & Rolling Features
-
-- Lag features: 1h, 6h, 12h, 24h  
-- Rolling statistics: 3h, 12h, 24h means
-
-#### Derived Meteorological Features
-
-- Dewpoint spread  
-- Temperature-pressure interaction  
-- Rainfall binary indicator  
-
-#### Spatial Features
-
-- Latitude, longitude  
-- Area type (urban/suburban/residential/industrial)
-
-#### Export
-
-- Saved as **Parquet** due to GitHub’s 100 MB file limit  
-- Metadata generated for the engineered dataset  
-
-### 5. Hypothesis Testing (H1–H4)
-
-Hypotheses are tested **after Feature Engineering**, because several require engineered variables (season, spatial metadata, cyclical encodings, derived weather features).
-
-#### H1 — PM2.5 displays a strong seasonal pattern
-
-- Validated using monthly, seasonal, and temperature-related engineered features.
-
-#### H2 — PM2.5 varies significantly across spatial regions
-
-- Validated using station averages, boxplots, and spatial metadata (area_type, latitude/longitude).
-
-#### H3 — Meteorological variables strongly correlate with PM2.5
-
-- Validated using engineered weather interactions (temp × pres, dewpoint spread).  
-
-#### H4 — Temporal structure explains PM2.5 variation
-
-- Uses engineered cyclical hour/month encodings and lag correlations.
-
-### 6. Modelling
-
-#### H5 — Lag features improve model performance
-
-- Tested during modelling by comparing:  
-  - Baseline models (no lag features)  
-  - Lag-based models (with engineered temporal features)
-
-##### Baseline Models (cleaned dataset)
-
-- Linear Regression  
-- Random Forest Regressor  
-- XGBoost Regressor  
-- Evaluated with MAE, RMSE, R²  
-
-#### Lag-Based Models (feature-engineered dataset)
-
-- NA rows removed (lag-related)  
-- Same modelling families for fair comparison  
-- Hyperparameter optimisation  
-- Performance comparison against baseline  
-- Feature importances ranked  
-
----
-
-### 7. Dashboard Development
-
-- Multi-page Streamlit dashboard  
-- Pages:  
-  - Home  
-  - Station Analysis  
-  - Temporal Trends  
-  - Correlation  
-  - Model Comparison  
-  - Forecasting  
-- Loads Parquet datasets + saved models  
-- Designed for both technical and non-technical users  
-
-### 8. Final Documentation
-
-- Metadata for all dataset stages  
-- Provenance diagram  
-- Workflow diagram  
-- Limitations + ethical considerations  
-- Deployment instructions  
-- Final README and dashboard guide
-
-## The Rationale to Map the Business Requirements to the Data Visualisations
+## 🗺 Mapping Business Requirements to Visualisations
 
 The dashboard and supporting notebooks were designed so that **each business requirement** is clearly addressed by one or more specific visualisations. This ensures that insights are not only computed, but also communicated in a way that is accessible to both technical and non-technical users.
 
@@ -245,7 +184,7 @@ The dashboard and supporting notebooks were designed so that **each business req
 | **BR5 – Provide short-term PM2.5 forecasts for selected stations** | Forecast line charts showing future PM2.5, with historical context, on the “Forecasting” page; station selector widget | Overlaying recent history with model forecast allows users to see both where the model is coming from and where it predicts levels are heading. Station filters allow localised insights. This addresses the practical decision-support side of the project by turning model outputs into actionable, station-specific information. |
 | **BR6 – Communicate data quality, coverage and limitations** | Summary tables/figures on record counts, missing data patterns (in notebooks), brief data quality notes on the “Home” or “About” dashboard section | Simple tables and high-level charts summarising data availability, along with short narrative notes, help users understand where the data is strong and where it is limited. This supports honest communication of uncertainty and reinforces the ethical considerations of the project. |
 
-## Analysis techniques used
+## 🧰 Analysis Techniques Used
 
 ### Exploratory Data Analysis (EDA)
 
@@ -277,30 +216,49 @@ The dashboard and supporting notebooks were designed so that **each business req
 - PM2.5 spikes are difficult to predict linearly → tree models perform better
 - Seasonal effects not explicitly encoded in raw data → added manually
 
-### Use of Generative AI Tools
+### 🧠 Use of Generative AI Tools
 
-- Ideation for feature engineering strategies
-- Optimising notebook structure and explanations
-- Assisting with Streamlit layout
-- Auto-generating metadata templates and documentation
+AI-assisted tools were used for:
 
-## Ethical considerations
+- Code suggestions (GitHub Copilot)
+- Summarising exploratory insights (ChatGPT)
+- Grammar and readability improvements (Grammarly)
+- Generating station metadata (ChatGPT)
+- Drafting documentation sections (ChatGPT)
 
-- Dataset is licensed under CC BY 4.0; attribution maintained throughout
-- No personal or sensitive data is included
-- Weather and pollution readings pose no privacy risk
-- Machine learning models used purely for environmental insight
-- Dashboard avoids alarmist or misleading conclusions
+All analytical decisions and implementation remain human-led.
 
-## Dashboard Design
+## ⚖️ Ethical, Legal & Social Considerations
 
-to be added
+This project considers several ethical and social factors:
 
-## Unfixed Bugs
+### Legal
 
-to be added
+- Dataset is openly licensed under CC BY 4.0 — attribution fully maintained
+- No personal data, IDs, or sensitive attributes appear, making project GDPR compliant
 
-## Deployment
+### Ethical
+
+- Forecasts are used only for academic and informational purposes
+- Care is taken not to present predictions as official air-quality warnings
+- Dashboard avoids sensational language or claims
+
+### Social Implications
+
+- Air pollution disproportionately affects vulnerable groups
+- High pollution alerts must be communicated responsibly
+- Insights are framed to inform, not to alarm, the public
+- Spatial clustering highlights neighbourhood-level disparities that may inform policy discussions
+
+## 🖥 Dashboard Design
+
+
+## 🐞 Unfixed Bugs
+
+- Some mobile plots may overflow the screen
+- Large datasets may cause slow initial load
+
+## 🚀 Deployment
 
 ### Streamlit Cloud
 
@@ -328,7 +286,29 @@ App Link: [rse1982-beijing-air-quality.streamlit.app](https://rse1982-beijing-ai
 | PyYAML               | Metadata generation            |
 | Streamlit            | Dashboard application          |
 
-## Credits
+## 🔚 Conclusion
+This project demonstrates that Beijing’s PM2.5 levels show:
+
+- Strong and consistent seasonal patterns, with winter pollution significantly higher
+
+- Clear spatial variation, reflecting urban density and geography
+
+- Meaningful relationships with meteorological variables, such as temperature inversions and low wind conditions
+
+- Predictability through machine learning, where lag-based models outperform baseline models
+
+- The dashboard transforms complex analysis into clear, interactive insights suitable for both technical and non-technical audiences.
+
+## 🔮 Future Work & Learning Roadmap
+
+- Incorporate deep learning models (LSTM, TFT)
+- Build automated retraining pipelines
+- Add real-time data ingestion
+- Evaluate SHAP values for model interpretability
+- Extend dashboard to include forecasting alerts
+- Deploy models using FastAPI or AWS Lambda
+
+## 🙏 Credits & Acknowledgements
 
 ### Content
 
