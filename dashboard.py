@@ -61,5 +61,11 @@ current_page = nav.title
 
 # ---------------- Sidebar (filters) ----------------
 
+st.sidebar.caption("""
+    © 2025 Robert Steven Elliott\\
+    Beijing Air Quality Capstone\\
+    Dataset © Song Chen (2017),
+    licensed under CC BY 4.0
+""")
 # Run the navigation
 nav.run()
