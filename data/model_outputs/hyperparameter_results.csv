@@ -1,17 +1,17 @@
 Model,Best Params,MAE,RMSE,R2,Estimator
-LinearRegression,{'fit_intercept': False},9.687843885237235,16.03788330034357,0.943241555682161,LinearRegression(fit_intercept=False)
+LinearRegression,{'fit_intercept': False},9.687846065430245,16.037886801401815,0.9432415309015041,LinearRegression(fit_intercept=False)
 DecisionTree,"{'max_depth': 5, 'min_samples_split': 2}",9.852349733954897,16.78954111524738,0.9377966122448064,"DecisionTreeRegressor(max_depth=5, random_state=42)"
 RandomForest,"{'max_depth': 20, 'max_features': 'sqrt', 'n_estimators': 50}",10.05771097638258,16.43194013036178,0.940418137730159,"RandomForestRegressor(max_depth=20, max_features='sqrt', n_estimators=50,
                       n_jobs=-1, random_state=42)"
-AdaBoost,"{'learning_rate': 0.5, 'n_estimators': 50}",38.535454210798655,45.8446473968602,0.5362182456530531,"AdaBoostRegressor(learning_rate=0.5, random_state=42)"
-XGBoost,"{'learning_rate': 0.05, 'max_depth': 4, 'subsample': 1.0}",9.08253536261485,15.411611309582257,0.9475877890832153,"XGBRegressor(base_score=None, booster=None, callbacks=None,
+AdaBoost,"{'learning_rate': 0.5, 'n_estimators': 50}",38.53545421079865,45.8446473968602,0.5362182456530531,"AdaBoostRegressor(learning_rate=0.5, random_state=42)"
+XGBoost,"{'learning_rate': 0.05, 'max_depth': 4, 'subsample': 0.8}",9.1057323261183,15.438962352582942,0.9474015917220203,"XGBRegressor(base_score=None, booster=None, callbacks=None,
              colsample_bylevel=None, colsample_bynode=None,
-             colsample_bytree=None, early_stopping_rounds=None,
+             colsample_bytree=None, device=None, early_stopping_rounds=None,
              enable_categorical=False, eval_metric='rmse', feature_types=None,
-             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
-             interaction_constraints=None, learning_rate=0.05, max_bin=None,
-             max_cat_threshold=None, max_cat_to_onehot=None,
-             max_delta_step=None, max_depth=4, max_leaves=None,
-             min_child_weight=None, missing=nan, monotone_constraints=None,
-             n_estimators=200, n_jobs=None, num_parallel_tree=None,
-             predictor=None, random_state=42, ...)"
+             feature_weights=None, gamma=None, grow_policy=None,
+             importance_type=None, interaction_constraints=None,
+             learning_rate=0.05, max_bin=None, max_cat_threshold=None,
+             max_cat_to_onehot=None, max_delta_step=None, max_depth=4,
+             max_leaves=None, min_child_weight=None, missing=nan,
+             monotone_constraints=None, multi_strategy=None, n_estimators=200,
+             n_jobs=None, num_parallel_tree=None, ...)"
