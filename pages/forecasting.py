@@ -2,11 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import joblib
-from pathlib import Path
 
 from utils.model_loader import load_best_model, load_encoders, load_feature_names
-from utils.load_data import load_engineered
+from utils.data_loader import load_engineered
 from utils.feature_engineering import apply_forecasting_features
 
 # ==============================================================

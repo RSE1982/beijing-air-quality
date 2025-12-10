@@ -6,7 +6,6 @@ forecasting.
 
 import pandas as pd
 
-
 def apply_forecasting_features(df: pd.DataFrame,
                                add_lags=True,
                                add_rollings=True):
