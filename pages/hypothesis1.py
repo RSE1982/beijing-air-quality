@@ -147,7 +147,8 @@ with col1:
                                      between="season",
                                      data=df,
                                      detailed=True)
-            st.dataframe(anova_results)
+            st.dataframe(anova_results, hide_index=True,
+                         use_container_width=True)
             st.markdown("""
             **What this shows:**
             A one-way ANOVA tests whether mean PM2.5 differs significantly
