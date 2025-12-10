@@ -6,3 +6,5 @@ secondaryColor="#959fdaff"
 [theme.sidebar]
 backgroundColor="#959fdaff"
 textColor="#000000"
+borderColor="#4056d1ff"
+showWidgetBorder=true

@@ -4,58 +4,171 @@ This page analyzes the seasonal variation in PM2.5 levels in Beijing.
 """
 
 import streamlit as st
-from utils.data_loader import load_cleaned
-from utils.charts import seasonal_boxplot, monthly_trend
+from utils.data_loader import load_engineered
+from utils.charts import (monthly_violin,
+                          seasonal_boxplot,
+                          monthly_trend,
+                          yearly_trend)
+import pingouin as pg
 
-col1, col2 = st.columns([1, 3])
+df = load_engineered()
+
+st.title("❄️ Hypothesis 1")
+st.latex(r"""
+         \begin{aligned}
+         H_0 &: \text{There is no significant difference in mean PM2.5 levels
+          between seasons.} \\
+         H_1 &: \text{Mean PM2.5 levels differ significantly between seasons.}
+         \end{aligned}
+         """)
+
+col1, col2 = st.columns([1, 2])
 with col1:
-    st.title("❄️ Hypothesis 1")
 
-    df = load_cleaned()
+    # -----------------------------------------------------
+    # Summary Metrics
+    # -----------------------------------------------------
+    st.subheader("Season Averages")
+    seasonal_avg = df.groupby("season")["pm25"].mean().round(1)
 
-    st.write("""
-    **PM2.5 levels show a strong seasonal pattern.**
+    st.metric("Winter avg PM2.5", f"{seasonal_avg['winter']}")
+    st.metric("Spring avg PM2.5", f"{seasonal_avg['spring']}")
+    st.metric("Summer avg PM2.5", f"{seasonal_avg['summer']}")
+    st.metric("Autumn avg PM2.5", f"{seasonal_avg['autumn']}")
 
-    This hypothesis evaluates whether pollution systematically increases or
-            decreases across the
-    four meteorological seasons in Beijing.
+    # -----------------------------------------------------
+    # Conclusion
+    # -----------------------------------------------------
+    st.success("""
+        **Conclusion:**
+        Hypothesis 1 is supported — PM2.5 levels vary strongly by season.
     """)
 
-    st.success("✔ **Conclusion:** H1 is supported — PM2.5 levels  \
-    vary strongly by season.")
-
-    st.caption("Source: Notebook 05 — Seasonal Analysis •  \
-    Dataset © Song Chen (CC BY 4.0)")
     with col2:
-        tab1, tab2, tab3 = st.tabs(["Seasonal Boxplot",
-                                    "Monthly Trend",
-                                    "Observations & Justification"])
+        tab1, tab2, tab3, tab4, tab5, = st.tabs(["Seasonal Boxplot",
+                                                 "Monthly Distribution",
+                                                 "Monthly Trend",
+                                                 "Yearly Trend",
+                                                 "ANOVA Test",])
         with tab1:
             st.subheader("📊 Seasonal PM2.5 Distribution")
-            st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
-        with tab2:
-            st.subheader("📈 Monthly PM2.5 Trend")
-            st.plotly_chart(monthly_trend(df), use_container_width=True)
-        with tab3:
-            # ------------------------- Observations -------------------------
-            st.markdown("### 📝 Observations")
-            st.markdown("""
-            - Winter (Dec–Feb) shows the **highest PM2.5 concentrations** with
-                        frequent extreme values.
-            - Summer (Jun–Aug) has the **lowest pollution**, reflecting strong
-                        atmospheric dispersion.
-            - Transitional seasons (spring/autumn) sit between these extremes.
-            - Monthly trend shows a clear U-shaped cycle across the year.
-            """)
+            graph, info = st.columns([3, 2])
+            with graph:
+                st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
+            with info:
+                st.markdown("""
+                    **What this shows:**
+                    This boxplot compares the distribution of PM2.5 values
+                    across the four seasons.
+                    Winter has the highest median and the largest spread,
+                    including more extreme pollution spikes.
+                    Summer displays the lowest concentrations with a much
+                    narrower distribution.
 
-            # ------------------------- Justification -------------------------
-            st.markdown("### 🎯 Justification")
+                    **Why it matters:**
+                    A clear ordering emerges (Winter > Autumn ≈
+                    Spring > Summer), demonstrating that PM2.5 levels vary
+                    strongly by season.
+
+                    **Key takeaway:**
+                    Season is a major driver of pollution levels, with winter
+                    pollution being consistently and significantly higher.
+                    """)
+        with tab2:
+            st.subheader("📈 Monthly PM2.5 Distribution")
+            graph, info = st.columns([3, 2])
+            with graph:
+                st.plotly_chart(monthly_violin(df), use_container_width=True)
+            with info:
+                st.markdown("""
+                    **What this shows:**
+                    The violin plot visualises the full distribution of PM2.5
+                    for each month.
+                    It reveals a **smooth seasonal cycle**, with peaks around
+                    December-January and troughs around July-August.
+
+                    **Why it matters:**
+                    Monthly patterns follow the same seasonal structure seen
+                    in the boxplot, strengthening the evidence that pollution
+                    varies systematically through the year.
+
+                    **Key takeaway:**
+                    Monthly patterns show a clear U-shaped seasonal cycle,
+                    confirming strong periodic behaviour in PM2.5.
+                    """)
+        with tab3:
+            st.subheader("📈 Monthly PM2.5 Trend")
+            graph, info = st.columns([3, 2])
+            with graph:
+                st.plotly_chart(monthly_trend(df), use_container_width=True)
+            with info:
+                st.markdown("""
+                    **What this shows:**
+                    This trend line aggregates PM2.5 by month across all years
+                    and highlights the overall monthly pattern.
+                    Pollution gradually rises through autumn, peaks sharply in
+                    winter, then falls through spring into summer.
+
+                    **Why it matters:**
+                    The smoothness of the curve confirms that the seasonal
+                    effect is not random noise but a stable, repeating pattern
+                    over multiple years.
+
+                    **Key takeaway:**
+                    PM2.5 follows a predictable seasonal rhythm, with winter
+                    peaks and summer lows.
+                    """)
+        with tab4:
+            st.subheader("📈 Yearly PM2.5 Trend")
+            graph, info = st.columns([3, 2])
+            with graph:
+                st.plotly_chart(yearly_trend(df), use_container_width=True)
+            with info:
+                st.markdown("""
+                    **What this shows:**
+                    The yearly trend chart displays long-term changes in
+                    average PM2.5 from 2013-2016.
+                    The seasonal cycle repeats each year, but the year-to-year
+                    trend shows a gradual downward shift in overall levels.
+
+                    **Why it matters:**
+                    This confirms that seasonal differences persist even when
+                    accounting for longer-term improvements in Beijing air
+                    quality policies.
+
+                    **Key takeaway:**
+                    Seasonal variation is consistent across years,
+                    demonstrating that the effect is structural rather than
+                    temporary.
+                    """)
+        with tab5:
+            st.subheader("🧪 ANOVA Test Results")
+            anova_results = pg.anova(dv="pm25",
+                                     between="season",
+                                     data=df,
+                                     detailed=True)
+            st.dataframe(anova_results, hide_index=True,
+                         use_container_width=True)
             st.markdown("""
-                        These visual patterns indicate substantial seasonal
-                        variation in air quality, driven bytemperature
-                        inversions, coal heating, wind strength, and
-                        atmospheric mixing conditions. The statistical
-                        ANOVA test performed in the notebook showed
-                        **significant differences between seasons
-                        (p < 0.001)**.
+            **What this shows:**
+            A one-way ANOVA tests whether mean PM2.5 differs significantly
+            between seasons.
+
+            **Why it matters:**
+            The test evaluates whether the visual differences seen in the
+            plots reflect a real statistical effect.
+
+            **Key takeaway:**
             """)
+            p_value = anova_results["p-unc"][0]
+            if p_value < 0.05:
+                st.markdown(f"The p-value is {p_value:.4f}, which is less than\
+                             0.05. We reject the null hypothesis and conclude\
+                             that there are significant differences in mean\
+                             PM2.5 levels between seasons.")
+            else:
+                st.markdown(f"The p-value is {p_value:.4f}, which is greater\
+                              than 0.05. We fail to reject the null hypothesis\
+                              and conclude that there are no significant\
+                              differences in mean PM2.5 levels between\
+                              seasons.")
