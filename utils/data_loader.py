@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 import yaml
 
-ROOT = Path(__file__).parent.parent.parent
+ROOT = Path(__file__).parent.parent
 DATA_PATH = ROOT / "data"
 
 
