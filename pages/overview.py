@@ -1,6 +1,7 @@
 """Overview page for the Beijing Clean Air Dashboard."""
 
 import streamlit as st
+import pandas as pd
 from utils.data_loader import load_engineered, load_station_meta
 from utils.charts import seasonal_boxplot, monthly_trend, spatial_boxplot
 import plotly.express as px
@@ -80,11 +81,12 @@ with col1:
 
 with col2:
     # ------------------------- Tabs -------------------------
-    tab1, tab2, tab3, tab4 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "🌤 Seasonal Trends",
         "Monthly Trends",
         "📍 Spatial Variation",
         "🗺 Station Map",
+        "Hypothesis Results"
     ])
 
     with tab1:
@@ -118,5 +120,42 @@ with col2:
         fig_map.update_layout(margin=dict(l=0, r=0, t=40, b=0))
 
         st.plotly_chart(fig_map, use_container_width=True)
+    with tab5:
+        st.subheader("📊 Hypothesis Results Summary")
+
+        results = [
+            ["H1",
+             "Seasonal PM2.5 patterns exist",
+             "ANOVA", "Supported",
+             "Winter levels significantly higher than summer."],
+            ["H2", 
+             "PM2.5 varies between stations",
+             "ANOVA",
+             "Supported",
+             "Urban stations show consistently higher pollution."],
+            ["H3", "Weather variables correlate with PM2.5",
+             "Correlation tests",
+             "Partially Supported", 
+             "Temperature & dew point correlate strongly; rainfall weak."],
+            ["H4",
+             "Short-term temporal structure explains PM2.5",
+             "Rolling analysis", "Supported",
+             "Strong hourly & daily autocorrelation detected."],
+            ["H5",
+             "Lag features improve modelling",
+             "Model comparison", "Supported", 
+             "Lag-based XGBoost outperforms baseline model."]]
+
+        df_results = pd.DataFrame(results,
+                                  columns=["Hypothesis",
+                                           "Statement",
+                                           "Method",
+                                           "Result",
+                                           "Interpretation"
+        ])
+
+        st.dataframe(df_results.reset_index(drop=True),
+                     hide_index=True,
+                     use_container_width=True)
 
 # ------------------------- Footer -------------------------
