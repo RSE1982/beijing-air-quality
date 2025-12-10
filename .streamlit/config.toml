@@ -1,0 +1,11 @@
+[theme]
+base="light"
+primaryColor="#006B48"
+borderColor="#006B48"
+
+
+
+[theme.sidebar]
+backgroundColor="#B7E8C5"
+textColor="#000000"
+showWidgetBorder=true
