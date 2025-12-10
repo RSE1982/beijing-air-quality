@@ -16,7 +16,7 @@ st.title("🌆 PM2.5 Forecast — All Stations")
 # Load Model + Features + Encoders
 # ==============================================================
 model = load_best_model()
-features = load_feature_names()
+features = model.feature_names_in_.tolist()
 season_dtype, area_dtype, station_dtype = load_encoders()
 
 # ==============================================================
