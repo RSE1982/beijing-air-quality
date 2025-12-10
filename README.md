@@ -128,7 +128,7 @@ This project uses observational environmental data and a complete analytical wor
 - Multi-page Streamlit dashboard
 - Tooltips, explanations, statistical summaries
 
-## Business Requirements
+## 🎯 Business Requirements
 
 This project aims to:
 
@@ -144,174 +144,32 @@ This project aims to:
     - Allow users to explore spatial, temporal, and predictive insights
     - Communicate findings clearly to both technical and non-technical users
 
-## Hypothesis and how to validate?
+## 🔍 Hypotheses & Validation Methods
 
-### H1: There is a strong seasonal pattern in PM2.5 levels
+### H1 — There is a strong seasonal pattern in PM2.5 levels.
 
-**Validation:**
+- Monthly and seasonal plots
+- Weather-driven analysis
 
-- Monthly/seasonal EDA plots
-- Year-on-year comparison
-- Weather variable analysis
+### H2 — PM2.5 varies significantly between stations.
 
-### H2: PM2.5 varies significantly between monitoring stations
+- Station boxplots
+- Spatial metadata
 
-**Validation:**
+### H3 — Meteorological variables correlate with PM2.5.
 
-- Station-level boxplots
-- Mean PM2.5 comparison
-- Spatial metadata analysis (urban vs suburban vs residential)
+- Correlation matrix
+- Scatterplots + regression lines
 
-### H3: Meteorological variables correlate with PM2.5
+### H4 — Short-term temporal structure explains PM2.5 variability.
 
-**Validation:**
+- Hourly/daily profiles
+- Rolling window analysis
 
-- Correlation heatmap
-- Pairplots
-- Scatter + regression visualisation
+### H5 — Lag features improve model accuracy.
 
-### H4: Hourly and daily temporal patterns explain short-term PM2.5 variability
-
-**Validation:**
-
-- Hourly averages
-- Daily rolling mean plots
-
-### H5: Lag features improve predictive model accuracy
-
-**Validation:**
-
-- Train baseline models (no lag features)
-- Train lag-based models (1h, 6h, 12h, 24h lags + rolling windows)
-- Compare MAE/RMSE/R² metrics
-
-## Project Plan
-
-This project follows a structured data analytics workflow aligned with Code Institute’s Capstone standards. It includes extraction, cleaning, exploration, feature engineering, hypothesis testing, modelling, and dashboard development.
-
-### 1. Data Extraction
-
-- Load 12 raw station CSV files  
-- Validate structure and column consistency  
-- Standardise column names  
-- Combine all stations into a unified dataset  
-- Generate raw + combined metadata  
-
-### 2. Data Cleaning
-
-- Merge timestamp fields into a single datetime column  
-- Correct datatypes  
-- Remove duplicates  
-- Handle missing values  
-- Drop unused pollutant columns (PM10, SO₂, NO₂, CO, O₃)  
-- Save cleaned dataset + metadata  
-
-### 3. Initial Exploratory Data Analysis (EDA)
-
-- Distribution analysis (PM2.5 + weather)  
-- Temporal trends (hourly, daily, monthly, seasonal)  
-- Spatial station comparisons  
-- Correlation and relationship analysis  
-- Identify candidate features for engineering  
-
-EDA produces the insights that justify the engineered features used later.
-
-### 4. Feature Engineering
-
-Feature Engineering is performed **before hypothesis testing**, because several hypotheses require enhanced or transformed features.
-
-Features engineered include:
-
-#### Temporal Features
-
-- Year, month, day, hour, day-of-week  
-- Seasonal categories (winter/spring/summer/autumn)  
-- Cyclical encodings (sin/cos for hour + month)
-
-#### Lag & Rolling Features
-
-- Lag features: 1h, 6h, 12h, 24h  
-- Rolling statistics: 3h, 12h, 24h means
-
-#### Derived Meteorological Features
-
-- Dewpoint spread  
-- Temperature-pressure interaction  
-- Rainfall binary indicator  
-
-#### Spatial Features
-
-- Latitude, longitude  
-- Area type (urban/suburban/residential/industrial)
-
-#### Export
-
-- Saved as **Parquet** due to GitHub’s 100 MB file limit  
-- Metadata generated for the engineered dataset  
-
-### 🔍 Hypotheses & Validation Methods
-
-Hypotheses are tested **after Feature Engineering**, because several require engineered variables (season, spatial metadata, cyclical encodings, derived weather features).
-
-#### H1 — PM2.5 displays a strong seasonal pattern
-
-- Validated using monthly, seasonal, and temperature-related engineered features.
-
-#### H2 — PM2.5 varies significantly across spatial regions
-
-- Validated using station averages, boxplots, and spatial metadata (area_type, latitude/longitude).
-
-#### H3 — Meteorological variables strongly correlate with PM2.5
-
-- Validated using engineered weather interactions (temp × pres, dewpoint spread).  
-
-#### H4 — Temporal structure explains PM2.5 variation
-
-- Uses engineered cyclical hour/month encodings and lag correlations.
-
-#### H5 — Lag features improve model performance
-
-- Tested during modelling by comparing:  
-  - Baseline models (no lag features)  
-  - Lag-based models (with engineered temporal features)
-
-##### Baseline Models (cleaned dataset)
-
-- Linear Regression  
-- Random Forest Regressor  
-- XGBoost Regressor  
-- Evaluated with MAE, RMSE, R²  
-
-#### Lag-Based Models (feature-engineered dataset)
-
-- NA rows removed (lag-related)  
-- Same modelling families for fair comparison  
-- Hyperparameter optimisation  
-- Performance comparison against baseline  
-- Feature importances ranked  
-
-
-### 7. Dashboard Development
-
-- Multi-page Streamlit dashboard  
-- Pages:  
-  - Home  
-  - Station Analysis  
-  - Temporal Trends  
-  - Correlation  
-  - Model Comparison  
-  - Forecasting  
-- Loads Parquet datasets + saved models  
-- Designed for both technical and non-technical users  
-
-### 8. Final Documentation
-
-- Metadata for all dataset stages  
-- Provenance diagram  
-- Workflow diagram  
-- Limitations + ethical considerations  
-- Deployment instructions  
-- Final README and dashboard guide
+- Compare baseline vs lag-enhanced models
+- Evaluate MAE, RMSE, R²
 
 ## 🗺 Mapping Business Requirements to Visualisations
 
