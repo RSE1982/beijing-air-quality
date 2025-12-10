@@ -33,6 +33,29 @@ This project follows the CRISP-DM analytical lifecycle:
 6. Deployment:\
   Multi-page Streamlit dashboard communicating findings interactively.
 
+## 🧪 Research Methodology Rationale
+
+The Beijing dataset is observational and non-experimental, making it suitable for an exploratory and hypothesis-driven research approach.
+Time-series methods were chosen because air quality exhibits:
+
+- Autocorrelation (recent values influence near-future values)
+- Seasonality
+- Hourly and daily cycles
+
+KMeans clustering was selected because:
+
+- It is effective for grouping stations based on continuous pollution metrics
+- PCA allows reduction of multicollinearity in meteorological features
+- It supports spatial interpretation without requiring labelled outcomes
+
+Machine learning models such as Random Forest and XGBoost were chosen due to:
+
+- Their robustness to nonlinear relationships
+- Strong performance on environmental data
+- Ability to incorporate engineered temporal features
+
+This methodological framework was selected to align with environmental modelling best practices and the project’s forecasting goals.
+
 ## 📊 Dataset Content
 
 This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Chen et al. (2017) on the UCI Machine Learning Repository with a verified Kaggle mirror.
@@ -144,6 +167,24 @@ This project aims to:
     - Allow users to explore spatial, temporal, and predictive insights
     - Communicate findings clearly to both technical and non-technical users
 
+## 🌍 Application of Data Analytics in Air Quality Management
+
+Air quality analytics plays a critical role in environmental health, enabling:
+
+- Identification of pollution hotspots
+- Understanding diurnal and seasonal pollution cycles
+- Evaluating policy impacts (e.g., vehicle restrictions, heating controls)
+- Supporting public health advisories (especially for vulnerable groups)
+- Building medium- and short-term pollution forecasts
+
+Machine learning and AI address real-world challenges such as:
+
+- Predicting harmful PM2.5 peaks ahead of time
+- Detecting station behaviour patterns that may indicate local emission sources
+- Automating anomaly detection in sensor networks
+
+These applications demonstrate the value of analytical and AI-driven approaches in environmental decision-making and policy planning.
+
 ## 🔍 Hypotheses & Validation Methods
 
 ### H1 — There is a strong seasonal pattern in PM2.5 levels.
@@ -216,17 +257,31 @@ The dashboard and supporting notebooks were designed so that **each business req
 - PM2.5 spikes are difficult to predict linearly → tree models perform better
 - Seasonal effects not explicitly encoded in raw data → added manually
 
-### 🧠 Use of Generative AI Tools
+### 🔍 Additional Limitations & Alternative Approaches
 
-AI-assisted tools were used for:
+Beyond the challenges mentioned, this project also faced:
 
-- Code suggestions (GitHub Copilot)
-- Summarising exploratory insights (ChatGPT)
-- Grammar and readability improvements (Grammarly)
-- Generating station metadata (ChatGPT)
-- Drafting documentation sections (ChatGPT)
+#### Data Gaps & Station Variability
 
-All analytical decisions and implementation remain human-led.
+Several stations contain long gaps or unexpectedly flat periods in early years.
+Alternative: imputation via Kalman filters or hierarchical models.
+
+#### Temporal Leakage Risk
+
+Forecast models required careful handling of lags and rolling windows to avoid leaking future information.
+Alternative: using window generators from TensorFlow/Keras.
+
+#### Model Interpretability
+
+Tree-based models outperform linear models but are harder to explain.
+Alternative: SHAP or LIME could provide clearer reasoning for predictions.
+
+#### Clustering Sensitivity
+
+KMeans assumes spherical clusters, which may oversimplify spatial behaviour.
+Alternative: DBSCAN or HDBSCAN can detect arbitrary shapes and noise points.
+
+Reflecting on these limitations shaped the design of the final modelling and dashboard choices.
 
 ## ⚖️ Ethical, Legal & Social Considerations
 
@@ -250,13 +305,43 @@ This project considers several ethical and social factors:
 - Insights are framed to inform, not to alarm, the public
 - Spatial clustering highlights neighbourhood-level disparities that may inform policy discussions
 
-## 🖥 Dashboard Design
+## 📝 Dashboard Narrative & Communication Strategy
 
+The dashboard is structured to communicate insights clearly to both technical and non-technical audiences. 
 
+Each page includes:
+
+- A short explanation of what each visualisation shows
+- Tooltips and labels to guide interpretation
+- A narrative linking visual patterns to the project’s hypotheses
+- Colour schemes and layouts designed for clarity and accessibility
+
+Pages are arranged to follow a logical analytical journey:
+
+- Overview – high-level insights
+- Hypotheses (1–5) – statistical evidence presented visually
+- Clustering – spatial behaviour patterns
+- Modelling – baseline vs lag-based performance
+- Forecasting – short-term predictions with context
+- About – dashboard narrative, instructions, ethics, methodology, and guidance
+
+This ensures the dashboard supports data storytelling and helps users interpret air-quality patterns responsibly.
 ## 🐞 Unfixed Bugs
 
 - Some mobile plots may overflow the screen
 - Large datasets may cause slow initial load
+
+## 🔧 Code Evaluation & Performance Improvements
+
+Throughout development, several iterations were required to enhance performance, reliability, and maintainability. Key improvements include:
+
+- Vectorised pandas operations replaced earlier slower loops, significantly reducing execution time when handling millions of rows.
+- Feature engineering code was consolidated into modular functions, improving reproducibility and enabling consistent transformations across notebooks and the Streamlit app.
+- The forecasting pipeline underwent optimisation by removing unused lag features, reducing RAM usage and model training time.
+- Errors relating to missing categories and inconsistent encodings were resolved by enforcing deterministic dtype mappings and explicitly saving/loading categorical state.
+- XGBoost integration was improved by upgrading to a modern version, resolving feature-mismatch errors and enabling faster prediction times.
+
+These refinements demonstrate an iterative, evidence-based approach to writing efficient and maintainable Python code.
 
 ## 🚀 Deployment
 
@@ -286,17 +371,22 @@ App Link: [rse1982-beijing-air-quality.streamlit.app](https://rse1982-beijing-ai
 | PyYAML               | Metadata generation            |
 | Streamlit            | Dashboard application          |
 
+## 🛠 Project Maintenance & Update Plan
+
+To ensure the long-term value of this project, future maintenance will include periodic model retraining when new data becomes available, extending the forecasting horizon, and monitoring prediction drift over time.
+
+The dashboard can be updated with live data ingestion, versioned model deployments, and improved performance using more efficient caching or incremental loading.
+
+A structured update cycle—data ingestion → cleaning → engineering → retraining → evaluation → dashboard release—ensures sustainable long-term operation.
+
 ## 🔚 Conclusion
+
 This project demonstrates that Beijing’s PM2.5 levels show:
 
 - Strong and consistent seasonal patterns, with winter pollution significantly higher
-
 - Clear spatial variation, reflecting urban density and geography
-
 - Meaningful relationships with meteorological variables, such as temperature inversions and low wind conditions
-
 - Predictability through machine learning, where lag-based models outperform baseline models
-
 - The dashboard transforms complex analysis into clear, interactive insights suitable for both technical and non-technical audiences.
 
 ## 🔮 Future Work & Learning Roadmap
@@ -307,6 +397,31 @@ This project demonstrates that Beijing’s PM2.5 levels show:
 - Evaluate SHAP values for model interpretability
 - Extend dashboard to include forecasting alerts
 - Deploy models using FastAPI or AWS Lambda
+
+## 🤖 Use of AI Tools in This Project
+
+Generative AI (ChatGPT) was used during this project to assist with:
+
+- Ideation of dashboard layout and user experience
+- Debugging code errors, particularly mismatches in XGBoost feature naming
+- Designing EDA narrative structure
+- Producing documentation templates (e.g., metadata YAML)
+- Generating explanatory text for statistical concepts and insights
+- Creating design variations for clustering visualisations and station profiling
+
+AI tools supported the workflow, but all data analysis, modelling decisions, and code execution were performed by the learner.
+This hybrid human–AI workflow improved productivity while maintaining academic integrity.
+
+## 📚 Learning Reflection
+
+This project strengthened my skills in managing large environmental datasets, engineering time-series features, and applying both classical statistical methods and machine learning models.
+
+Debugging forecasting pipelines, handling inconsistent station data, and optimising XGBoost workflows deepened my understanding of real-world data challenges.
+
+Building a Streamlit dashboard improved my ability to communicate complex insights to technical and non-technical audiences, and integrating AI tools taught me how to use generative assistance responsibly and effectively.
+
+The project prepared me for continuous learning in areas such as advanced time-series modelling, cloud deployment, and applied environmental analytics.
+
 
 ## 🙏 Credits & Acknowledgements
 
