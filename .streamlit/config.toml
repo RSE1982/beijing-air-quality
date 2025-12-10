@@ -1,11 +1,8 @@
 [theme]
 base="light"
-primaryColor="#006B48"
-borderColor="#006B48"
-
-
+primaryColor="#4056d1ff"
+secondaryColor="#959fdaff"
 
 [theme.sidebar]
-backgroundColor="#B7E8C5"
+backgroundColor="#959fdaff"
 textColor="#000000"
-showWidgetBorder=true
