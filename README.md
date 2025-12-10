@@ -33,22 +33,23 @@ This project follows the CRISP-DM analytical lifecycle:
 6. Deployment:\
   Multi-page Streamlit dashboard communicating findings interactively.
 
-## Dataset Content
+## 📊 Dataset Content
 
-This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Song Chen (2017) and hosted on the UCI Machine Learning Repository, with a verified Kaggle mirror.
+This project uses the Beijing Multi-Site Air Quality Dataset, originally published by Chen et al. (2017) on the UCI Machine Learning Repository with a verified Kaggle mirror.
 
-It contains hourly pollutant and meteorological observations from 12 monitoring stations across Beijing, including:
+The dataset contains hourly pollutant and meteorological observations from 12 monitoring stations across Beijing.
 
-- PM2.5
-- Temperature, dew point, pressure, and rainfall
-- Wind direction and wind speed
-- Station identifiers and timestamp fields
+### Variables include:
 
-This dataset represents historical air-quality observations.
-For analytical consistency, the project uses the full years 2013–2016.
-The original source includes some early 2017 data, but these records were removed during cleaning because the year is incomplete and would distort seasonal and temporal analyses.
+- PM2.5 concentration
+- Temperature, dew point, pressure, rainfall
+- Wind speed and wind direction
+- Station ID and precise timestamps
 
-The final engineered dataset is stored in Parquet format to comply with GitHub’s 100 MB repository limit while maintaining efficient compression and fast loading.
+### Time Coverage
+
+- Full years 2013–2016 are used.
+- Early 2017 data was removed because it is incomplete and would distort seasonal analysis.
 
 ### Data Licensing (CC BY 4.0)
 
