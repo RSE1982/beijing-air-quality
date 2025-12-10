@@ -51,21 +51,21 @@ The dataset contains hourly pollutant and meteorological observations from 12 mo
 - Full years 2013–2016 are used.
 - Early 2017 data was removed because it is incomplete and would distort seasonal analysis.
 
-### Data Licensing (CC BY 4.0)
+## 🔐 Data Licensing (CC BY 4.0)
 
-The Beijing Multi-Site Air Quality Dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) licence.
-
-This licence allows sharing and adaptation for any purpose — as long as appropriate attribution is provided.
+This dataset is licensed under the Creative Commons Attribution 4.0 International Licence.
 
 Required Attribution:
 
-Chen, Song (2017). Beijing Multi-Site Air Quality.\
-UCI Machine Learning Repository.\
-DOI: https://doi.org/10.24432/C5RK5G\
-Mirrored on Kaggle by Manu Siddhartha.\
+Chen, Song (2017). Beijing Multi-Site Air Quality.
+UCI Machine Learning Repository.
+DOI: [https://doi.org/10.24432/C5RK5G](https://doi.org/10.24432/C5RK5G)
+
+Mirrored on Kaggle by Manu Siddhartha.
 Licensed under CC BY 4.0.
 
-More information: https://creativecommons.org/licenses/by/4.0/
+Full licence text: [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)
+
 
 ### Data Collection, Cleaning & Storage
 
