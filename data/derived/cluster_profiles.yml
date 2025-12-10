@@ -1,0 +1,63 @@
+0:
+  name: "Moderate Spring–Autumn Pollution"
+  summary: "Mild temperatures, transitional seasons, and moderate PM2.5 levels."
+  notes:
+    - "Transitional seasons (spring/autumn) dominate."
+    - "Moderate pollution, not extreme."
+    - "Conditions support some build-up but not severe stagnation."
+
+1:
+  name: "Clean Winter High-Pressure Days"
+  summary: "Very low PM2.5, freezing temperatures, and strong high-pressure systems."
+  notes:
+    - "Winter dominated."
+    - "Cold and dry with high pressure."
+    - "Represents clean, crisp winter days."
+
+2:
+  name: "Clean, Cool Spring Days"
+  summary: "Lowest PM2.5 values under cool, dry conditions with good dispersion."
+  notes:
+    - "Spring-heavy cluster."
+    - "Consistently low PM2.5."
+    - "Strong atmospheric dispersion."
+
+3:
+  name: "Warm-Season Moderate Pollution"
+  summary: "Summer haze with moderate PM2.5 and warm temperatures."
+  notes:
+    - "Summer dominated."
+    - "Warm with moderate haze."
+    - "Not the worst pollution, but noticeable."
+
+4:
+  name: "Rain-Driven Clean Days"
+  summary: "Low PM2.5 due to rainfall cleansing the atmosphere."
+  notes:
+    - "All observations have rain."
+    - "Precipitation removes pollutants."
+    - "Generally cleaner than dry days."
+
+5:
+  name: "Mixed-Season Moderate Pollution"
+  summary: "Variable meteorology with moderate and inconsistent PM2.5."
+  notes:
+    - "Mixed seasons and varied conditions."
+    - "Moderate PM2.5 but high variability."
+    - "Acts as a ‘miscellaneous’ cluster."
+
+6:
+  name: "Cold Polluted Winter Cluster"
+  summary: "Cold stagnant winter days with elevated PM2.5."
+  notes:
+    - "Winter dominated, cold temperatures."
+    - "Elevated PM2.5, likely due to heating + stagnation."
+    - "Closer to winter haze events."
+
+7:
+  name: "Severe Warm-Season Pollution"
+  summary: "Hot, low-pressure stagnant conditions producing high PM2.5."
+  notes:
+    - "Summer dominated, hot temperatures."
+    - "Very high PM2.5."
+    - "Represents the most severe warm-season pollution."
