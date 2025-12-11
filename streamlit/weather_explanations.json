@@ -1,0 +1,32 @@
+{
+    "temperature": {
+        "what": "The histogram and boxplot display how temperature varies across the dataset, highlighting typical conditions and the frequency of extreme cold or warm periods.",
+        "why": "Temperature influences atmospheric stability. Cold air can trap pollutants during inversion events, while warmer conditions encourage mixing and pollutant dispersion.",
+        "takeaway": "Temperature variability helps explain seasonal PM2.5 peaks and how inversion conditions contribute to pollution buildup."
+    },
+    "dew_point": {
+        "what": "The histogram and boxplot show the distribution of dew point values, illustrating atmospheric moisture levels and how often very dry or moist conditions occur.",
+        "why": "Dew point affects humidity and particle growth. Moist air can cause fine particles to absorb water, increasing PM2.5 levels.",
+        "takeaway": "Dew point patterns reveal atmospheric moisture conditions that can intensify or reduce PM2.5 concentrations."
+    },
+    "pressure": {
+        "what": "The histogram and boxplot illustrate the range and central tendency of atmospheric pressure throughout the dataset.",
+        "why": "High-pressure systems create stable, stagnant air that traps pollutants, while low-pressure systems allow better dispersion.",
+        "takeaway": "Pressure patterns help identify meteorological conditions under which PM2.5 accumulates or dissipates."
+    },
+    "rain": {
+        "what": "The visuals show the distribution of rainfall amounts, including the frequency and intensity of precipitation events.",
+        "why": "Rain removes airborne particles through wet deposition. Even light rainfall can significantly reduce PM2.5 levels.",
+        "takeaway": "Rainfall patterns indicate how often natural cleansing events occur and how they influence PM2.5 variability."
+    },
+    "wind_speed": {
+        "what": "The histogram and boxplot show how wind speed varies across the dataset, highlighting calm versus windy periods.",
+        "why": "Wind is a major dispersion mechanism for air pollutants. Calm air allows PM2.5 to accumulate, while stronger winds disperse pollutants.",
+        "takeaway": "Wind speed distribution identifies how often stagnation events occur, directly affecting PM2.5 peaks."
+    },
+    "relative_humidity": {
+        "what": "These plots display the distribution of relative humidity values, showing how often dry, moderate, or humid conditions occur.",
+        "why": "Humidity affects particle growth. High humidity increases PM2.5 through hygroscopic growth, while dry conditions often reduce particle size.",
+        "takeaway": "Humidity patterns provide insight into atmospheric moisture's contribution to PM2.5 variations and pollution spikes."
+    }
+}

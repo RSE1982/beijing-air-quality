@@ -19,6 +19,13 @@ st.html("""
 </style>
 """)
 
+weather_vars = ["temperature",
+                "dew_point",
+                "pressure",
+                "rain",
+                "wind_speed",
+                "relative_humidity"] # List of weather variables
+
 # Title of the dashboard
 st.title("🌆 Beijing Clean Air Dashboard")
 st.write("Analyze Beijing's air quality through\
@@ -84,6 +91,18 @@ nav = st.navigation({
 current_page = nav.title
 
 # ---------------- Sidebar (filters) ----------------
+
+if current_page == "Hypothesis 3":
+    st.sidebar.header("Filters for Hypothesis 3")
+    st.sidebar.write("Adjust the parameters below to filter the data displayed in Hypothesis 3 analysis.")
+    weather_filter = st.sidebar.selectbox(
+        "Select Meteorological Variable",
+        weather_vars,
+        index=0,
+        key="weather_filter"
+    )
+
+# Include a footer in the sidebar
 
 st.sidebar.caption("""
     © 2025 Robert Steven Elliott\\
