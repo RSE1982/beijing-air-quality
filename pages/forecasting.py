@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.express as px
 
-from utils.model_loader import load_best_model, load_encoders, load_feature_names
+from utils.model_loader import load_best_model, load_encoders
 from utils.data_loader import load_engineered
 from utils.feature_engineering import apply_forecasting_features
+from utils.forcast import forecast_next_24h     
 
 # ==============================================================
 # Title
@@ -29,15 +29,13 @@ def apply_model_dtypes(df):
     df["station"] = df["station"].astype(station_dtype).cat.codes.astype("int16")
     return df
 
-# ==============================================================
-# Load engineered dataset
-# ==============================================================
-df = load_engineered()
+
+df = load_engineered()  # Load engineered data
 
 # Keep only model features + datetime + pm25 (needed for lags)
-required_cols = set(features) | {"datetime", "pm25"}
-drop_cols = set(df.columns) - required_cols
-df.drop(columns=list(drop_cols), inplace=True)
+required_cols = set(features) | {"datetime", "pm25"} 
+drop_cols = set(df.columns) - required_cols  # determine columns to drop
+df.drop(columns=list(drop_cols), inplace=True)  # Drop unnecessary columns
 
 # Apply forecasting features per station, forward-fill missing values
 df_list = []
@@ -55,62 +53,6 @@ df = pd.concat(df_list, ignore_index=True)
 # Drop pm25 if not used in features
 if "pm25" in df.columns and "pm25" not in features:
     df.drop(columns=["pm25"], inplace=True)
-
-# ==============================================================
-# Recursive 24h Forecast
-# ==============================================================
-def forecast_next_24h(df_station, model, features):
-    df_station = df_station.sort_values("datetime")
-    last = df_station.iloc[-1][features].copy()
-    forecasts = []
-
-    for step in range(24):
-        new_time = df_station["datetime"].max() + pd.Timedelta(hours=step + 1)
-
-        # Update calendar features in-place if present in features
-        for col, value in {
-            "hour": new_time.hour,
-            "month": new_time.month,
-            "day_of_week": new_time.dayofweek,
-            "year": new_time.year,
-            "hour_sin": np.sin(2*np.pi*new_time.hour/24),
-            "hour_cos": np.cos(2*np.pi*new_time.hour/24),
-            "month_sin": np.sin(2*np.pi*new_time.month/12),
-            "month_cos": np.cos(2*np.pi*new_time.month/12)
-        }.items():
-            if col in features:
-                last[col] = value
-
-        # Update lag features
-        lag_cols = ["pm25_lag_18h","pm25_lag_12h","pm25_lag_6h","pm25_lag_3h","pm25_lag_1h"]
-        if all(col in features for col in lag_cols):
-            last["pm25_lag_18h"] = last["pm25_lag_12h"]
-            last["pm25_lag_12h"] = last["pm25_lag_6h"]
-            last["pm25_lag_6h"] = last["pm25_lag_3h"]
-            last["pm25_lag_3h"] = last["pm25_lag_1h"]
-
-        # Predict
-        X = last[features].astype("float32").to_numpy().reshape(1, -1)
-        pred = model.predict(X)[0]
-
-        # Update lag_1h
-        if "pm25_lag_1h" in features:
-            last["pm25_lag_1h"] = pred
-
-        # Update rolling means
-        rolling_map = {
-            "pm25_roll_3h_mean": ["pm25_lag_1h","pm25_lag_3h"],
-            "pm25_roll_6h_mean": ["pm25_lag_1h","pm25_lag_3h","pm25_lag_6h"],
-            "pm25_roll_12h_mean": ["pm25_lag_1h","pm25_lag_3h","pm25_lag_6h","pm25_lag_12h"],
-            "pm25_roll_18h_mean": ["pm25_lag_1h","pm25_lag_3h","pm25_lag_6h","pm25_lag_12h","pm25_lag_18h"]
-        }
-        for roll_col, lag_list in rolling_map.items():
-            if roll_col in features:
-                last[roll_col] = np.mean([last[c] for c in lag_list])
-
-        forecasts.append({"datetime": new_time, "pm25_predicted": pred})
-
-    return pd.DataFrame(forecasts)
 
 # ==============================================================
 # Multi-select stations
@@ -140,22 +82,23 @@ for st_name in selected_stations:
 
 if forecast_list:
     all_forecasts = pd.concat(forecast_list, ignore_index=True)
-
+    col1, col2 = st.columns([3, 2])
     # ==============================================================
     # Plot
     # ==============================================================
-    st.subheader("📈 PM2.5 Forecast — Next 24 Hours")
-    fig = px.line(
-        all_forecasts,
-        x="datetime",
-        y="pm25_predicted",
-        color="station_name",
-        labels={"station_name": "Station", "pm25_predicted": "PM2.5 (µg/m³)"},
-        title="Next 24h PM2.5 Forecast for Selected Stations"
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.write("Forecast table for selected stations:")
-    st.dataframe(all_forecasts)
+    with col1:
+        st.subheader("📈 PM2.5 Forecast — Next 24 Hours")
+        fig = px.line(
+            all_forecasts,
+            x="datetime",
+            y="pm25_predicted",
+            color="station_name",
+            labels={"station_name": "Station", "pm25_predicted": "PM2.5 (µg/m³)"},
+            title="Next 24h PM2.5 Forecast for Selected Stations"
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    with col2:
+        st.write("Forecast table for selected stations:")
+        st.dataframe(all_forecasts)
 else:
     st.warning("No forecastable stations selected or available.")
