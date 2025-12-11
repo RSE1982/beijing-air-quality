@@ -7,8 +7,8 @@ import pandas as pd
 import numpy as np
 
 
-def forecast_next_24h(df_station: pd.DataFrame, model: object,
-                      features: list, horizon: int = 24) -> pd.DataFrame:
+def forecast_horizon(df_station: pd.DataFrame, model: object,
+                     features: list, horizon: int = 24) -> pd.DataFrame:
     """
     Forecast PM2.5 levels for the next 24 hours for a given station.
     Parameters:
