@@ -81,11 +81,12 @@ nav = st.navigation({
     ],
 
     "📊 Analysis": [           # submenu, MUST be a list
-        clustering,
-        modelling,
+        clustering
     ],
 
-    "📈 Forecasting": [forcasting],  # top-level page, NOT a list
+    "📈 Forecasting": [
+        modelling,
+        forcasting],  # top-level page, NOT a list
 })
 
 current_page = nav.title
@@ -102,7 +103,7 @@ if current_page == "Hypothesis 3":
         key="weather_filter"
     )
 if current_page == "Clustering Analysis":
-    st.header("🧭 Cluster Profile Explorer")
+    st.sidebar.header("🧭 Cluster Profile Explorer")
     cluster_ids = [0, 1, 2, 3, 4, 5, 6, 7]
     default_cluster = cluster_ids[0] if cluster_ids else None
 
@@ -113,6 +114,23 @@ if current_page == "Clustering Analysis":
         format_func=lambda c: f"Cluster {c}",
         key="selected_cluster"
     )
+
+if current_page == "Air Quality Forecasting":
+    st.sidebar.header("Forecast Settings")
+
+horizon_label = st.sidebar.radio(
+    "Select Forecast Horizon:",
+    [
+        "3 Hours",
+        "6 Hours",
+        "12 Hours",
+        "18 Hours",
+        "24 Hours",
+        "48 Hours"
+    ],
+    key="horizon_label"
+)
+
 
 # Include a footer in the sidebar
 

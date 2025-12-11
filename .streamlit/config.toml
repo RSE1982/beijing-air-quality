@@ -1,7 +1,6 @@
 [theme]
 base="light"
 primaryColor="#4056d1ff"
-secondaryColor="#959fdaff"
 
 [theme.sidebar]
 backgroundColor="#959fdaff"
