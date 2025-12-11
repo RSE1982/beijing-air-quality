@@ -118,18 +118,18 @@ if current_page == "Clustering Analysis":
 if current_page == "Air Quality Forecasting":
     st.sidebar.header("Forecast Settings")
 
-horizon_label = st.sidebar.radio(
-    "Select Forecast Horizon:",
-    [
-        "3 Hours",
-        "6 Hours",
-        "12 Hours",
-        "18 Hours",
-        "24 Hours",
-        "48 Hours"
-    ],
-    key="horizon_label"
-)
+    horizon_label = st.sidebar.radio(
+        "Select Forecast Horizon:",
+        [
+            "3 Hours",
+            "6 Hours",
+            "12 Hours",
+            "18 Hours",
+            "24 Hours",
+            "48 Hours"
+        ],
+        key="horizon_label"
+    )
 
 
 # Include a footer in the sidebar
