@@ -30,11 +30,12 @@ with col1:
     # -----------------------------------------------------
     st.subheader("Season Averages")
     seasonal_avg = df.groupby("season")["pm25"].mean().round(1)
-
-    st.metric("Winter avg PM2.5", f"{seasonal_avg['winter']}")
-    st.metric("Spring avg PM2.5", f"{seasonal_avg['spring']}")
-    st.metric("Summer avg PM2.5", f"{seasonal_avg['summer']}")
-    st.metric("Autumn avg PM2.5", f"{seasonal_avg['autumn']}")
+    colA, colB = st.columns(2)
+    colA.metric("Winter avg PM2.5", f"{seasonal_avg['winter']}")
+    colB.metric("Spring avg PM2.5", f"{seasonal_avg['spring']}")
+    colA, colB = st.columns(2)
+    colA.metric("Summer avg PM2.5", f"{seasonal_avg['summer']}")
+    colB.metric("Autumn avg PM2.5", f"{seasonal_avg['autumn']}")
 
     # -----------------------------------------------------
     # Conclusion
