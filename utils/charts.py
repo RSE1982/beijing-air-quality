@@ -3,6 +3,8 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.figure_factory as ff
+import numpy as np
 
 
 # Hypothesis 1 Charts #
@@ -208,6 +210,63 @@ def violin_by_area_type(df: pd.DataFrame) -> px.violin:
 
 
 # Hypothesis 3 Charts #
+def weather_distribution(df: pd.DataFrame, weather_var: str) -> px.histogram:
+    """
+    Create a histogram showing the distribution of a meteorological variable.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing the weather variable column
+        weather_var (str): The meteorological variable to plot
+    Returns:
+        px.histogram: Plotly histogram figure
+    """
+    data = df[weather_var].dropna().values.tolist()
+    label = weather_var.replace("_", " ").title()
+
+    data_min, data_max = np.min(data), np.max(data)
+    bin_size = (data_max - data_min) / 30
+
+    fig = ff.create_distplot(
+        [data],
+        [label],
+        bin_size=bin_size,
+        show_rug=False,
+    )
+
+    fig.update_layout(
+        width=700,
+        height=400,
+        title=f"Distribution of {label}",
+        showlegend=False,
+        margin={"r": 0,
+                "t": 30,
+                "l": 0,
+                "b": 0}
+    )
+
+    return fig
+
+def weather_boxplot(df: pd.DataFrame, weather_var: str) -> px.box:
+    """
+    Create a single boxplot showing the distribution of one weather variable.
+    """
+    label = weather_var.replace("_", " ").title()
+
+    fig = px.box(
+        df,
+        y=weather_var,
+        labels={"y": label},
+        title=f"Distribution of {label}",
+        points="outliers"  # optional: shows outlier points
+    )
+
+    fig.update_layout(
+        xaxis_visible=False,     # hides empty x-axis
+        xaxis_showticklabels=False
+    )
+
+    return fig
+
+
 def corr_heatmap(df: pd.DataFrame) -> go.Figure:
     """
     Create a heatmap of the correlation matrix for the DataFrame.
@@ -216,7 +275,14 @@ def corr_heatmap(df: pd.DataFrame) -> go.Figure:
     Returns:
         go.Figure: Plotly heatmap figure
     """
-    corr = df.corr(numeric_only=True)
+    vars = ["pm25",
+            "temperature",
+            "dew_point",
+            "pressure",
+            "rain",
+            "wind_speed",
+            "relative_humidity"]
+    corr = df[vars].corr(numeric_only=True)
     fig = go.Figure(go.Heatmap(
         z=corr.values,
         x=corr.columns,
