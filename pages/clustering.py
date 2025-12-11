@@ -26,12 +26,6 @@ NUMERIC_FEATURES = [
 ]
 
 selected_cluster = st.session_state.get("selected_cluster", 0)
-
-st.write(df_pca["cluster"].dtype == df_clusters["cluster"].dtype)
-# ==============================
-# Sidebar — Cluster Profile Explorer
-# ==============================
-
 profile = cluster_profiles.get(selected_cluster, {})
 
 
