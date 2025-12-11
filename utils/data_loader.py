@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 import yaml
+import numpy as np
 
 ROOT = Path(__file__).parent.parent
 DATA_PATH = ROOT / "data"
@@ -132,3 +133,26 @@ def load_hyperparameter_results() -> pd.DataFrame:
     """
     return _load_csv(DATA_PATH / "model_outputs" /
                      "hyperparameter_results.csv")
+
+
+@st.cache_resource
+def load_model_predictions() -> pd.DataFrame:
+    """
+    Load model predictions data.
+
+    Returns:
+        pd.DataFrame: Model predictions data.
+    """
+    return np.load(DATA_PATH / "model_outputs" / "predictions.npz")
+
+
+@st.cache_data
+def load_lag_feature_importance() -> pd.DataFrame:
+    """
+    Load feature importance data.
+
+    Returns:
+        pd.DataFrame: Feature importance data.
+    """
+    return _load_csv(DATA_PATH / "model_outputs" /
+                     "lag_model_feature_importances.csv")
