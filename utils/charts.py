@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
+# Hypothesis 1 Charts #
 def seasonal_boxplot(df: pd.DataFrame) -> px.box:
     """
     Create a box plot of PM2.5 levels by season.
@@ -110,6 +111,7 @@ def yearly_trend(df: pd.DataFrame) -> px.line:
     return fig
 
 
+# Hypothesis 2 Charts #
 def spatial_boxplot(df: pd.DataFrame) -> px.box:
     """
     Create a box plot of PM2.5 levels across different stations.
@@ -121,7 +123,91 @@ def spatial_boxplot(df: pd.DataFrame) -> px.box:
     return px.box(df, x="station", y="pm25",
                   title="PM2.5 Variation Across Stations")
 
+def violin_by_station(df: pd.DataFrame) -> px.violin:
+    """
+    Create a violin plot of PM2.5 levels across different stations.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'station' and 'pm25' columns
+    Returns:
+        px.violin: Plotly violin plot figure
+    """
+    fig = px.violin(
+        df, x="station", y="pm25", color="station",
+        labels={"station": "Station", "pm25": "PM2.5 Levels (µg/m³)"},
+        title="PM2.5 Distribution by Station"
+    )
+    fig.update_layout(showlegend=False)
+    return fig
 
+def map_pm25_by_station(df: pd.DataFrame, meta: pd.DataFrame) -> px.scatter_mapbox:
+    """
+    Create a map showing average PM2.5 levels by station.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'station' and 'pm25' columns
+        meta (pd.DataFrame): DataFrame containing station metadata with
+                             'station', 'latitude', and 'longitude' columns
+    Returns:
+        px.scatter_mapbox: Plotly scatter mapbox figure
+    """
+    fig = px.scatter_mapbox(
+        meta.merge(df, on="station"),
+        lat="latitude",
+        lon="longitude",
+        color="pm25",
+        size="pm25",
+        hover_name="station",
+        zoom=8,
+        height=500,
+        range_color=[df["pm25"].min(), df["pm25"].max()],
+        color_continuous_midpoint=df["pm25"].mean(),
+        color_continuous_scale=px.colors.sequential.Viridis,
+        labels={"pm25": "Avg PM2.5 (µg/m³)"},
+        mapbox_style="carto-positron",
+        title="Average PM2.5 by Station"
+    )
+    fig.update_layout(margin={"r": 0,
+                              "t": 30,
+                              "l": 0,
+                              "b": 0},
+                      height=400,
+                      width=1000)
+    return fig
+
+
+def area_boxplot(df: pd.DataFrame) -> px.box:
+    """
+    Create a box plot of PM2.5 levels across different area types.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'area_type' and 'pm25' columns
+    Returns:
+        px.box: Plotly box plot figure
+    """
+    fig = px.box(
+        df, x="area_type", y="pm25",
+        labels={"area_type": "Area Type", "pm25": "PM2.5 Levels (µg/m³)"},
+        title="PM2.5 Variation Across Area Types"
+    )
+    fig.update_layout(showlegend=False)
+    return fig
+
+def violin_by_area_type(df: pd.DataFrame) -> px.violin:
+    """
+    Create a violin plot of PM2.5 levels across different area types.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'area_type' and 'pm25' columns
+    Returns:
+        px.violin: Plotly violin plot figure
+    """
+    fig = px.violin(
+        df, x="area_type", y="pm25", color="area_type",
+        labels={"area_type": "Area Type", "pm25": "PM2.5 Levels (µg/m³)"},
+        title="PM2.5 Distribution by Area Type"
+    )
+    fig.update_layout(showlegend=False)
+    return fig
+
+
+# Hypothesis 3 Charts #
 def corr_heatmap(df: pd.DataFrame) -> go.Figure:
     """
     Create a heatmap of the correlation matrix for the DataFrame.
