@@ -44,7 +44,6 @@ def monthly_violin(df: pd.DataFrame) -> px.violin:
     fig.update_layout(showlegend=False)
     return fig
 
-
 def monthly_trend(df: pd.DataFrame) -> px.line:
     """
     Create a line plot showing the monthly trend of PM2.5 levels.
@@ -260,8 +259,15 @@ def weather_boxplot(df: pd.DataFrame, weather_var: str) -> px.box:
     )
 
     fig.update_layout(
+        width=700,
+        height=400,
         xaxis_visible=False,     # hides empty x-axis
-        xaxis_showticklabels=False
+        xaxis_showticklabels=False,
+        showlegend=False,
+        margin={"r": 0,
+                "t": 30,
+                "l": 0,
+                "b": 0}
     )
 
     return fig
@@ -291,4 +297,40 @@ def corr_heatmap(df: pd.DataFrame) -> go.Figure:
         reversescale=True
     ))
     fig.update_layout(title="Correlation Heatmap")
+    return fig
+
+
+# Hypothesis 4 Charts #
+
+
+def temperal_variation(df: pd.DataFrame, value: str) -> px.line:
+    """
+    Create a line plot showing the hourly trend of PM2.5 levels.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'hour' and 'pm25' columns
+    Returns:
+        px.line: Plotly line plot figure
+    """
+    variation = df.groupby([value], as_index=False)['pm25'].mean().reset_index()
+    fig = px.line(
+        variation,
+        x=value,
+        y="pm25",
+        markers=True,
+        title=f"{value.capitalize()} PM2.5 Variation",
+        labels={
+            value: value.replace("_", " ").capitalize(),
+            "pm25": "PM2.5 Levels (µg/m³)"
+        }
+    )
+
+    fig.update_layout(
+        width=800,
+        height=400,
+        margin={"r": 0,
+                "t": 30,
+                "l": 0,
+                "b": 0}
+    )
+
     return fig
