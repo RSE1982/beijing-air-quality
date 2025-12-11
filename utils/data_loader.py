@@ -143,7 +143,17 @@ def load_model_predictions() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Model predictions data.
     """
-    return np.load(DATA_PATH / "model_outputs" / "predictions.npz")
+    return np.load(DATA_PATH / "model_outputs" / "h5_predictions.npz")
+
+@st.cache_resource
+def load_best_model_predictions() -> pd.DataFrame:
+    """
+    Load best model predictions data.
+
+    Returns:
+        pd.DataFrame: Best model predictions data.
+    """
+    return np.load(DATA_PATH / "model_outputs" / "best_predictions.npz")
 
 
 @st.cache_data
