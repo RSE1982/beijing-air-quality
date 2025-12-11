@@ -1,84 +1,126 @@
 import streamlit as st
-from utils.data_loader import load_engineered
-import plotly.graph_objects as go
+from utils.data_loader import (load_engineered,
+                               load_model_predictions,
+                               load_lag_feature_importance)
+from utils.charts import (plot_actual_vs_pred,
+                          befere_vs_after,
+                          plot_lag_feature_importances)
 
 st.title("🤖 Hypothesis 5 — Lag Features Improve Model Performance")
-
+st.latex(r"""
+         \begin{aligned}
+         H_0 &: \text{Lag features do not improve PM2.5 forecasting
+         performance.} \\
+         H_1 &: \text{Lag features significantly improve PM2.5 forecasting
+         performance.​}
+         \end{aligned}
+""")
 df = load_engineered()
+predictions = load_model_predictions()
+y_true = predictions["y_true"]
+baseline_pred = predictions["baseline_pred"]
+lag_pred = predictions["l_pred"]
+feature_importance = load_lag_feature_importance()
 
-st.write("""
-### 📌 Hypothesis H5
-**Lag features improve PM2.5 forecasting performance compared to baseline
-          models.**
+baseline_mae = 42.163872063135194  # obtained from notebook
+baseline_rmse = 56.09295025109381  # obtained from notebook
+baseline_r2 = 0.37973956724526914  # obtained from notebook
+lag_mae = 10.227534681736866  # obtained from notebook
+lag_rmse = 16.55474291376961  # obtained from notebook
+lag_r2 = 0.9395242494495807  # obtained from notebook
 
-Models compared:
-- Baseline: weather + time features only
-- Lag-based: pm25_lag_1h, 3h, 6h, 12h, 18h + rolling means
-""")
+col1, col2 = st.columns([1, 3])
+with col1:
+    colA, colB = st.columns(2)
+    with colA:
+        st.markdown("Baseline Model")
+        st.metric(label="MAE", value=f"{baseline_mae:.2f}")
+        st.metric(label="RMSE", value=f"{baseline_rmse:.2f}")
+        st.metric(label="R2", value=f"{baseline_r2:.4f}")
+    with colB:
+        st.markdown("Lag-Based Model")
+        st.metric(label="MAE", value=f"{lag_mae:.2f}")
+        st.metric(label="RMSE", value=f"{lag_rmse:.2f}")
+        st.metric(label="R2", value=f"{lag_r2:.4f}")
 
-# ------------------------- Performance Comparison -------------------------
-st.subheader("📊 Model Performance Comparison")
+    st.success("✔ **Conclusion:** H5 is supported —  \
+                    lag features significantly improve forecasting accuracy.")
+with col2:
+    tab1, tab2, tab3 = st.tabs(["Actual vs Lag-Based Predictions",
+                                "Model Performance Comparison",
+                                "Feature Importance"])
+    with tab1:
+        graph, info = st.columns([3, 2])
+        with graph:
+            st.subheader("📈 Actual vs Lag-Based Model Predictions")
+            st.plotly_chart(plot_actual_vs_pred(y_true,
+                                                baseline_pred,
+                                                lag_pred),
+                            use_container_width=True)
+        with info:
+            st.markdown("""
+            **What this shows:**
+            A side-by-side comparison of real PM2.5 values and the lag-based
+            model's predictions over time. The closer the prediction line
+            follows the actual values, the better the model performance.
 
-# Replace these with values from your notebook
-baseline_mae = 37.613408
-baseline_rmse = 52.778598
-baseline_r2 = 0.450872
-lag_mae = 10.001359
-lag_rmse = 16.223324
-lag_r2 = 0.941921
+            **Why it matters:**
+            This visual directly demonstrates how well the model captures
+            PM2.5 behaviour, especially rapid rises, peaks, and drops. It
+            provides intuitive, real-world evidence of forecasting accuracy
+            that numerical metrics alone cannot show.
 
-fig = go.Figure(data=[
-    go.Bar(name="Baseline Model",
-           x=["MAE", "RMSE"],
-           y=[baseline_mae, baseline_rmse]),
-    go.Bar(name="Lag-Based Model",
-           x=["MAE", "RMSE"],
-           y=[lag_mae, lag_rmse])
-])
-fig.update_layout(
-    title="MAE & RMSE Comparison: Baseline vs Lag-Based Model",
-    yaxis_title="Error (µg/m³)",
-    barmode="group"
-)
-st.plotly_chart(fig, use_container_width=True)
+            **Key takeaway:**
+            The lag-based model closely tracks the actual PM2.5 pattern,
+            capturing both trends and turning points, confirming strong
+            predictive capability.""")
+    with tab2:
+        graph, info = st.columns([3, 2])
+        with graph:
+            st.subheader("📊 Model Performance Comparison")
+            st.plotly_chart(befere_vs_after(baseline_mae,
+                                            baseline_rmse,
+                                            baseline_r2,
+                                            lag_mae,
+                                            lag_rmse,
+                                            lag_r2),
+                            use_container_width=True)
+        with info:
+            st.markdown("""
+            **What this shows:**
+            A grouped bar chart comparing MAE, RMSE, and R² for the baseline
+            and lag-based models. Lower MAE/RMSE and higher R² indicate better
+            forecasting performance.
 
+            **Why it matters:**
+            This visual makes it easy to see the magnitude of improvement
+            delivered by lag features. The large gap between baseline and
+            lag-based errors highlights how much more accurate the enhanced
+            model is.
 
-fig = go.Figure(data=[
-    go.Bar(name="Baseline Model",
-           x=["R2"],
-           y=[baseline_r2]),
-    go.Bar(name="Lag-Based Model",
-           x=["R2"],
-           y=[lag_r2])
-])
-fig.update_layout(
-    title="R2 Comparison: Baseline vs Lag-Based Model",
-    yaxis_title="R2",
-    barmode="group"
-)
-st.plotly_chart(fig, use_container_width=True)
+            **Key takeaway:**
+            The lag-based model dramatically outperforms the baseline model,
+            reducing error by over 70% and achieving far higher explanatory
+            power.""")
+    with tab3:
+        graph, info = st.columns([3, 2])
+        with graph:
+            st.subheader("🔍 Lag-Based Model Feature Importance")
+            st.plotly_chart(plot_lag_feature_importances(feature_importance),
+                            use_container_width=True)
+        with info:
+            st.markdown("""
+            **What this shows:**
+            A ranked feature importance chart from the lag-based model,
+            showing which predictors contribute most strongly to PM2.5
+            forecasting.
 
+            **Why it matters:**
+            If lag features truly improve forecasting, they should appear as
+            the most influential predictors. This confirms whether the model
+            relies on recent PM2.5 history as expected.
 
-# ------------------------- Observations -------------------------
-st.markdown("### 📝 Observations")
-st.markdown("""
-- Lag-based model reduces error by **40–50%**, a substantial improvement.
-- Rolling mean features help smooth volatility and capture pollutant momentum.
-- Feature importance plots showed lag features dominating predictive power.
-""")
-
-# ------------------------- Justification -------------------------
-st.markdown("### 🎯 Justification")
-st.markdown("""
-Lag features encode pollutant persistence and short-term autocorrelation,
-             which are
-critical for air-quality forecasting.
-Notebook 09 confirmed that lag-based XGBoost achieved the
-            **best RMSE and MAE scores**.
-""")
-
-st.success("✔ **Conclusion:** H5 is supported —  \
-            lag features significantly improve forecasting accuracy.")
-
-st.caption("Source: Notebook 09 — Forecasting Analysis \
-           • Dataset © Song Chen (CC BY 4.0)")
+            **Key takeaway:**
+            Lag features dominate the model’s decision-making process,
+            demonstrating that short-term pollutant persistence is the
+            key driver of PM2.5 forecasting accuracy.""")

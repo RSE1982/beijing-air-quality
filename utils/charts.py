@@ -334,3 +334,92 @@ def temperal_variation(df: pd.DataFrame, value: str) -> px.line:
     )
 
     return fig
+
+### Hypothesis 5 Charts #
+
+def plot_actual_vs_pred(y_true, baseline_pred, lag_pred, n=300):
+    """Reproduce the Matplotlib actual vs predicted plot using Plotly."""
+    
+    fig = go.Figure()
+
+    # Actual
+    fig.add_trace(go.Scatter(
+        y=y_true[:n],
+        mode="lines",
+        name="Actual",
+        line=dict(color="green", width=2)
+    ))
+
+    # Baseline prediction
+    fig.add_trace(go.Scatter(
+        y=baseline_pred[:n],
+        mode="lines",
+        name="Baseline Prediction",
+        line=dict(color="blue", width=2),
+        opacity=0.8
+    ))
+
+    # Lag-based prediction
+    fig.add_trace(go.Scatter(
+        y=lag_pred[:n],
+        mode="lines",
+        name="Lag Model Prediction",
+        line=dict(color="orange", width=2),
+        opacity=0.8
+    ))
+
+    fig.update_layout(
+        title="PM2.5: Actual vs Predicted",
+        xaxis_title="Time Index (sample)",
+        yaxis_title="PM2.5 (µg/m³)",
+        legend=dict(x=0, y=1),
+        height=400,
+    )
+
+    return fig
+
+
+def befere_vs_after(baseline_mae, baseline_rmse, baseline_r2,
+                    lag_mae, lag_rmse, lag_r2):
+    """Bar charts comparing model performance metrics."""
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        x=["MAE", "RMSE", "R²"],
+        y=[baseline_mae, baseline_rmse, baseline_r2],
+        name="Baseline",
+        marker_color="indianred"
+    ))
+
+    fig.add_trace(go.Bar(
+        x=["MAE", "RMSE", "R²"],
+        y=[lag_mae, lag_rmse, lag_r2],
+        name="Lag-Based",
+        marker_color="seagreen"
+    ))
+
+    fig.update_layout(
+        title="📉 Baseline vs Lag-Based Model Performance",
+        barmode="group",
+        yaxis_title="Error / Score",
+    )
+
+    return fig
+
+
+def plot_lag_feature_importances(fi: pd.DataFrame):
+    fig = px.bar(
+        fi.sort_values("importance", ascending=True),
+        x="importance",
+        y="feature",
+        orientation="h",
+        title="Lag Model Feature Importances",
+        labels={"importance": "Importance", "feature": "Feature"},
+    )
+    fig.update_layout(
+        height=400,
+        margin={"r": 0,
+                "t": 30,
+                "l": 0,
+                "b": 0})
+    return fig
