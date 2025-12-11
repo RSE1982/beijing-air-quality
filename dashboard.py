@@ -25,6 +25,12 @@ st.write("Analyze Beijing's air quality through\
           various hypotheses and models.")
 
 # Define pages for navigation
+homepage = st.Page("pages/home.py",
+                   title="Home",
+                   icon="🏠")
+about = st.Page("pages/about.py",
+                title="About",
+                icon="ℹ️")
 overview = st.Page("pages/overview.py",
                    title="Overview",
                    icon="🏠")
@@ -53,9 +59,27 @@ forcasting = st.Page("pages/forecasting.py",
                      title="Air Quality Forecasting",
                      icon="📈")
 
-nav = st.navigation([overview, hypothesis1, hypothesis2, hypothesis3,
-                     hypothesis4, hypothesis5, clustering, modelling,
-                     forcasting])
+nav = st.navigation({
+    "🏠 Dashboard": [
+        homepage,
+        overview,
+        about],   # top-level page, NOT a list
+
+    "🔬 Hypotheses": [         # submenu, MUST be a list
+        hypothesis1,
+        hypothesis2,
+        hypothesis3,
+        hypothesis4,
+        hypothesis5,
+    ],
+
+    "📊 Analysis": [           # submenu, MUST be a list
+        clustering,
+        modelling,
+    ],
+
+    "📈 Forecasting": [forcasting],  # top-level page, NOT a list
+})
 
 current_page = nav.title
 

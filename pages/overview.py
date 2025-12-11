@@ -16,19 +16,8 @@ meta = load_station_meta()
 
 col1, col2 = st.columns([1, 2])
 with col1:
-    col1_tab1, col1_tab2, col1_tab3, col1_tab4 = st.tabs(["About", "📈 Snapshot", "Time Summary", "ℹ️ PM2.5 Summary"])
+    col1_tab1, col1_tab2, col1_tab3 = st.tabs(["📈 Snapshot", "Time Summary", "ℹ️ PM2.5 Summary"])
     with col1_tab1:
-        st.write("""
-            Welcome to the **Beijing Clean Air Dashboard**, your interactive companion to the  
-            **Beijing Air Quality Analysis & Forecasting** Capstone project.
-
-            Use this dashboard to explore:
-            - Seasonal, spatial, meteorological, and temporal pollution patterns  
-            - Statistical validation of five hypotheses  
-            - XGBoost-based PM2.5 forecasting  
-            - Station-level clustering and PCA insights  
-            """)
-    with col1_tab2:
         # ------------------------- KPI Metrics -------------------------
         st.markdown("## 📊 Dataset Snapshot")
 
@@ -39,7 +28,7 @@ with col1:
         k2.metric("Stations", df["station"].nunique())
         k3.metric("Years Covered", f"{df['year'].min()}–{df['year'].max()}")
         k4.metric("Features", df.shape[1])
-    with col1_tab3:
+    with col1_tab2:
         first_date = df['datetime'].min().date()
         last_date = df['datetime'].max().date()
         date_range = last_date - first_date
@@ -47,7 +36,7 @@ with col1:
         st.metric("First Date", str(first_date))
         st.metric("Last Date", str(last_date))
         st.metric("Days Covered", f"{date_range.days:,}")
-    with col1_tab4:
+    with col1_tab3:
         # ------------------------- PM2.5 KPIs -------------------------
         st.markdown("## 🌫 PM2.5 Summary")
 
