@@ -6,6 +6,10 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 import numpy as np
 
+MARGINS = {"r": 0,
+           "t": 30,
+           "l": 0,
+           "b": 0}
 
 # Hypothesis 1 Charts #
 def seasonal_boxplot(df: pd.DataFrame) -> px.box:
@@ -21,7 +25,8 @@ def seasonal_boxplot(df: pd.DataFrame) -> px.box:
         labels={"season": "Season", "pm25": "PM2.5 Levels (µg/m³)"},
         title="PM2.5 Distribution by Season"
     )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False,
+                      margin=MARGINS)
     return fig
 
 
@@ -41,7 +46,8 @@ def monthly_violin(df: pd.DataFrame) -> px.violin:
         labels={"month_name": "Month", "pm25": "PM2.5 Levels (µg/m³)"},
         title="PM2.5 Distribution by Month"
     )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False, 
+                      margin=MARGINS)
     return fig
 
 def monthly_trend(df: pd.DataFrame) -> px.line:
@@ -77,7 +83,8 @@ def monthly_trend(df: pd.DataFrame) -> px.line:
     fig.update_layout(
         width=800,
         height=350,
-        legend_title_text="Year"
+        legend_title_text="Year",
+        margin=MARGINS
     )
     return fig
 
@@ -107,7 +114,9 @@ def yearly_trend(df: pd.DataFrame) -> px.line:
 
     fig.update_layout(
         width=800,
-        height=400
+        height=400,
+        margins=MARGINS,
+        legend_title_text="Year"
     )
     return fig
 
@@ -121,8 +130,12 @@ def spatial_boxplot(df: pd.DataFrame) -> px.box:
     Returns:
         px.box: Plotly box plot figure
     """
-    return px.box(df, x="station", y="pm25",
+    fig = px.box(df, x="station", y="pm25",
                   title="PM2.5 Variation Across Stations")
+    
+    fig.update_layout(showlegend=False,
+                      margin=MARGINS)
+    return fig
 
 def violin_by_station(df: pd.DataFrame) -> px.violin:
     """
@@ -137,7 +150,8 @@ def violin_by_station(df: pd.DataFrame) -> px.violin:
         labels={"station": "Station", "pm25": "PM2.5 Levels (µg/m³)"},
         title="PM2.5 Distribution by Station"
     )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False,
+                      margin=MARGINS)
     return fig
 
 def map_pm25_by_station(df: pd.DataFrame, meta: pd.DataFrame) -> px.scatter_mapbox:
@@ -166,10 +180,7 @@ def map_pm25_by_station(df: pd.DataFrame, meta: pd.DataFrame) -> px.scatter_mapb
         mapbox_style="carto-positron",
         title="Average PM2.5 by Station"
     )
-    fig.update_layout(margin={"r": 0,
-                              "t": 30,
-                              "l": 0,
-                              "b": 0},
+    fig.update_layout(margin=MARGINS,
                       height=400,
                       width=1000)
     return fig
@@ -188,7 +199,8 @@ def area_boxplot(df: pd.DataFrame) -> px.box:
         labels={"area_type": "Area Type", "pm25": "PM2.5 Levels (µg/m³)"},
         title="PM2.5 Variation Across Area Types"
     )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False, 
+                      margin=MARGINS)
     return fig
 
 def violin_by_area_type(df: pd.DataFrame) -> px.violin:
@@ -204,7 +216,8 @@ def violin_by_area_type(df: pd.DataFrame) -> px.violin:
         labels={"area_type": "Area Type", "pm25": "PM2.5 Levels (µg/m³)"},
         title="PM2.5 Distribution by Area Type"
     )
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False,
+                      margin=MARGINS)
     return fig
 
 
@@ -236,10 +249,7 @@ def weather_distribution(df: pd.DataFrame, weather_var: str) -> px.histogram:
         height=400,
         title=f"Distribution of {label}",
         showlegend=False,
-        margin={"r": 0,
-                "t": 30,
-                "l": 0,
-                "b": 0}
+        margin=MARGINS
     )
 
     return fig
@@ -264,10 +274,7 @@ def weather_boxplot(df: pd.DataFrame, weather_var: str) -> px.box:
         xaxis_visible=False,     # hides empty x-axis
         xaxis_showticklabels=False,
         showlegend=False,
-        margin={"r": 0,
-                "t": 30,
-                "l": 0,
-                "b": 0}
+        margin=MARGINS
     )
 
     return fig
@@ -327,10 +334,7 @@ def temperal_variation(df: pd.DataFrame, value: str) -> px.line:
     fig.update_layout(
         width=800,
         height=400,
-        margin={"r": 0,
-                "t": 30,
-                "l": 0,
-                "b": 0}
+        margin=MARGINS
     )
 
     return fig
@@ -374,6 +378,8 @@ def plot_actual_vs_pred(y_true, baseline_pred, lag_pred, n=300):
         yaxis_title="PM2.5 (µg/m³)",
         legend=dict(x=0, y=1),
         height=400,
+        width=800,
+        margin=MARGINS
     )
 
     return fig
@@ -402,6 +408,9 @@ def befere_vs_after(baseline_mae, baseline_rmse, baseline_r2,
         title="📉 Baseline vs Lag-Based Model Performance",
         barmode="group",
         yaxis_title="Error / Score",
+        height=400,
+        width=700,
+        margin=MARGINS
     )
 
     return fig
@@ -418,8 +427,5 @@ def plot_lag_feature_importances(fi: pd.DataFrame):
     )
     fig.update_layout(
         height=400,
-        margin={"r": 0,
-                "t": 30,
-                "l": 0,
-                "b": 0})
+        margin=MARGINS)
     return fig

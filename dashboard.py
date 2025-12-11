@@ -101,6 +101,18 @@ if current_page == "Hypothesis 3":
         index=0,
         key="weather_filter"
     )
+if current_page == "Clustering Analysis":
+    st.header("🧭 Cluster Profile Explorer")
+    cluster_ids = [0, 1, 2, 3, 4, 5, 6, 7]
+    default_cluster = cluster_ids[0] if cluster_ids else None
+
+    selected_cluster = st.sidebar.selectbox(
+        "Select a cluster:",
+        options=cluster_ids,
+        index=0,
+        format_func=lambda c: f"Cluster {c}",
+        key="selected_cluster"
+    )
 
 # Include a footer in the sidebar
 
