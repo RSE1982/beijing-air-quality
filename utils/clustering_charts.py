@@ -103,14 +103,14 @@ def silhouette_values_per_cluster(df: pd.DataFrame) -> go.Figure:
     Creates a silhouette plot highlighting the selected cluster.
     """
     fig = px.box(
-    df.sort_values("cluster"),
-    x="cluster",
-    y="silhouette",
-    color="cluster",
-    color_discrete_map=CLUSTER_COLORS_STR,
-    title="Silhouette Values per Cluster",
-    labels={"silhouette": "Silhouette Score"},
-)
+        df.sort_values("cluster"),
+        x="cluster",
+        y="silhouette",
+        color="cluster",
+        color_discrete_map=CLUSTER_COLORS_INT,
+        title="Silhouette Values per Cluster",
+        labels={"silhouette": "Silhouette Score"},
+    )
     fig.update_layout(legend_title_text="Cluster",
                       margin=MARGINS,
                       height=400)
