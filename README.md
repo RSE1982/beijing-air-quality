@@ -8,6 +8,9 @@
 
 **Objective:** Analyse Beijing’s multi-station air quality data, identify temporal + spatial pollution patterns, and build machine learning models (baseline + lag-based) to forecast PM2.5 concentrations.
 
+🚀 **Live Dashboard:**  
+[rse1982-beijing-air-quality.streamlit.app](https://rse1982-beijing-air-quality.streamlit.app/)
+
 ![Beijing Air Quality Banner](images/beijing_air_quality_banner.png)
 
 ---
@@ -326,9 +329,20 @@ Pages are arranged to follow a logical analytical journey:
 - About – dashboard narrative, instructions, ethics, methodology, and guidance
 
 This ensures the dashboard supports data storytelling and helps users interpret air-quality patterns responsibly.
+
+### 🧭 How to Navigate the Dashboard
+
+- Use the **Overview** page for high-level trends and context
+- Hypotheses pages (H1–H5) present statistical evidence visually
+- The **Clustering** page explores spatial station behaviour
+- The **Modelling** page compares baseline and lag-based models
+- The **Forecasting** page shows short-term PM2.5 predictions by station
+- The **About** page explains methodology, ethics, and limitations
+
 ## 🐞 Unfixed Bugs
 
 - Some mobile plots may overflow the screen
+- On the clustering page, only the radar plot filters correctly for the selected cluster
 - Large datasets may cause slow initial load
 
 ## 🔧 Code Evaluation & Performance Improvements
@@ -345,9 +359,28 @@ These refinements demonstrate an iterative, evidence-based approach to writing e
 
 ## 🚀 Deployment
 
+### Local Installation & Deployment (Optional)
+
+This project can be run locally for development or exploration.
+
+#### Requirements
+
+- Python 3.12+
+- Git
+
+#### Setup Steps
+```bash
+git clone https://github.com/RSE1982/beijing-air-quality.git
+cd beijing-air-quality
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run streamlit/app.py
+```
+
 ### Streamlit Cloud
 
-The app is deployed via Streamlit Cloud.
+The app is deployed via Streamlit Cloud following the steps below:
 
 **Steps:**
 
@@ -388,6 +421,17 @@ This project demonstrates that Beijing’s PM2.5 levels show:
 - Meaningful relationships with meteorological variables, such as temperature inversions and low wind conditions
 - Predictability through machine learning, where lag-based models outperform baseline models
 - The dashboard transforms complex analysis into clear, interactive insights suitable for both technical and non-technical audiences.
+
+### Hypothesis summary table
+
+| Hypothesis | Test             | Result            | Conclusion          |
+| ---------- | ---------------- | ----------------- | ------------------- |
+| H1         | ANOVA            | p < 0.001         | Supported           |
+| H2         | ANOVA            | p < 0.001         | Supported           |
+| H3         | Correlation      | Mixed             | Partially supported |
+| H4         | Time-series      | Clear structure   | Supported           |
+| H5         | Model comparison | Lag models better | Supported           |
+
 
 ## 🔮 Future Work & Learning Roadmap
 
