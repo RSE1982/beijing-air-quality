@@ -3,7 +3,7 @@ import streamlit as st
 from utils.model_loader import load_best_model, load_metadata
 from utils.data_loader import (load_feature_importance,
                                load_hyperparameter_results,
-                               load_best_model_predictions)
+                               load_model_predictions)
 from utils.modelling_charts import (bar_chart,
                                     prediction_vs_actual_chart,
                                     residuals_distribution_chart,
@@ -13,9 +13,9 @@ from utils.modelling_charts import (bar_chart,
 # load models and data
 model = load_best_model()
 metadata = load_metadata()
-feature_imp = load_feature_importance()
+feature_imp = load_feature_importance("regression")
 grid_results = load_hyperparameter_results()
-predictions = load_best_model_predictions()
+predictions = load_model_predictions("regression")
 
 best_preds = predictions["normal_preds"]
 y_true = predictions["y_true"]

@@ -7,7 +7,7 @@ improves PM2.5 forecasting accuracy.
 import streamlit as st
 from utils.data_loader import (load_engineered,
                                load_model_predictions,
-                               load_lag_feature_importance)
+                               load_feature_importance)
 from utils.charts import (plot_actual_vs_pred,
                           befere_vs_after,
                           plot_lag_feature_importances)
@@ -25,11 +25,11 @@ st.latex(r"""
 
 # Load data and model predictions
 df = load_engineered()
-predictions = load_model_predictions()
+predictions = load_model_predictions("h5")
 y_true = predictions["y_true"]
 baseline_pred = predictions["baseline_pred"]
 lag_pred = predictions["l_pred"]
-feature_importance = load_lag_feature_importance()
+feature_importance = load_feature_importance("h5")
 
 # Model performance metrics from notebook evaluation
 baseline_mae = 42.163872063135194  # obtained from notebook

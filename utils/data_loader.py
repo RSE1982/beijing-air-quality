@@ -14,6 +14,7 @@ ROOT = Path(__file__).parent.parent
 
 # Define the data directory
 DATA_PATH = ROOT / "data"
+MODEL_OUTPUT = ROOT / "model_outputs"
 
 @st.cache_data
 def load_engineered() -> pd.DataFrame:
@@ -48,7 +49,7 @@ def load_clustered() -> pd.DataFrame:
         pd.DataFrame: Clustered Beijing air quality data.
     """
 
-    return load_csv(DATA_PATH / "derived" / "beijing_clustered.csv")
+    return load_csv(MODEL_OUTPUT / "clustering" / "beijing_clustered.csv")
 
 
 @st.cache_data
@@ -60,7 +61,7 @@ def load_pca_coords() -> pd.DataFrame:
         pd.DataFrame: PCA coordinates data.
     """
 
-    return load_csv(DATA_PATH / "derived" / "pca_coords.csv")
+    return load_csv(MODEL_OUTPUT / "clustering" / "pca_coords.csv")
 
 
 @st.cache_data
@@ -71,7 +72,7 @@ def load_silhouette_values() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Silhouette values data.
     """
-    return load_csv(DATA_PATH / "derived" / "silhouette_values.csv")
+    return load_csv(MODEL_OUTPUT / "clustering" / "silhouette_values.csv")
 
 
 @st.cache_data
@@ -85,7 +86,7 @@ def load_cluster_profiles() -> dict:
         dict: Cluster profiles with normalized keys.
     """
 
-    CLUSTER_PROFILES = DATA_PATH / "derived" / "cluster_profiles.yml"
+    CLUSTER_PROFILES = ROOT / "streamlit" / "cluster_profiles.yml"
 
     with open(CLUSTER_PROFILES, "r", encoding="utf-8") as f:
         profiles = yaml.safe_load(f) or {}
@@ -100,14 +101,16 @@ def load_cluster_profiles() -> dict:
 
 
 @st.cache_data
-def load_feature_importance() -> pd.DataFrame:
+def load_feature_importance(model: str) -> pd.DataFrame:
     """
     Load feature importance data.
-
+    args:
+        model (str): Model name.
     Returns:
         pd.DataFrame: Feature importance data.
     """
-    return load_csv(DATA_PATH / "model_outputs" / "feature_importance.csv")
+
+    return load_csv(MODEL_OUTPUT / model / "feature_importances.csv")
 
 
 @st.cache_data
@@ -118,41 +121,17 @@ def load_hyperparameter_results() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Hyperparameter tuning results.
     """
-    return load_csv(DATA_PATH / "model_outputs" /
+    return load_csv(MODEL_OUTPUT / "regression" /
                     "hyperparameter_results.csv")
 
 
 @st.cache_resource
-def load_model_predictions() -> pd.DataFrame:
+def load_model_predictions(model: str) -> pd.DataFrame:
     """
     Load model predictions data.
-
+    args:
+        model (str): Model name.
     Returns:
         pd.DataFrame: Model predictions data.
     """
-    return np.load(DATA_PATH / "model_outputs" / "h5_predictions.npz")
-
-
-@st.cache_resource
-def load_best_model_predictions() -> pd.DataFrame:
-    """
-    Load best model predictions data.
-
-    Returns:
-        pd.DataFrame: Best model predictions data.
-    """
-
-    return np.load(DATA_PATH / "model_outputs" / "best_predictions.npz")
-
-
-@st.cache_data
-def load_lag_feature_importance() -> pd.DataFrame:
-    """
-    Load feature importance data.
-
-    Returns:
-        pd.DataFrame: Feature importance data.
-    """
-
-    return load_csv(DATA_PATH / "model_outputs" /
-                    "lag_model_feature_importances.csv")
+    return np.load(MODEL_OUTPUT / model / "predictions.npz")
