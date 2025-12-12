@@ -1,0 +1,63 @@
+0:
+  name: "Moderate Spring–Autumn Pollution"
+  summary: "Transitional-season conditions with moderate PM2.5 levels and mild meteorology."
+  notes:
+    - "Primarily associated with spring and autumn periods."
+    - "PM2.5 levels are elevated but not extreme."
+    - "Represents transitional atmospheric conditions with limited stagnation."
+
+1:
+  name: "Clean Winter High-Pressure Days"
+  summary: "Cold, dry winter conditions with very low PM2.5 concentrations."
+  notes:
+    - "Dominated by winter observations."
+    - "High-pressure systems promote atmospheric stability without pollution build-up."
+    - "Represents clean, crisp winter air episodes."
+
+2:
+  name: "Clean, Cool Spring Days"
+  summary: "Low PM2.5 levels under cool and dry spring conditions with strong dispersion."
+  notes:
+    - "Spring-heavy cluster composition."
+    - "Consistently among the lowest PM2.5 concentrations."
+    - "Good atmospheric mixing reduces pollutant accumulation."
+
+3:
+  name: "Warm-Season Moderate Pollution"
+  summary: "Warm summer conditions with noticeable but moderate PM2.5 pollution."
+  notes:
+    - "Predominantly summer observations."
+    - "Moderate haze under warm temperatures."
+    - "Pollution present but below severe episode thresholds."
+
+4:
+  name: "Rain-Driven Clean Days"
+  summary: "Low PM2.5 levels associated with precipitation events."
+  notes:
+    - "All observations coincide with rainfall."
+    - "Wet deposition effectively removes airborne pollutants."
+    - "Cleaner air compared to dry conditions across seasons."
+
+5:
+  name: "Mixed-Season Moderate Pollution"
+  summary: "Variable meteorological conditions producing inconsistent PM2.5 levels."
+  notes:
+    - "Includes observations from multiple seasons."
+    - "Moderate average PM2.5 with high variability."
+    - "Functions as a heterogeneous or transitional cluster."
+
+6:
+  name: "Cold Polluted Winter Cluster"
+  summary: "Cold, stagnant winter conditions with elevated PM2.5 concentrations."
+  notes:
+    - "Winter-dominated with low temperatures."
+    - "Higher PM2.5 likely linked to heating emissions and weak dispersion."
+    - "Represents winter haze-type pollution events."
+
+7:
+  name: "Severe Warm-Season Pollution"
+  summary: "Hot, stagnant summer conditions producing very high PM2.5 levels."
+  notes:
+    - "Strongly summer-dominated cluster."
+    - "Highest PM2.5 concentrations among all clusters."
+    - "Represents severe warm-season pollution episodes."

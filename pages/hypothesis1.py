@@ -13,7 +13,7 @@ import pingouin as pg
 
 df = load_engineered()
 
-st.title("❄️ Hypothesis 1")
+st.title(":material/ac_unit: Hypothesis 1")
 st.latex(r"""
          \begin{aligned}
          H_0 &: \text{There is no significant difference in mean PM2.5 levels
@@ -28,7 +28,7 @@ with col1:
     # -----------------------------------------------------
     # Summary Metrics
     # -----------------------------------------------------
-    st.subheader("Season Averages")
+    st.subheader(":material/thermostat: Season Averages")
     seasonal_avg = df.groupby("season")["pm25"].mean().round(1)
     colA, colB = st.columns(2)
     colA.metric("Winter avg PM2.5", f"{seasonal_avg['winter']}")
@@ -46,13 +46,14 @@ with col1:
     """)
 
     with col2:
-        tab1, tab2, tab3, tab4, tab5, = st.tabs(["Seasonal Boxplot",
-                                                 "Monthly Distribution",
-                                                 "Monthly Trend",
-                                                 "Yearly Trend",
-                                                 "ANOVA Test",])
-        with tab1:
-            st.subheader("📊 Seasonal PM2.5 Distribution")
+        tab = st.tabs([":material/partly_cloudy_day: Seasonal Boxplot",
+                       ":material/calendar_month: Monthly Distribution",
+                       ":material/calendar_month: Monthly Trend",
+                       ":material/calendar_today: Yearly Trend",
+                       ":material/assessment: ANOVA Test",])
+        with tab[0]:
+            st.subheader(":material/partly_cloudy_day:\
+                         Seasonal PM2.5 Distribution")
             graph, info = st.columns([3, 2])
             with graph:
                 st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
@@ -75,8 +76,9 @@ with col1:
                     Season is a major driver of pollution levels, with winter
                     pollution being consistently and significantly higher.
                     """)
-        with tab2:
-            st.subheader("📈 Monthly PM2.5 Distribution")
+        with tab[1]:
+            st.subheader(":material/calendar_month:\
+                         Monthly PM2.5 Distribution")
             graph, info = st.columns([3, 2])
             with graph:
                 st.plotly_chart(monthly_violin(df), use_container_width=True)
@@ -97,8 +99,8 @@ with col1:
                     Monthly patterns show a clear U-shaped seasonal cycle,
                     confirming strong periodic behaviour in PM2.5.
                     """)
-        with tab3:
-            st.subheader("📈 Monthly PM2.5 Trend")
+        with tab[2]:
+            st.subheader(":material/calendar_month: Monthly PM2.5 Trend")
             graph, info = st.columns([3, 2])
             with graph:
                 st.plotly_chart(monthly_trend(df), use_container_width=True)
@@ -119,8 +121,8 @@ with col1:
                     PM2.5 follows a predictable seasonal rhythm, with winter
                     peaks and summer lows.
                     """)
-        with tab4:
-            st.subheader("📈 Yearly PM2.5 Trend")
+        with tab[3]:
+            st.subheader(":material/calendar_today: Yearly PM2.5 Trend")
             graph, info = st.columns([3, 2])
             with graph:
                 st.plotly_chart(yearly_trend(df), use_container_width=True)
@@ -142,8 +144,8 @@ with col1:
                     demonstrating that the effect is structural rather than
                     temporary.
                     """)
-        with tab5:
-            st.subheader("🧪 ANOVA Test Results")
+        with tab[4]:
+            st.subheader(":material/assessment: ANOVA Test Results")
             anova_results = pg.anova(dv="pm25",
                                      between="season",
                                      data=df,

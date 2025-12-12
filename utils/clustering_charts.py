@@ -12,31 +12,54 @@ CLUSTER_COLORS_INT = {
     5: "#8c564b",
     6: "#e377c2",
     7: "#7f7f7f",
-}
+}  # Cluster ID to color mapping
 
+# Convert integer keys to string for Plotly color mapping
 CLUSTER_COLORS_STR = {str(k): v for k, v in CLUSTER_COLORS_INT.items()}
+
 
 def make_cluster_radar(df: pd.DataFrame, cluster_id: int,
                        features: list[str]) -> go.Figure:
     """
     Creates a normalised radar chart for a given cluster.
     Normalisation is done over cluster-level means for each feature.
+    Parameters:
+        df : pd.DataFrame
+            Must contain 'cluster' column and feature columns.
+        cluster_id : int
+            Cluster to plot.
+        features : list[str]
+            List of feature column names to include in the radar chart.
+    Returns:
+        go.Figure
     """
+
+    # Get colour for the cluster
     color = CLUSTER_COLORS_INT[cluster_id]
 
+    # Compute normalised means
     cluster_means_all = df.groupby("cluster")[features].mean()
+
+    # Normalisation
     feature_min = cluster_means_all.min()
     feature_max = cluster_means_all.max()
 
     # avoid division by zero
     denom = (feature_max - feature_min).replace(0, 1e-9)
 
+    # Get this cluster's normalised means
     this_cluster_mean = cluster_means_all.loc[cluster_id]
+
+    # Scale to [0, 1]
     scaled = (this_cluster_mean - feature_min) / denom
 
+    # Prepare data for radar chart
     theta = list(features) + [features[0]]
+
+    # Close the radar chart loop
     r = scaled.tolist() + [scaled.tolist()[0]]
 
+    # Create radar chart
     fig = go.Figure(
         data=go.Scatterpolar(
             r=r,
@@ -48,6 +71,7 @@ def make_cluster_radar(df: pd.DataFrame, cluster_id: int,
         )
     )
 
+    # Update layout
     fig.update_layout(
         title=f"Cluster {cluster_id} — Normalised Feature Profile",
         polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
@@ -56,13 +80,24 @@ def make_cluster_radar(df: pd.DataFrame, cluster_id: int,
         height=400,
         width=400
     )
+
     return fig
+
 
 def pca_cluster_scatter(df: pd.DataFrame) -> go.Figure:
     """
     Creates a PCA scatter plot colored by cluster.
+    Parameters:
+        df : pd.DataFrame
+            Must contain 'pc1', 'pc2', and 'cluster' columns.
+    Returns:
+        go.Figure
     """
-    df["cluster"] = df["cluster"].astype(str)  # Ensure cluster is string for color mapping
+
+    # Ensure cluster is string for color mapping
+    df["cluster"] = df["cluster"].astype(str)
+
+    # Create scatter plot
     fig = px.scatter(
         df.sort_values("cluster"),
         x="pc1",
@@ -74,18 +109,29 @@ def pca_cluster_scatter(df: pd.DataFrame) -> go.Figure:
         title="PCA Scatter Plot of Clusters",
         labels={"pc1": "Principal Component 1", "pc2": "Principal Component 2"}
     )
-    
+
+    # Update layout
     fig.update_layout(legend_title_text="Cluster",
                       margin=MARGINS,
                       height=400)
 
     return fig
 
+
 def plot_cluster_size(df: pd.DataFrame) -> go.Figure:
     """
     Plots the size of each cluster as a bar chart.
+    Parameters:
+        df : pd.DataFrame
+            Must contain 'cluster' column.
+    Returns:
+        go.Figure
     """
+
+    # Calculate cluster sizes
     cluster_counts = df["cluster"].value_counts().sort_index()
+
+    # Create bar chart
     fig = px.bar(
         cluster_counts,
         title="Cluster Sizes",
@@ -93,15 +139,26 @@ def plot_cluster_size(df: pd.DataFrame) -> go.Figure:
         color_discrete_map=CLUSTER_COLORS_STR,
         labels={"index": "Cluster", "value": "Count"},
     )
+
+    # Update layout
     fig.update_layout(legend_title_text="Cluster",
                       margin=MARGINS,
                       height=400)
+
     return fig
+
 
 def silhouette_values_per_cluster(df: pd.DataFrame) -> go.Figure:
     """
     Creates a silhouette plot highlighting the selected cluster.
+    Parameters:
+        df : pd.DataFrame
+            Must contain 'cluster' and 'silhouette' columns.
+    Returns:
+        go.Figure
     """
+
+    # Create box plot
     fig = px.box(
         df.sort_values("cluster"),
         x="cluster",
@@ -111,24 +168,26 @@ def silhouette_values_per_cluster(df: pd.DataFrame) -> go.Figure:
         title="Silhouette Values per Cluster",
         labels={"silhouette": "Silhouette Score"},
     )
+
+    # Update layout
     fig.update_layout(legend_title_text="Cluster",
                       margin=MARGINS,
                       height=400)
     return fig
 
+
 def silhouette_plot(df_sil: pd.DataFrame,
                     selected_cluster: int) -> go.Figure:
     """
     Creates a horizontal silhouette plot for all clusters.
-    
+
     Parameters
-    ----------
-    df_sil : pd.DataFrame
-        Must contain 'cluster' and 'silhouette' columns.
-    selected_cluster : int
-        Cluster to highlight.
-    color_map : dict
-        Mapping of cluster_id -> colour hex string.
+        df_sil : pd.DataFrame
+            Must contain 'cluster' and 'silhouette' columns.
+        selected_cluster : int
+            Cluster to highlight.
+        color_map : dict
+            Mapping of cluster_id -> colour hex string.
 
     Returns
     -------
@@ -145,7 +204,8 @@ def silhouette_plot(df_sil: pd.DataFrame,
     ytick_labels = []
 
     for cluster in clusters:
-        cluster_values = df_sil_sorted[df_sil_sorted["cluster"] == cluster]["silhouette"]
+        cluster_values = df_sil_sorted[df_sil_sorted["cluster"]
+                                       == cluster]["silhouette"]
         n_points = len(cluster_values)
 
         # Standardised colour from your cluster mapping
@@ -173,6 +233,7 @@ def silhouette_plot(df_sil: pd.DataFrame,
     # Average silhouette score
     avg_sil = df_sil["silhouette"].mean()
 
+    # Add average silhouette line
     fig.add_vline(
         x=avg_sil,
         line_dash="dash",
@@ -181,6 +242,7 @@ def silhouette_plot(df_sil: pd.DataFrame,
         annotation_position="top right"
     )
 
+    # Update layout
     fig.update_layout(
         title="Silhouette Plot (Cluster Quality)",
         xaxis_title="Silhouette score",

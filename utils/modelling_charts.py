@@ -55,7 +55,7 @@ def prediction_vs_actual_chart(actual: list, predicted: list) -> px.scatter:
             trace.line.width = 3
 
     fig.update_layout(margin=MARGINS,
-                      height=500)  # set layout properties
+                      height=400)  # set layout properties
     return fig  # return the figure
 
 
@@ -79,7 +79,7 @@ def residuals_distribution_chart(residuals: list) -> px.histogram:
         title="Residuals Distribution",
         xaxis_title="Residuals",
         margin=MARGINS,
-        height=500,
+        height=400,
         showlegend=False
     )
     return fig
@@ -106,7 +106,7 @@ def residuals_vs_predicted_chart(residuals: list,
         if trace.mode == "lines":
             trace.line.color = "red"
             trace.line.width = 3
-    fig.update_layout(margin=MARGINS, height=500)
+    fig.update_layout(margin=MARGINS, height=400)
     return fig
 
 
@@ -131,4 +131,29 @@ def feature_importance_chart(feature_imp: pd.DataFrame) -> px.bar:
     )
     fig.update_layout(margin=MARGINS,
                       height=400)
+    return fig
+
+
+def forecast_line_chart(all_forecasts: pd.DataFrame,
+                        horizon: int) -> px.line:
+    """
+    Creates a line chart for PM2.5 forecasts over a specified horizon.
+    Args:
+        all_forecasts (pd.DataFrame): DataFrame containing forecasted PM2.5
+            values for different stations.
+        horizon (int): Forecast horizon in hours.
+    Returns:
+        px.line: A Plotly line chart figure.
+    """
+    fig = px.line(
+        all_forecasts,
+        x="datetime",
+        y="pm25_predicted",
+        color="station_name",
+        labels={"station_name": "Station", "pm25_predicted": "PM2.5 (µg/m³)"},
+        title=f"Next {horizon} Hours PM2.5 Forecast for All Stations"
+        )  # Create line plot
+    fig.update_layout(legend_title_text="Stations",
+                      hovermode="closest",
+                      margin=MARGINS)
     return fig

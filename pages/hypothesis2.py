@@ -12,21 +12,19 @@ import pandas as pd
 from utils.charts import (spatial_boxplot,
                           map_pm25_by_station,
                           violin_by_station,
-                          area_boxplot, 
+                          area_boxplot,
                           violin_by_area_type)
-
-def eta_squared_anova(groups):
-    """Compute eta-squared effect size from groups used in ANOVA."""
-    all_values = np.concatenate(groups) # Combine all group values
-    grand_mean = np.mean(all_values) # Overall mean
-    ss_between = sum(len(g) * (np.mean(g) - grand_mean) ** 2 for g in groups) # Between-group sum of squares
-    ss_total = np.sum((all_values - grand_mean) ** 2) # Total sum of squares
-    return ss_between / ss_total if ss_total > 0 else np.nan # Return eta-squared effect size
+from utils.eta_squared import eta_squared_anova
 
 
+# Load data
 df = load_engineered()
 meta = load_station_meta()
+
+# Prepare data for ANOVA
 station_means = df.groupby("station")["pm25"].mean().reset_index()
+
+# ANOVA for stations and area types
 station_groups = [group["pm25"].dropna().values
                   for _, group in df.groupby("station", observed=False)
                   if group["pm25"].notna().sum() > 0]
@@ -35,13 +33,18 @@ area_groups = [
     for _, group in df.groupby("area_type", observed=False)
     if group["pm25"].notna().sum() > 0
     ]
+
+# Perform ANOVA
 f_stat_station, p_value_station = stats.f_oneway(*station_groups)
 f_stat_area, p_value_area = stats.f_oneway(*area_groups)
+
+# Calculate eta-squared effect sizes
 eta_station = np.nan
 eta_area = np.nan
 eta_station = eta_squared_anova(station_groups)
 eta_area = eta_squared_anova(area_groups)
 
+# Compute station statistics
 station_stats = df.groupby("station")["pm25"].agg(
             Mean="mean",
             Median="median",
@@ -49,7 +52,7 @@ station_stats = df.groupby("station")["pm25"].agg(
             Max="max",
             Min="min"
         ).reset_index()
-
+# Prepare ANOVA results for display
 anova_results = {
             "Stations": {
                 "type": "Stations",
@@ -67,7 +70,6 @@ anova_results = {
 
 # Compute area-type means
 area_means = df.groupby("area_type")["pm25"].mean()
-
 urban_mean = area_means.get("urban", float("nan"))
 suburban_mean = area_means.get("suburban", float("nan"))
 residential_mean = area_means.get("residential", float("nan"))
@@ -80,12 +82,11 @@ suburban_residential_delta = suburban_mean - residential_mean
 # Highest and lowest area-type averages
 highest_area = area_means.idxmax()
 lowest_area = area_means.idxmin()
-
 highest_area_value = area_means.max()
 lowest_area_value = area_means.min()
 
 
-st.title("Hypothesis 2")
+st.title(":material/cell_tower: Hypothesis 2")
 st.latex(r"""
 
         \begin{aligned}
@@ -99,44 +100,44 @@ st.latex(r"""
 
 col1, col2 = st.columns([1, 3])
 with col1:
-    st.subheader("Station & Area-Type Metrics")
+    st.subheader(":material/key: Key Metrics")
     colA, colB = st.columns(2)
     colA.metric("Highest Avg PM2.5 (Station)",
-                   f"{station_means['pm25'].max():.1f} µg/m³",
-                   station_means.loc[station_means['pm25'].idxmax(),
-                                     'station'])
+                f"{station_means['pm25'].max():.1f} µg/m³",
+                station_means.loc[station_means['pm25'].idxmax(),
+                                  'station'])
 
     colB.metric("Lowest Avg PM2.5 (Station)",
-                   f"{station_means['pm25'].min():.1f} µg/m³",
-                   station_means.loc[station_means['pm25'].idxmin(),
-                                     'station'])
+                f"{station_means['pm25'].min():.1f} µg/m³",
+                station_means.loc[station_means['pm25'].idxmin(),
+                                  'station'])
     colA, colB = st.columns(2)
-    colA.metric("Highest Area-Type Mean", 
-                f"{highest_area_value:.1f} µg/m³", 
+    colA.metric("Highest Area-Type Mean",
+                f"{highest_area_value:.1f} µg/m³",
                 highest_area)
 
-    colB.metric("Lowest Area-Type Mean", 
-                f"{lowest_area_value:.1f} µg/m³", 
+    colB.metric("Lowest Area-Type Mean",
+                f"{lowest_area_value:.1f} µg/m³",
                 lowest_area)
-    
+
     st.success("""
         **Conclusion:**
-        Hypothesis 2 is supported — PM2.5 levels differ significantly across 
-        monitoring stations and spatial area types, although the statistical 
-        effect size indicates that spatial location explains only a small portion 
-        of overall PM2.5 variability.
+        Hypothesis 2 is supported — PM2.5 levels differ significantly across
+        monitoring stations and spatial area types, although the statistical
+        effect size indicates that spatial location explains only a small
+        portion of overall PM2.5 variability.
     """)
 with col2:
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Station Statistics",
-                                                        "Station Boxplot",
-                                                        "Station Violin Plot",
-                                                        "Station Map",
-                                                        "Area Boxplot",
-                                                        "Area Violin Plot",
-                                                        "ANOVA & Eta Squared"
-                                                        ])
-    with tab1:
-        st.subheader("📈 Station-wise PM2.5 Statistics")
+    tab = st.tabs([":material/bar_chart_4_bars: Station Statistics",
+                   ":material/bar_chart: Plot Station Boxplot",
+                   ":material/bar_chart: Station Violin Plot",
+                   ":material/map: Station Map",
+                   ":material/bar_chart: Plot Area Boxplot",
+                   ":material/bar_chart: Area Violin Plot",
+                   ":material/analytics: ANOVA & Eta Squared"])
+    with tab[0]:
+        st.subheader(":material/bar_chart_4_bars:\
+                      Station-wise PM2.5 Statistics")
         graph, info = st.columns([3, 2])
         with graph:
             st.dataframe(station_stats.style.format({
@@ -166,9 +167,10 @@ with col2:
                 variability, suggesting that spatial location plays a
                 meaningful role in pollution exposure.
                 """)
-    with tab2:
+    with tab[1]:
         # ------------------------- Charts -------------------------
-        st.subheader("📊 PM2.5 Variation Across 12 Stations")
+        st.subheader(":material/bar_chart:\
+                     Plot PM2.5 Variation Across 12 Stations")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(spatial_boxplot(df), use_container_width=True)
@@ -179,7 +181,7 @@ with col2:
                 each station, showing medians, quartiles, and outliers. It
                 reveals which stations experience more variability or more
                 extreme pollution events.
-                        
+
                 **Why it matters:**
                 Boxplots are ideal for comparing multiple groups. They quickly
                 show whether some stations have systematically higher typical
@@ -191,8 +193,8 @@ with col2:
                 higher typical PM2.5 and a wider spread, reinforcing that
                 spatial location impacts pollution intensity.
                 """)
-    with tab3:
-        st.subheader("🎻 PM2.5 Distribution by Station")
+    with tab[2]:
+        st.subheader(":material/bar_chart: PM2.5 Distribution by Station")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(violin_by_station(df), use_container_width=True)
@@ -203,20 +205,20 @@ with col2:
                 for each monitoring station. It highlights the shape of each
                 station’s pollution distribution, including multimodal
                 patterns.
-                        
+
                 **Why it matters:**
                 Density insights provide additional nuance beyond quartiles —
                 for example, whether a station often experiences very high
                 PM2.5 or if most values cluster at certain levels.
-                        
+
                 **Key takeaway:**
                 The distribution shapes differ notably between stations,
                 indicating that pollution behaviour varies spatially, not
                 just in averages but also in overall distribution patterns.
                 """)
-    with tab4:
+    with tab[3]:
         # Compute station averages
-        st.subheader("🗺️ Average PM2.5 by Station on Map")
+        st.subheader(":material/map: Average PM2.5 by Station on Map")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(map_pm25_by_station(station_means, meta),
@@ -228,7 +230,7 @@ with col2:
                         and colours/sizes them based on average PM2.5 levels.
                         It visualises spatial pollution patterns directly on
                         Beijing’s map.
-                        
+
                         **Why it matters:**
                         Mapping makes spatial variation immediately
                         interpretable — users can see whether high-pollution
@@ -239,8 +241,8 @@ with col2:
                         High-PM2.5 stations tend to cluster in more urbanised
                         zones, supporting the hypothesis that geography
                         influences pollution levels.""")
-    with tab5:
-        st.subheader("📊 PM2.5 Variation Across Areas")
+    with tab[4]:
+        st.subheader(":material/bar_chart: PM2.5 Variation Across Areas")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(area_boxplot(df), use_container_width=True)
@@ -250,7 +252,7 @@ with col2:
                 This boxplot compares PM2.5 across Beijing’s area types
                 (e.g., urban vs suburban vs other categories). It shows
                 typical values and variability for each spatial classification.
-                        
+
                 **Why it matters:**
                 Area type generalises station-level insights and reveals
                 structural spatial differences across the city. Urban areas
@@ -261,8 +263,8 @@ with col2:
                 values, confirming that broader spatial characteristics
                 influence pollution levels.
                 """)
-    with tab6:
-        st.subheader("🎻 PM2.5 Distribution by Area")
+    with tab[5]:
+        st.subheader(":material/bar_chart: PM2.5 Distribution by Area")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(violin_by_area_type(df), use_container_width=True)
@@ -277,13 +279,13 @@ with col2:
                 It reveals not just median differences but also distribution
                 shapes — useful for understanding how often each area type
                 experiences very high PM2.5.
-                        
+
                 **Key takeaway:**
                 Urban areas have a denser concentration of high-PM2.5 values,
                 strengthening evidence that spatial characteristics are a
                 major factor in pollution exposure.""")
-    with tab7:
-        st.subheader("📐 ANOVA & Effect Size")
+    with tab[6]:
+        st.subheader(":material/analytics: ANOVA & Effect Size")
         st.dataframe(pd.DataFrame(anova_results).T.style.format({
             "type": "{}",
             "F-statistic": "{:.4f}",
@@ -294,15 +296,15 @@ with col2:
         st.markdown("""
                     **What this shows:**
                     The table presents results from ANOVA tests comparing
-                    PM2.5 across stations and area types, along with 
+                    PM2.5 across stations and area types, along with
                     eta-squared effect sizes indicating how much variance
                     each factor explains.
-                    
+
                     **Why it matters:**
                     ANOVA provides formal statistical evidence to confirm or
                     reject the hypothesis. Eta-squared quantifies how
                     meaningful the spatial differences are in practical terms.
-                    
+
                     **Key takeaway:**
                     Both ANOVA tests return statistically significant
                     differences, but the eta-squared values indicate a small

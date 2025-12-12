@@ -7,15 +7,16 @@ import joblib
 import streamlit as st
 import json
 
-
+# Define the root directory and model path
 ROOT = Path(__file__).parent.parent
 MODEL_PATH = ROOT / "models"
+MODEL_OUTPUT = ROOT / "model_outputs"
 
 
 @st.cache_resource
 def load_best_model():
     """Load the XGBoost regression model used in the analysis."""
-    with open(MODEL_PATH / "best_regression_model.joblib", "rb") as f:
+    with open(MODEL_PATH / "regression" / "best_regression_model.joblib", "rb") as f:
         return joblib.load(f)
 
 
@@ -50,7 +51,7 @@ def load_lag_model():
 @st.cache_resource
 def load_metadata():
     """Load regression metadata."""
-    metadata_path = MODEL_PATH / "regression_metadata.json"
+    metadata_path = MODEL_OUTPUT / "regression" / "regression_metadata.json"
     with open(metadata_path, "r") as f:
         return json.load(f)
 
@@ -58,13 +59,9 @@ def load_metadata():
 @st.cache_resource
 def load_encoders():
     """Load categorical encoders used in the models."""
-    season_dtype = joblib.load(MODEL_PATH / "season_dtype.joblib")
-    area_dtype = joblib.load(MODEL_PATH / "area_dtype.joblib")
-    station_dtype = joblib.load(MODEL_PATH / "station_dtype.joblib")
-    return season_dtype, area_dtype, station_dtype
+    ENCODERS_PATH = MODEL_OUTPUT / "regression"
 
-@st.cache_resource
-def load_feature_names():
-    """Load feature names used in the models."""
-    features = joblib.load(MODEL_PATH / "forecasting_feature_names.joblib")
-    return features
+    season_dtype = joblib.load(ENCODERS_PATH / "season_dtype.joblib")
+    area_dtype = joblib.load(ENCODERS_PATH / "area_dtype.joblib")
+    station_dtype = joblib.load(ENCODERS_PATH / "station_dtype.joblib")
+    return season_dtype, area_dtype, station_dtype

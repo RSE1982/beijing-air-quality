@@ -1,12 +1,19 @@
+"""
+Hypothesis 5 page: Lag Features Improve Model Performance
+This page evaluates whether including lag features in the model
+improves PM2.5 forecasting accuracy.
+"""
+
 import streamlit as st
 from utils.data_loader import (load_engineered,
                                load_model_predictions,
-                               load_lag_feature_importance)
+                               load_feature_importance)
 from utils.charts import (plot_actual_vs_pred,
                           befere_vs_after,
                           plot_lag_feature_importances)
 
-st.title("🤖 Hypothesis 5 — Lag Features Improve Model Performance")
+st.title(":material/smart_toy: Hypothesis 5 —\
+         Lag Features Improve Model Performance")
 st.latex(r"""
          \begin{aligned}
          H_0 &: \text{Lag features do not improve PM2.5 forecasting
@@ -15,13 +22,16 @@ st.latex(r"""
          performance.​}
          \end{aligned}
 """)
+
+# Load data and model predictions
 df = load_engineered()
-predictions = load_model_predictions()
+predictions = load_model_predictions("h5")
 y_true = predictions["y_true"]
 baseline_pred = predictions["baseline_pred"]
 lag_pred = predictions["l_pred"]
-feature_importance = load_lag_feature_importance()
+feature_importance = load_feature_importance("h5")
 
+# Model performance metrics from notebook evaluation
 baseline_mae = 42.163872063135194  # obtained from notebook
 baseline_rmse = 56.09295025109381  # obtained from notebook
 baseline_r2 = 0.37973956724526914  # obtained from notebook
@@ -31,14 +41,15 @@ lag_r2 = 0.9395242494495807  # obtained from notebook
 
 col1, col2 = st.columns([1, 3])
 with col1:
+    st.subheader(":material/key: Key Metrics")
     colA, colB = st.columns(2)
     with colA:
-        st.markdown("Baseline Model")
+        st.markdown("**Baseline Model**")
         st.metric(label="MAE", value=f"{baseline_mae:.2f}")
         st.metric(label="RMSE", value=f"{baseline_rmse:.2f}")
         st.metric(label="R2", value=f"{baseline_r2:.4f}")
     with colB:
-        st.markdown("Lag-Based Model")
+        st.markdown("**Lag-Based Model**")
         st.metric(label="MAE", value=f"{lag_mae:.2f}")
         st.metric(label="RMSE", value=f"{lag_rmse:.2f}")
         st.metric(label="R2", value=f"{lag_r2:.4f}")
@@ -46,13 +57,17 @@ with col1:
     st.success("✔ **Conclusion:** H5 is supported —  \
                     lag features significantly improve forecasting accuracy.")
 with col2:
-    tab1, tab2, tab3 = st.tabs(["Actual vs Lag-Based Predictions",
-                                "Model Performance Comparison",
-                                "Feature Importance"])
+    tab1, tab2, tab3 = st.tabs([":material/trending_up:\
+                                 Actual vs Lag-Based Predictions",
+                                ":material/bar_chart:\
+                                 Model Performance Comparison",
+                                ":material/insights:\
+                                 Feature Importance Analysis"])
     with tab1:
         graph, info = st.columns([3, 2])
         with graph:
-            st.subheader("📈 Actual vs Lag-Based Model Predictions")
+            st.subheader(":material/trending_up:\
+                          Actual vs Lag-Based Model Predictions")
             st.plotly_chart(plot_actual_vs_pred(y_true,
                                                 baseline_pred,
                                                 lag_pred),
@@ -77,7 +92,7 @@ with col2:
     with tab2:
         graph, info = st.columns([3, 2])
         with graph:
-            st.subheader("📊 Model Performance Comparison")
+            st.subheader(":material/bar_chart: Model Performance Comparison")
             st.plotly_chart(befere_vs_after(baseline_mae,
                                             baseline_rmse,
                                             baseline_r2,
@@ -105,7 +120,8 @@ with col2:
     with tab3:
         graph, info = st.columns([3, 2])
         with graph:
-            st.subheader("🔍 Lag-Based Model Feature Importance")
+            st.subheader(":material/insights:\
+                          Lag-Based Model Feature Importance")
             st.plotly_chart(plot_lag_feature_importances(feature_importance),
                             use_container_width=True)
         with info:

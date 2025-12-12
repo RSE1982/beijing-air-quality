@@ -1,0 +1,190 @@
+{
+    "best_model": "XGBRegressor",
+    "best_params": {
+        "objective": "reg:squarederror",
+        "base_score": null,
+        "booster": null,
+        "callbacks": null,
+        "colsample_bylevel": null,
+        "colsample_bynode": null,
+        "colsample_bytree": null,
+        "device": null,
+        "early_stopping_rounds": null,
+        "enable_categorical": false,
+        "eval_metric": "rmse",
+        "feature_types": null,
+        "feature_weights": null,
+        "gamma": null,
+        "grow_policy": null,
+        "importance_type": null,
+        "interaction_constraints": null,
+        "learning_rate": 0.05,
+        "max_bin": null,
+        "max_cat_threshold": null,
+        "max_cat_to_onehot": null,
+        "max_delta_step": null,
+        "max_depth": 4,
+        "max_leaves": null,
+        "min_child_weight": null,
+        "missing": NaN,
+        "monotone_constraints": null,
+        "multi_strategy": null,
+        "n_estimators": 200,
+        "n_jobs": null,
+        "num_parallel_tree": null,
+        "random_state": 42,
+        "reg_alpha": null,
+        "reg_lambda": null,
+        "sampling_method": null,
+        "scale_pos_weight": null,
+        "subsample": 0.8,
+        "tree_method": null,
+        "validate_parameters": null,
+        "verbosity": null
+    },
+    "mae": 9.116674858937614,
+    "rmse": 15.565970667962976,
+    "r2": 0.9465509739423837,
+    "feature_schema": {
+        "temperature": {
+            "min": -19.9,
+            "max": 41.6,
+            "default": 14.1
+        },
+        "dew_point": {
+            "min": -43.4,
+            "max": 29.1,
+            "default": 2.2
+        },
+        "pressure": {
+            "min": 982.4,
+            "max": 1042.8,
+            "default": 1010.3
+        },
+        "rain": {
+            "min": 0.0,
+            "max": 72.5,
+            "default": 0.0
+        },
+        "wind_speed": {
+            "min": 0.0,
+            "max": 12.9,
+            "default": 1.4
+        },
+        "temp_pres_interaction": {
+            "min": -20568.64,
+            "max": 41129.920000000006,
+            "default": 14273.0
+        },
+        "dew_point_spread": {
+            "min": -0.1999999999999993,
+            "max": 46.9,
+            "default": 9.9
+        },
+        "rain_binary": {
+            "min": 0.0,
+            "max": 1.0,
+            "default": 0.0
+        },
+        "area_type": {
+            "min": 0.0,
+            "max": 2.0,
+            "default": 1.0
+        },
+        "hour_sin": {
+            "min": -1.0,
+            "max": 1.0,
+            "default": 1.2246467991473532e-16
+        },
+        "hour_cos": {
+            "min": -1.0,
+            "max": 1.0,
+            "default": 6.123233995736766e-17
+        },
+        "month_sin": {
+            "min": -1.0,
+            "max": 1.0,
+            "default": 1.2246467991473532e-16
+        },
+        "month_cos": {
+            "min": -1.0,
+            "max": 1.0,
+            "default": 6.123233995736766e-17
+        },
+        "season": {
+            "min": 0.0,
+            "max": 3.0,
+            "default": 1.0
+        },
+        "day_of_week": {
+            "min": 0.0,
+            "max": 6.0,
+            "default": 3.0
+        },
+        "month": {
+            "min": 1.0,
+            "max": 12.0,
+            "default": 6.0
+        },
+        "year": {
+            "min": 2013.0,
+            "max": 2016.0,
+            "default": 2014.0
+        },
+        "station": {
+            "min": 0.0,
+            "max": 9.0,
+            "default": 4.0
+        },
+        "relative_humidity": {
+            "min": 1.6878161927073805,
+            "max": 100.0,
+            "default": 51.03118400468725
+        },
+        "pm25_lag_1h": {
+            "min": 2.0,
+            "max": 941.0,
+            "default": 55.0
+        },
+        "pm25_lag_3h": {
+            "min": 2.0,
+            "max": 941.0,
+            "default": 55.0
+        },
+        "pm25_lag_6h": {
+            "min": 2.0,
+            "max": 941.0,
+            "default": 55.0
+        },
+        "pm25_lag_12h": {
+            "min": 2.0,
+            "max": 941.0,
+            "default": 55.0
+        },
+        "pm25_lag_18h": {
+            "min": 2.0,
+            "max": 941.0,
+            "default": 55.0
+        },
+        "pm25_roll_3h_mean": {
+            "min": 2.6666666666666665,
+            "max": 827.0,
+            "default": 58.0
+        },
+        "pm25_roll_6h_mean": {
+            "min": 3.0,
+            "max": 821.5,
+            "default": 58.5
+        },
+        "pm25_roll_12h_mean": {
+            "min": 3.5,
+            "max": 717.75,
+            "default": 58.75
+        },
+        "pm25_roll_18h_mean": {
+            "min": 3.611111111111111,
+            "max": 684.9444444444445,
+            "default": 58.888888888888886
+        }
+    }
+}

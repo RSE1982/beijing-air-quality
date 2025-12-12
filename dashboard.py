@@ -24,7 +24,7 @@ weather_vars = ["temperature",
                 "pressure",
                 "rain",
                 "wind_speed",
-                "relative_humidity"] # List of weather variables
+                "relative_humidity"]  # List of weather variables
 
 # Title of the dashboard
 st.title("🌆 Beijing Clean Air Dashboard")
@@ -34,45 +34,46 @@ st.write("Analyze Beijing's air quality through\
 # Define pages for navigation
 homepage = st.Page("pages/home.py",
                    title="Home",
-                   icon="🏠")
+                   icon=":material/home:")
 about = st.Page("pages/about.py",
                 title="About",
-                icon="ℹ️")
+                icon=":material/info:")
 overview = st.Page("pages/overview.py",
                    title="Overview",
-                   icon="🏠")
+                   icon=":material/overview:")
 hypothesis1 = st.Page("pages/hypothesis1.py",
                       title="Hypothesis 1",
-                      icon="❓")
+                      icon=":material/biotech:")
 hypothesis2 = st.Page("pages/hypothesis2.py",
                       title="Hypothesis 2",
-                      icon="❓")
+                      icon=":material/biotech:")
 hypothesis3 = st.Page("pages/hypothesis3.py",
                       title="Hypothesis 3",
-                      icon="❓")
+                      icon=":material/biotech:")
 hypothesis4 = st.Page("pages/hypothesis4.py",
                       title="Hypothesis 4",
-                      icon="❓")
+                      icon=":material/biotech:")
 hypothesis5 = st.Page("pages/hypothesis5.py",
                       title="Hypothesis 5",
-                      icon="❓")
+                      icon=":material/biotech:")
 clustering = st.Page("pages/clustering.py",
                      title="Clustering Analysis",
-                     icon="📊")
+                     icon=":material/bubble_chart:")
 modelling = st.Page("pages/modelling.py",
                     title="Modeling",
-                    icon="🧠")
+                    icon=":material/psychology:")
 forcasting = st.Page("pages/forecasting.py",
                      title="Air Quality Forecasting",
-                     icon="📈")
+                     icon=":material/trending_up:")
 
+# Set up navigation
 nav = st.navigation({
-    "🏠 Dashboard": [
+    "Dashboard": [
         homepage,
         overview,
-        about],   # top-level page, NOT a list
+        about],
 
-    "🔬 Hypotheses": [         # submenu, MUST be a list
+    "Hypotheses": [
         hypothesis1,
         hypothesis2,
         hypothesis3,
@@ -80,34 +81,33 @@ nav = st.navigation({
         hypothesis5,
     ],
 
-    "📊 Analysis": [           # submenu, MUST be a list
+    "Analysis": [
         clustering
     ],
 
-    "📈 Forecasting": [
+    "Forecasting": [
         modelling,
-        forcasting],  # top-level page, NOT a list
+        forcasting],
 })
 
 current_page = nav.title
 
-# ---------------- Sidebar (filters) ----------------
-
+# Sidebar filters based on the current page
 if current_page == "Hypothesis 3":
     st.sidebar.header("Filters for Hypothesis 3")
-    st.sidebar.write("Adjust the parameters below to filter the data displayed in Hypothesis 3 analysis.")
-    weather_filter = st.sidebar.selectbox(
+    weather_filter = st.sidebar.radio(
         "Select Meteorological Variable",
-        weather_vars,
+        options=weather_vars,
         index=0,
+        format_func=lambda w: w.replace("_", " ").title(),
         key="weather_filter"
     )
 if current_page == "Clustering Analysis":
-    st.sidebar.header("🧭 Cluster Profile Explorer")
+    st.sidebar.header("Cluster Profile")
     cluster_ids = [0, 1, 2, 3, 4, 5, 6, 7]
     default_cluster = cluster_ids[0] if cluster_ids else None
 
-    selected_cluster = st.sidebar.selectbox(
+    selected_cluster = st.sidebar.radio(
         "Select a cluster:",
         options=cluster_ids,
         index=0,
@@ -117,7 +117,6 @@ if current_page == "Clustering Analysis":
 
 if current_page == "Air Quality Forecasting":
     st.sidebar.header("Forecast Settings")
-
     horizon_label = st.sidebar.radio(
         "Select Forecast Horizon:",
         [
@@ -131,14 +130,13 @@ if current_page == "Air Quality Forecasting":
         key="horizon_label"
     )
 
-
 # Include a footer in the sidebar
-
 st.sidebar.caption("""
     © 2025 Robert Steven Elliott\\
     Beijing Air Quality Capstone\\
     Dataset © Song Chen (2017),
     licensed under CC BY 4.0
 """)
+
 # Run the navigation
 nav.run()
