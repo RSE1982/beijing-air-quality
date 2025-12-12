@@ -25,17 +25,18 @@ NUMERIC_FEATURES = [
     "temp_pres_interaction",
 ]
 
+# Get selected cluster from session state or default to 0
 selected_cluster = st.session_state.get("selected_cluster", 0)
 profile = cluster_profiles.get(selected_cluster, {})
 
-
-st.title("🧩 Clustering Analysis")
+st.title(":material/hive: Clustering Analysis")
 
 col1, col2 = st.columns([1, 3])
 with col1:
-    tab1, tab2 = st.tabs(["📊 Overview", "📖 Cluster Profile"])
+    tab1, tab2 = st.tabs([":material/bar_chart: Overview",
+                          ":material/book: Cluster Profile"])
     with tab1:
-        st.subheader("Overview")
+        st.subheader(":material/bar_chart: Overview")
         st.markdown("""
         This page summarises the clustering performed in **Notebook 10**:
 
@@ -52,7 +53,8 @@ with col1:
         m3.metric("Average Silhouette Score",
                   f"{df_sil['silhouette'].mean():.3f}")
     with tab2:
-        st.subheader(profile.get("name", f"Cluster {selected_cluster}"))
+        st.subheader(f":material/book:\
+                      {profile.get('name', f'Cluster {selected_cluster}')}")
         st.write(profile.get("summary", "No profile description available."))
 
         notes = profile.get("notes", [])
@@ -67,13 +69,13 @@ with col1:
                 meteorological features."
         )
 with col2:
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["📊 PCA Visualisation",
-                                            "📖 Cluster Size",
-                                            "📈 Silhouette Values per Cluster",
-                                            "📡 Cluster Feature Profile",
-                                            "📉 Silhouette Plot"])
-    with tab1:
-        st.header("🌀 PCA Cluster Visualisation")
+    tab = st.tabs([":material/scatter_plot: PCA Visualisation",
+                   ":material/bar_chart: Cluster Size",
+                   ":material/insights: Silhouette Values per Cluster",
+                   ":material/radar: Cluster Feature Profile",
+                   ":material/insights: Silhouette Plot"])
+    with tab[0]:
+        st.header(":material/scatter_plot: PCA Cluster Visualisation")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(pca_cluster_scatter(df_pca),
@@ -96,8 +98,8 @@ with col2:
             separability and structure, showing how distinct or blended the
             clusters are in reduced feature space.
             """)
-    with tab2:
-        st.header("📊 Cluster Size")
+    with tab[1]:
+        st.header(":material/bar_chart: Cluster Size")
         graph, info = st.columns([3, 2])
         with graph:
             cluster_counts = df_clusters["cluster"].value_counts().sort_index()
@@ -117,8 +119,8 @@ with col2:
             The distribution of cluster sizes helps identify dominant
             clusters, rare patterns, and potential imbalances within the data.
             """)
-    with tab3:
-        st.header("📈 Silhouette Values per Cluster")
+    with tab[2]:
+        st.header(":material/insights: Silhouette Values per Cluster")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(silhouette_values_per_cluster(df_sil),
@@ -145,8 +147,8 @@ with col2:
             more distinct, while clusters with low or wide ranges of
             silhouette values may require re-evaluation.
             """)
-    with tab4:
-        st.header("📡 Cluster Feature Profiles")
+    with tab[3]:
+        st.header(":material/radar: Cluster Feature Profiles")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(make_cluster_radar(df_clusters,
@@ -171,8 +173,8 @@ with col2:
             interpret the environmental and pollution patterns that
             differentiate one cluster from another.
             """)
-    with tab5:
-        st.header("📈 Silhouette Plot (Cluster Quality)")
+    with tab[4]:
+        st.header(":material/insights: Silhouette Plot (Cluster Quality)")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(silhouette_plot(df_sil, selected_cluster),

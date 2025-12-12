@@ -21,13 +21,13 @@ best_preds = predictions["normal_preds"]
 y_true = predictions["y_true"]
 residuals = y_true - best_preds
 
-st.title("📈 Regression Modelling & Hyperparameter Search")
+st.title(":material/psychology: Regression Modelling & Hyperparameter Search")
 
 col1, col2 = st.columns([1, 3])
 with col1:
-    tab1, tab2, tab3 = st.tabs(["📄 Overview",
-                                "❓ Best Model",
-                                "📈 Hyperparameters"])
+    tab1, tab2, tab3 = st.tabs([":material/article: Overview",
+                                ":material/model_training: Best Model",
+                                ":material/trending_up: Hyperparameters"])
     with tab1:
         st.subheader("Modelling Overview")
         st.markdown(
@@ -54,18 +54,18 @@ with col1:
         )
         st.dataframe(params_df, use_container_width=True)
 with col2:
-    st.header("📊 Performance Visualisation")
+    st.header(":material/bar_chart: Performance Visualisation")
 
-    tabs = st.tabs(["RMSE Ranking",
-                    "MAE Ranking",
-                    "R² Ranking",
-                    "Prediction vs Actual",
-                    "Residuals",
-                    "Residuals vs Predicted",
-                    "Feature Importance",
-                    "Hyperparameter Search Results"])
+    tabs = st.tabs([":material/bar_chart: RMSE Ranking",
+                    ":material/bar_chart: MAE Ranking",
+                    ":material/bar_chart: R² Ranking",
+                    ":material/scatter_plot: Prediction vs Actual",
+                    ":material/insights: Residuals",
+                    ":material/insights: Residuals vs Predicted",
+                    ":material/bar_chart: Feature Importance",
+                    ":material/insights: Hyperparameter Search Results"])
     with tabs[0]:
-        st.subheader("RMSE Ranking")
+        st.subheader(":material/bar_chart: RMSE Ranking")
         grid, info = st.columns([3, 2])
         with grid:
             st.plotly_chart(bar_chart(grid_results.sort_values("RMSE"),
@@ -88,7 +88,7 @@ with col2:
               differences.
             """)
     with tabs[1]:
-        st.subheader("MAE Ranking")
+        st.subheader(":material/bar_chart: MAE Ranking")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(bar_chart(grid_results.sort_values("MAE"),
@@ -110,7 +110,7 @@ with col2:
               among models.
             """)
     with tabs[2]:
-        st.subheader("R² Ranking")
+        st.subheader(":material/bar_chart: R² Ranking")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(bar_chart(
@@ -132,7 +132,7 @@ with col2:
             - Values closer to 1 indicate a better fit to the data.
             """)
     with tabs[3]:
-        st.subheader("Prediction vs Actual Values")
+        st.subheader(":material/scatter_plot: Prediction vs Actual Values")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(prediction_vs_actual_chart(y_true, best_preds),
@@ -154,6 +154,7 @@ with col2:
             - The slope of the trendline reflects prediction bias.
             """)
     with tabs[4]:
+        st.subheader(":material/insights: Residuals Distribution")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(residuals_distribution_chart(residuals),
@@ -175,7 +176,7 @@ with col2:
             - Wider distributions indicate larger prediction errors.
             """)
     with tabs[5]:
-        st.subheader("Residuals vs Predicted Values")
+        st.subheader(":material/insights: Residuals vs Predicted Values")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(
@@ -200,7 +201,7 @@ with col2:
               in the model.
             """)
     with tabs[6]:
-        st.subheader("Feature Importance")
+        st.subheader(":material/bar_chart: Feature Importance")
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(feature_importance_chart(feature_imp),
@@ -222,7 +223,8 @@ with col2:
             - Understanding feature importance can inform domain insights.
             """)
     with tabs[7]:
-        st.subheader("🔍 Hyperparameter Search Results (GridSearchCV)")
+        st.subheader(":material/insights:\
+                      Hyperparameter Search Results (GridSearchCV)")
         graph, info = st.columns([3, 2])
         with graph:
             st.dataframe(grid_results, use_container_width=True)

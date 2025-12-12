@@ -17,7 +17,18 @@ class MetadataBuilder:
     A builder class for generating metadata YAML files with step tracking.
     """
 
-    def __init__(self, dataset_path, dataset_name, description):
+    def __init__(self, dataset_path: Path,
+                 dataset_name: str,
+                 description: str):
+        """
+        Initialize the MetadataBuilder.
+        Args:
+            dataset_path (Path): Path to the dataset file.
+            dataset_name (str): Name of the dataset.
+            description (str): Description of the dataset.
+        """
+
+        # Basic attributes
         self.dataset_path = Path(dataset_path)
         self.dataset_name = dataset_name
         self.description = description
@@ -43,6 +54,7 @@ class MetadataBuilder:
         Args:
             step_description (str): Description of the step to add.
         """
+
         self.metadata["steps"].append(step_description)
 
     def add_columns(self, columns):
@@ -52,6 +64,7 @@ class MetadataBuilder:
         Args:
             columns (list or iterable): List or iterable of column names.
         """
+
         self.metadata["columns"] = list(columns)
 
     def add_creation_script(self, script_path):
@@ -61,6 +74,7 @@ class MetadataBuilder:
         Args:
             script_path (str or Path): Path to the creation script.
         """
+
         self.metadata["creation_script"] = script_path
 
     def add_source_info(self):
@@ -144,12 +158,16 @@ class MetadataBuilder:
             to.
         """
 
+        # Determine output path
         if output_path is None:
             output_path = self.dataset_path.with_suffix(".yml")
 
+        # Ensure output_path is a Path object
         output_path = Path(output_path)
 
+        # Write YAML file
         with open(output_path, "w", encoding="utf-8") as f:
             yaml.dump(self.metadata, f, sort_keys=False, allow_unicode=True)
 
+        # Log the output path
         print(f"📄 Metadata written to: {output_path}")

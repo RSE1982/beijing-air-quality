@@ -7,7 +7,7 @@ import joblib
 import streamlit as st
 import json
 
-
+# Define the root directory and model path
 ROOT = Path(__file__).parent.parent
 MODEL_PATH = ROOT / "models"
 
@@ -62,6 +62,7 @@ def load_encoders():
     area_dtype = joblib.load(MODEL_PATH / "area_dtype.joblib")
     station_dtype = joblib.load(MODEL_PATH / "station_dtype.joblib")
     return season_dtype, area_dtype, station_dtype
+
 
 @st.cache_resource
 def load_feature_names():

@@ -7,30 +7,13 @@ import pandas as pd
 import streamlit as st
 import yaml
 import numpy as np
+from utils.load_csv import load_csv
 
+# Define the root data path
 ROOT = Path(__file__).parent.parent
+
+# Define the data directory
 DATA_PATH = ROOT / "data"
-
-
-def _load_csv(path: Path) -> pd.DataFrame:
-    """
-    Load a CSV file into a DataFrame.
-
-    Args:
-        path (Path): Path to the CSV file.
-    Returns:
-        pd.DataFrame: Loaded DataFrame.
-    """
-    df = pd.read_csv(path)
-
-    if "datetime" in df.columns:
-        df["datetime"] = pd.to_datetime(df["datetime"])
-    for col in df.select_dtypes(include="object").columns:
-        if col != "datetime":
-            df[col] = df[col].astype("category")
-
-    return df
-
 
 @st.cache_data
 def load_engineered() -> pd.DataFrame:
@@ -40,7 +23,8 @@ def load_engineered() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Feature engineered Beijing air quality data.
     """
-    return _load_csv(DATA_PATH / "engineered" / "beijing_engineered.csv")
+
+    return load_csv(DATA_PATH / "engineered" / "beijing_engineered.csv")
 
 
 @st.cache_data
@@ -51,7 +35,8 @@ def load_station_meta() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Station metadata.
     """
-    return _load_csv(DATA_PATH / "metadata" / "station_metadata.csv")
+
+    return load_csv(DATA_PATH / "metadata" / "station_metadata.csv")
 
 
 @st.cache_data
@@ -62,7 +47,8 @@ def load_clustered() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Clustered Beijing air quality data.
     """
-    return _load_csv(DATA_PATH / "derived" / "beijing_clustered.csv")
+
+    return load_csv(DATA_PATH / "derived" / "beijing_clustered.csv")
 
 
 @st.cache_data
@@ -73,7 +59,8 @@ def load_pca_coords() -> pd.DataFrame:
     Returns:
         pd.DataFrame: PCA coordinates data.
     """
-    return _load_csv(DATA_PATH / "derived" / "pca_coords.csv")
+
+    return load_csv(DATA_PATH / "derived" / "pca_coords.csv")
 
 
 @st.cache_data
@@ -84,7 +71,7 @@ def load_silhouette_values() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Silhouette values data.
     """
-    return _load_csv(DATA_PATH / "derived" / "silhouette_values.csv")
+    return load_csv(DATA_PATH / "derived" / "silhouette_values.csv")
 
 
 @st.cache_data
@@ -120,7 +107,7 @@ def load_feature_importance() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Feature importance data.
     """
-    return _load_csv(DATA_PATH / "model_outputs" / "feature_importance.csv")
+    return load_csv(DATA_PATH / "model_outputs" / "feature_importance.csv")
 
 
 @st.cache_data
@@ -131,8 +118,8 @@ def load_hyperparameter_results() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Hyperparameter tuning results.
     """
-    return _load_csv(DATA_PATH / "model_outputs" /
-                     "hyperparameter_results.csv")
+    return load_csv(DATA_PATH / "model_outputs" /
+                    "hyperparameter_results.csv")
 
 
 @st.cache_resource
@@ -145,6 +132,7 @@ def load_model_predictions() -> pd.DataFrame:
     """
     return np.load(DATA_PATH / "model_outputs" / "h5_predictions.npz")
 
+
 @st.cache_resource
 def load_best_model_predictions() -> pd.DataFrame:
     """
@@ -153,6 +141,7 @@ def load_best_model_predictions() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Best model predictions data.
     """
+
     return np.load(DATA_PATH / "model_outputs" / "best_predictions.npz")
 
 
@@ -164,5 +153,6 @@ def load_lag_feature_importance() -> pd.DataFrame:
     Returns:
         pd.DataFrame: Feature importance data.
     """
-    return _load_csv(DATA_PATH / "model_outputs" /
-                     "lag_model_feature_importances.csv")
+
+    return load_csv(DATA_PATH / "model_outputs" /
+                    "lag_model_feature_importances.csv")

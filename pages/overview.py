@@ -7,7 +7,7 @@ from utils.charts import seasonal_boxplot, monthly_trend, spatial_boxplot
 import plotly.express as px
 
 # ------------------------- Page Header -------------------------
-st.title("🏠 Overview")
+st.title(":material/home: Overview")
 
 # ------------------------- Load Data -------------------------
 df = load_engineered()
@@ -16,29 +16,34 @@ meta = load_station_meta()
 
 col1, col2 = st.columns([1, 2])
 with col1:
-    col1_tab1, col1_tab2, col1_tab3 = st.tabs(["📈 Snapshot", "Time Summary", "ℹ️ PM2.5 Summary"])
-    with col1_tab1:
-        # ------------------------- KPI Metrics -------------------------
-        st.markdown("## 📊 Dataset Snapshot")
+    tab = st.tabs([
+        ":material/trending_up: Snapshot",
+        ":material/access_time: Time Summary",
+        ":material/info: PM2.5 Summary"])
+    with tab[0]:
+        # ------------------------- Dataset KPIs -------------------------
+        st.subheader(":material/dataset: Dataset Snapshot")
+        # two rows of two columns
+        k1, k2 = st.columns(2)  # first row
+        k3, k4 = st.columns(2)  # second row
 
-        k1, k2 = st.columns(2)
-        k3, k4 = st.columns(2)
-        
+        # metrics showing no records, unique stations, year range, no features
         k1.metric("Rows", f"{len(df):,}")
         k2.metric("Stations", df["station"].nunique())
-        k3.metric("Years Covered", f"{df['year'].min()}–{df['year'].max()}")
+        k3.metric("Years Covered", f"{df['year'].min()}-{df['year'].max()}")
         k4.metric("Features", df.shape[1])
-    with col1_tab2:
+    with tab[1]:
+        # ------------------------- Time Coverage -------------------------
+        st.subheader(":material/access_time: Time Coverage")
         first_date = df['datetime'].min().date()
         last_date = df['datetime'].max().date()
         date_range = last_date - first_date
-
         st.metric("First Date", str(first_date))
         st.metric("Last Date", str(last_date))
         st.metric("Days Covered", f"{date_range.days:,}")
-    with col1_tab3:
-        # ------------------------- PM2.5 KPIs -------------------------
-        st.markdown("## 🌫 PM2.5 Summary")
+    with tab[2]:
+        # ------------------------- PM2.5 Summary -------------------------
+        st.subheader(":material/air: PM2.5 Summary")
 
         # compute statistics
         mean_pm25 = df["pm25"].mean()
@@ -51,7 +56,7 @@ with col1:
 
         pm1, pm2 = st.columns(2)
         pm3, pm4 = st.columns(2)
-       
+
         pm1.metric("Mean PM2.5", f"{mean_pm25:.1f} µg/m³")
         pm2.metric("Max PM2.5", f"{max_pm25:.0f} µg/m³")
         pm3.metric("Worst Station", f"{worst_station}")
@@ -65,30 +70,28 @@ with col1:
         pm5.metric("Hours Above WHO Guideline", f"{exceed_hours:,}")
         pm6.metric("Percent Exceedance", f"{pct_exceed:.1f}%")
 
-        
-
-
 with col2:
     # ------------------------- Tabs -------------------------
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "🌤 Seasonal Trends",
-        "Monthly Trends",
-        "📍 Spatial Variation",
-        "🗺 Station Map",
-        "Hypothesis Results"
+    tab = st.tabs([
+        ":material/partly_cloudy_day: Seasonal Trends",
+        ":material/calendar_month: Monthly Trends",
+        ":material/location_on: Spatial Variation",
+        ":material/map: Station Map",
+        ":material/assessment: Hypothesis Results"
     ])
 
-    with tab1:
-        st.subheader("Seasonal & Monthly Trends")
+    with tab[0]:
+        st.subheader(":material/partly_cloudy_day: Seasonal & Monthly Trends")
         st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
-    with tab2:
-        st.subheader("Monthly PM2.5 Trends")
+    with tab[1]:
+        st.subheader(":material/calendar_month: Monthly PM2.5 Trends")
         st.plotly_chart(monthly_trend(df), use_container_width=True)
-    with tab3:
-        st.subheader("Spatial Variation Across Stations")
+    with tab[2]:
+        st.subheader(":material/location_on:\
+                     Spatial Variation Across Stations")
         st.plotly_chart(spatial_boxplot(df), use_container_width=True)
-    with tab4:
-        st.subheader("Interactive Station Map")
+    with tab[3]:
+        st.subheader(":material/map: Interactive Station Map")
         station_means = df.groupby("station")["pm25"].mean().reset_index()
         meta_map = meta.merge(station_means, on="station")
 
@@ -100,8 +103,9 @@ with col2:
             color="pm25",
             size="pm25",
             hover_name="station",
-            mapbox_style="open-street-map",
-            center={"lat": meta_map.latitude.mean(), "lon": meta_map.longitude.mean()},
+            mapbox_style="carto-positron",
+            center={"lat": meta_map.latitude.mean(),
+                    "lon": meta_map.longitude.mean()},
             zoom=8,
             height=500,
         )
@@ -109,7 +113,7 @@ with col2:
         fig_map.update_layout(margin=dict(l=0, r=0, t=40, b=0))
 
         st.plotly_chart(fig_map, use_container_width=True)
-    with tab5:
+    with tab[4]:
         st.subheader("📊 Hypothesis Results Summary")
 
         results = [
@@ -117,14 +121,14 @@ with col2:
              "Seasonal PM2.5 patterns exist",
              "ANOVA", "Supported",
              "Winter levels significantly higher than summer."],
-            ["H2", 
+            ["H2",
              "PM2.5 varies between stations",
              "ANOVA",
              "Supported",
              "Urban stations show consistently higher pollution."],
             ["H3", "Weather variables correlate with PM2.5",
              "Correlation tests",
-             "Partially Supported", 
+             "Partially Supported",
              "Temperature & dew point correlate strongly; rainfall weak."],
             ["H4",
              "Short-term temporal structure explains PM2.5",
@@ -132,7 +136,7 @@ with col2:
              "Strong hourly & daily autocorrelation detected."],
             ["H5",
              "Lag features improve modelling",
-             "Model comparison", "Supported", 
+             "Model comparison", "Supported",
              "Lag-based XGBoost outperforms baseline model."]]
 
         df_results = pd.DataFrame(results,
@@ -140,11 +144,8 @@ with col2:
                                            "Statement",
                                            "Method",
                                            "Result",
-                                           "Interpretation"
-        ])
+                                           "Interpretation"])
 
         st.dataframe(df_results.reset_index(drop=True),
                      hide_index=True,
                      use_container_width=True)
-
-# ------------------------- Footer -------------------------

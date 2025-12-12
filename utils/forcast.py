@@ -22,10 +22,16 @@ def forecast_horizon(df_station: pd.DataFrame, model: object,
     the next 24 hours.
     """
 
+    # Sort by datetime to ensure correct order
     df_station = df_station.sort_values("datetime")
+
+    # Initialize the last known feature values
     last = df_station.iloc[-1][features].copy()
+
+    # Initialize list to store forecasts
     forecasts = []
 
+    # Iterate to forecast each hour
     for step in range(horizon):
         new_time = df_station["datetime"].max() + pd.Timedelta(hours=step + 1)
 
@@ -49,6 +55,8 @@ def forecast_horizon(df_station: pd.DataFrame, model: object,
                     "pm25_lag_6h",
                     "pm25_lag_3h",
                     "pm25_lag_1h"]
+
+        # Shift lag features down
         if all(col in features for col in lag_cols):
             last["pm25_lag_18h"] = last["pm25_lag_12h"]
             last["pm25_lag_12h"] = last["pm25_lag_6h"]

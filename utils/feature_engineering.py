@@ -6,6 +6,7 @@ forecasting.
 
 import pandas as pd
 
+
 def apply_forecasting_features(df: pd.DataFrame,
                                add_lags=True,
                                add_rollings=True):
@@ -19,14 +20,18 @@ def apply_forecasting_features(df: pd.DataFrame,
     Returns:
         pd.DataFrame: DataFrame with added features.
     """
+
+    # Create a copy to avoid modifying the original dataframe
     df = df.copy()
 
+    # Add lag features
     if add_lags:
         for lag in [1, 3, 6, 12, 18]:
             df[f"pm25_lag_{lag}h"] = (
                 df.groupby("station", observed=False)["pm25"].shift(lag)
             )
 
+    # Add rolling mean features
     if add_rollings:
         for w in [3, 6, 12, 18]:
             df[f"pm25_roll_{w}h_mean"] = (
