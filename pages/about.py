@@ -51,7 +51,7 @@ Kaggle mirror by Manu Siddhartha (CC BY 4.0).
 """)
 
 # Methodology
-st.subheader(":material/brain: Methodology Summary")
+st.subheader(":material/psychology: Methodology Summary")
 st.markdown("""
 - **CRISP-DM** analytical workflow
 - ETL pipeline with staged data cleaning and feature engineering
