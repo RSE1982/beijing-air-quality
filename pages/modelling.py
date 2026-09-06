@@ -51,6 +51,7 @@ with col1:
         params_df = (
             pd.DataFrame.from_dict(params, orient="index", columns=["value"])
             .dropna()
+            .astype(str)
         )
         st.dataframe(params_df, width="stretch")
 with col2:

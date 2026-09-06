@@ -119,7 +119,8 @@ def yearly_trend(df: pd.DataFrame) -> px.line:
 
     # Create yearly trend line plot
     yearly_trend = df.groupby(['year', 'season'],
-                              as_index=False)['pm25'].mean()
+                              as_index=False,
+                              observed=False)['pm25'].mean()
     fig = px.line(
         yearly_trend,
         x="season",

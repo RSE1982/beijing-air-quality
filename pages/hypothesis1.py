@@ -29,7 +29,7 @@ with col1:
     # Summary Metrics
     # -----------------------------------------------------
     st.subheader(":material/thermostat: Season Averages")
-    seasonal_avg = df.groupby("season")["pm25"].mean().round(1)
+    seasonal_avg = df.groupby("season", observed=False)["pm25"].mean().round(1)
     colA, colB = st.columns(2)
     colA.metric("Winter avg PM2.5", f"{seasonal_avg['winter']}")
     colB.metric("Spring avg PM2.5", f"{seasonal_avg['spring']}")
@@ -163,7 +163,9 @@ with col1:
 
             **Key takeaway:**
             """)
-            p_value = anova_results["p-unc"][0]
+            # Pingouin 0.6 renamed ``p-unc`` to ``p_unc``.
+            p_column = "p_unc" if "p_unc" in anova_results else "p-unc"
+            p_value = anova_results[p_column].iloc[0]
             if p_value < 0.05:
                 st.markdown(f"The p-value is {p_value:.4f}, which is less than\
                              0.05. We reject the null hypothesis and conclude\

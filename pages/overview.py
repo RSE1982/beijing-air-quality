@@ -96,14 +96,14 @@ with col2:
         meta_map = meta.merge(station_means, on="station")
 
         # More mobile-friendly + no Mapbox token needed
-        fig_map = px.scatter_mapbox(
+        fig_map = px.scatter_map(
             meta_map,
             lat="latitude",
             lon="longitude",
             color="pm25",
             size="pm25",
             hover_name="station",
-            mapbox_style="carto-positron",
+            map_style="carto-positron",
             center={"lat": meta_map.latitude.mean(),
                     "lon": meta_map.longitude.mean()},
             zoom=8,
