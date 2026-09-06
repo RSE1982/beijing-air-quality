@@ -6,6 +6,7 @@ from pathlib import Path
 import joblib
 import streamlit as st
 import json
+from xgboost import XGBRegressor
 
 # Define the root directory and model path
 ROOT = Path(__file__).parent.parent
@@ -16,8 +17,9 @@ MODEL_OUTPUT = ROOT / "model_outputs"
 @st.cache_resource
 def load_best_model():
     """Load the XGBoost regression model used in the analysis."""
-    with open(MODEL_PATH / "regression" / "best_regression_model.joblib", "rb") as f:
-        return joblib.load(f)
+    model = XGBRegressor()
+    model.load_model(MODEL_PATH / "regression" / "best_regression_model.json")
+    return model
 
 
 @st.cache_resource

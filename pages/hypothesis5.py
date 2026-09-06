@@ -71,7 +71,7 @@ with col2:
             st.plotly_chart(plot_actual_vs_pred(y_true,
                                                 baseline_pred,
                                                 lag_pred),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -99,7 +99,7 @@ with col2:
                                             lag_mae,
                                             lag_rmse,
                                             lag_r2),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -123,7 +123,7 @@ with col2:
             st.subheader(":material/insights:\
                           Lag-Based Model Feature Importance")
             st.plotly_chart(plot_lag_feature_importances(feature_importance),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**

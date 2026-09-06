@@ -52,7 +52,7 @@ with col1:
             pd.DataFrame.from_dict(params, orient="index", columns=["value"])
             .dropna()
         )
-        st.dataframe(params_df, use_container_width=True)
+        st.dataframe(params_df, width="stretch")
 with col2:
     st.header(":material/bar_chart: Performance Visualisation")
 
@@ -69,7 +69,7 @@ with col2:
         grid, info = st.columns([3, 2])
         with grid:
             st.plotly_chart(bar_chart(grid_results.sort_values("RMSE"),
-                                      "RMSE"), use_container_width=True)
+                                      "RMSE"), width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -92,7 +92,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(bar_chart(grid_results.sort_values("MAE"),
-                                      "MAE"), use_container_width=True)
+                                      "MAE"), width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -115,7 +115,7 @@ with col2:
         with graph:
             st.plotly_chart(bar_chart(
                 grid_results.sort_values("R2", ascending=False), "R2"),
-                use_container_width=True)
+                width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -136,7 +136,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(prediction_vs_actual_chart(y_true, best_preds),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -158,7 +158,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(residuals_distribution_chart(residuals),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -181,7 +181,7 @@ with col2:
         with graph:
             st.plotly_chart(
                 residuals_vs_predicted_chart(residuals, best_preds),
-                use_container_width=True)
+                width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -205,7 +205,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(feature_importance_chart(feature_imp),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -227,7 +227,7 @@ with col2:
                       Hyperparameter Search Results (GridSearchCV)")
         graph, info = st.columns([3, 2])
         with graph:
-            st.dataframe(grid_results, use_container_width=True)
+            st.dataframe(grid_results, width="stretch")
         with info:
             st.markdown("""
             **What this shows:**

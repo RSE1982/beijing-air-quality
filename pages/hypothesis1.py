@@ -56,7 +56,7 @@ with col1:
                          Seasonal PM2.5 Distribution")
             graph, info = st.columns([3, 2])
             with graph:
-                st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
+                st.plotly_chart(seasonal_boxplot(df), width="stretch")
             with info:
                 st.markdown("""
                     **What this shows:**
@@ -81,7 +81,7 @@ with col1:
                          Monthly PM2.5 Distribution")
             graph, info = st.columns([3, 2])
             with graph:
-                st.plotly_chart(monthly_violin(df), use_container_width=True)
+                st.plotly_chart(monthly_violin(df), width="stretch")
             with info:
                 st.markdown("""
                     **What this shows:**
@@ -103,7 +103,7 @@ with col1:
             st.subheader(":material/calendar_month: Monthly PM2.5 Trend")
             graph, info = st.columns([3, 2])
             with graph:
-                st.plotly_chart(monthly_trend(df), use_container_width=True)
+                st.plotly_chart(monthly_trend(df), width="stretch")
             with info:
                 st.markdown("""
                     **What this shows:**
@@ -125,7 +125,7 @@ with col1:
             st.subheader(":material/calendar_today: Yearly PM2.5 Trend")
             graph, info = st.columns([3, 2])
             with graph:
-                st.plotly_chart(yearly_trend(df), use_container_width=True)
+                st.plotly_chart(yearly_trend(df), width="stretch")
             with info:
                 st.markdown("""
                     **What this shows:**
@@ -151,7 +151,7 @@ with col1:
                                      data=df,
                                      detailed=True)
             st.dataframe(anova_results, hide_index=True,
-                         use_container_width=True)
+                         width="stretch")
             st.markdown("""
             **What this shows:**
             A one-way ANOVA tests whether mean PM2.5 differs significantly

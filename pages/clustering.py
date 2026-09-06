@@ -79,7 +79,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(pca_cluster_scatter(df_pca),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -104,7 +104,7 @@ with col2:
         with graph:
             cluster_counts = df_clusters["cluster"].value_counts().sort_index()
             st.plotly_chart(plot_cluster_size(df_clusters),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -124,7 +124,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(silhouette_values_per_cluster(df_sil),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -154,7 +154,7 @@ with col2:
             st.plotly_chart(make_cluster_radar(df_clusters,
                                                selected_cluster,
                                                NUMERIC_FEATURES),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**
@@ -178,7 +178,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(silhouette_plot(df_sil, selected_cluster),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
             **What this shows:**

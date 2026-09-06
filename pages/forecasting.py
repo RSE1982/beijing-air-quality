@@ -38,7 +38,7 @@ df = df[[col for col in df.columns if col in required_cols]]
 df_list = []
 for st_name in df["station"].unique():
     d = df[df["station"] == st_name].copy()
-    d = apply_forecasting_features(d).fillna(method="ffill")
+    d = apply_forecasting_features(d).ffill()
     if not d.empty:
         df_list.append(d)
 
@@ -91,7 +91,7 @@ if forcast_list:
         st.subheader(f":material/trending_up:\
                       PM2.5 Forecast for Next {horizon} Hours")
         st.plotly_chart(forecast_line_chart(all_forecasts, horizon),
-                        use_container_width=True)
+                        width="stretch")
     with col2:
         # Data display
         st.subheader(":material/assignment: Forecast Data")

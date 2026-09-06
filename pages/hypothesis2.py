@@ -22,7 +22,7 @@ df = load_engineered()
 meta = load_station_meta()
 
 # Prepare data for ANOVA
-station_means = df.groupby("station")["pm25"].mean().reset_index()
+station_means = df.groupby("station", observed=False)["pm25"].mean().reset_index()
 
 # ANOVA for stations and area types
 station_groups = [group["pm25"].dropna().values
@@ -45,7 +45,7 @@ eta_station = eta_squared_anova(station_groups)
 eta_area = eta_squared_anova(area_groups)
 
 # Compute station statistics
-station_stats = df.groupby("station")["pm25"].agg(
+station_stats = df.groupby("station", observed=False)["pm25"].agg(
             Mean="mean",
             Median="median",
             Std_Dev="std",
@@ -69,7 +69,7 @@ anova_results = {
         }
 
 # Compute area-type means
-area_means = df.groupby("area_type")["pm25"].mean()
+area_means = df.groupby("area_type", observed=False)["pm25"].mean()
 urban_mean = area_means.get("urban", float("nan"))
 suburban_mean = area_means.get("suburban", float("nan"))
 residential_mean = area_means.get("residential", float("nan"))
@@ -146,7 +146,7 @@ with col2:
                 "Std_Dev": "{:.2f} µg/m³",
                 "Max": "{:.2f} µg/m³",
                 "Min": "{:.2f} µg/m³"
-            }), use_container_width=True, hide_index=True)
+            }), width="stretch", hide_index=True)
         with info:
             st.markdown("""
                 **What this shows:**
@@ -173,7 +173,7 @@ with col2:
                      Plot PM2.5 Variation Across 12 Stations")
         graph, info = st.columns([3, 2])
         with graph:
-            st.plotly_chart(spatial_boxplot(df), use_container_width=True)
+            st.plotly_chart(spatial_boxplot(df), width="stretch")
         with info:
             st.markdown("""
                 **What this shows:**
@@ -197,7 +197,7 @@ with col2:
         st.subheader(":material/bar_chart: PM2.5 Distribution by Station")
         graph, info = st.columns([3, 2])
         with graph:
-            st.plotly_chart(violin_by_station(df), use_container_width=True)
+            st.plotly_chart(violin_by_station(df), width="stretch")
         with info:
             st.markdown("""
                 **What this shows:**
@@ -222,7 +222,7 @@ with col2:
         graph, info = st.columns([3, 2])
         with graph:
             st.plotly_chart(map_pm25_by_station(station_means, meta),
-                            use_container_width=True)
+                            width="stretch")
         with info:
             st.markdown("""
                         **What this shows:**
@@ -245,7 +245,7 @@ with col2:
         st.subheader(":material/bar_chart: PM2.5 Variation Across Areas")
         graph, info = st.columns([3, 2])
         with graph:
-            st.plotly_chart(area_boxplot(df), use_container_width=True)
+            st.plotly_chart(area_boxplot(df), width="stretch")
         with info:
             st.markdown("""
                 **What this shows:**
@@ -267,7 +267,7 @@ with col2:
         st.subheader(":material/bar_chart: PM2.5 Distribution by Area")
         graph, info = st.columns([3, 2])
         with graph:
-            st.plotly_chart(violin_by_area_type(df), use_container_width=True)
+            st.plotly_chart(violin_by_area_type(df), width="stretch")
         with info:
             st.markdown("""
                 **What this shows:**
@@ -291,7 +291,7 @@ with col2:
             "F-statistic": "{:.4f}",
             "p-value": "{:.4e}",
             "eta-squared": "{:.4f}"
-        }), use_container_width=True, hide_index=True)
+        }), width="stretch", hide_index=True)
 
         st.markdown("""
                     **What this shows:**

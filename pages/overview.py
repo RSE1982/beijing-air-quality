@@ -50,7 +50,7 @@ with col1:
         max_pm25 = df["pm25"].max()
         min_pm25 = df["pm25"].min()
 
-        station_means = df.groupby("station")["pm25"].mean()
+        station_means = df.groupby("station", observed=False)["pm25"].mean()
         worst_station = station_means.idxmax()
         best_station = station_means.idxmin()
 
@@ -82,17 +82,17 @@ with col2:
 
     with tab[0]:
         st.subheader(":material/partly_cloudy_day: Seasonal & Monthly Trends")
-        st.plotly_chart(seasonal_boxplot(df), use_container_width=True)
+        st.plotly_chart(seasonal_boxplot(df), width="stretch")
     with tab[1]:
         st.subheader(":material/calendar_month: Monthly PM2.5 Trends")
-        st.plotly_chart(monthly_trend(df), use_container_width=True)
+        st.plotly_chart(monthly_trend(df), width="stretch")
     with tab[2]:
         st.subheader(":material/location_on:\
                      Spatial Variation Across Stations")
-        st.plotly_chart(spatial_boxplot(df), use_container_width=True)
+        st.plotly_chart(spatial_boxplot(df), width="stretch")
     with tab[3]:
         st.subheader(":material/map: Interactive Station Map")
-        station_means = df.groupby("station")["pm25"].mean().reset_index()
+        station_means = df.groupby("station", observed=False)["pm25"].mean().reset_index()
         meta_map = meta.merge(station_means, on="station")
 
         # More mobile-friendly + no Mapbox token needed
@@ -112,7 +112,7 @@ with col2:
 
         fig_map.update_layout(margin=dict(l=0, r=0, t=40, b=0))
 
-        st.plotly_chart(fig_map, use_container_width=True)
+        st.plotly_chart(fig_map, width="stretch")
     with tab[4]:
         st.subheader("📊 Hypothesis Results Summary")
 
@@ -148,4 +148,4 @@ with col2:
 
         st.dataframe(df_results.reset_index(drop=True),
                      hide_index=True,
-                     use_container_width=True)
+                     width="stretch")

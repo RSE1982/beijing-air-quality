@@ -77,7 +77,7 @@ with col2:
         with colA:
             st.subheader(":material/hourglass: Hourly Trends in PM2.5")
             st.plotly_chart(temperal_variation(df, "hour"),
-                            use_container_width=True)
+                            width="stretch")
         with colB:
             st.markdown("""
             **What this shows:**
@@ -100,7 +100,7 @@ with col2:
             st.subheader(":material/calendar_today:\
                           Day-of-Week Trends in PM2.5")
             st.plotly_chart(temperal_variation(df, "day_of_week"),
-                            use_container_width=True)
+                            width="stretch")
         with colB:
             st.markdown("""
             **What this shows:**
@@ -121,7 +121,7 @@ with col2:
         with colA:
             st.subheader(":material/calendar_month: Monthly Trends in PM2.5")
             st.plotly_chart(temperal_variation(df, "month"),
-                            use_container_width=True)
+                            width="stretch")
         with colB:
             st.markdown("""
             **What this shows:**
@@ -141,7 +141,7 @@ with col2:
         with colA:
             st.subheader(":material/calendar_today: Yearly Trends in PM2.5")
             st.plotly_chart(temperal_variation(df, "year"),
-                            use_container_width=True)
+                            width="stretch")
         with colB:
             st.markdown("""
             **What this shows:**
@@ -174,7 +174,7 @@ with col2:
             # Display the DataFrame
             st.dataframe(spearman_time_df.style.format({"Spearman ρ": "{:.3f}",
                                                         "p-value": "{:.3f}"}),
-                         use_container_width=True)
+                         width="stretch")
         with colB:
             st.markdown("""
             **What this shows:**

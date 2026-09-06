@@ -109,10 +109,10 @@ with col2:
                                   ":material/bar_chart: Box Plot"])
             with tabA:
                 st.plotly_chart(weather_distribution(df, weather_var),
-                                use_container_width=True)
+                                width="stretch")
             with tabB:
                 st.plotly_chart(weather_boxplot(df, weather_var),
-                                use_container_width=True)
+                                width="stretch")
         with col2:
             explanation = get_weather_explanation(weather_var)
             if explanation:
@@ -128,7 +128,7 @@ with col2:
         st.subheader(":material/scatter_plot: Correlation Matrix")
         col1, col2 = st.columns([3, 2])
         with col1:
-            st.plotly_chart(corr_heatmap(df), use_container_width=True)
+            st.plotly_chart(corr_heatmap(df), width="stretch")
         with col2:
             st.markdown("""
                         **What this shows:**
